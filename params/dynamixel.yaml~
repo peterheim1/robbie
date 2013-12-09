@@ -1,0 +1,44 @@
+
+joints: ['head_pan_joint', 'head_tilt_joint', 'right_arm_tilt_joint_controller', 'right_arm_lift_joint_controller', 'right_arm_rotate_joint_controller', 'right_arm_elbow_joint_controller', 'right_arm_wrist_tilt_joint_controller']
+
+
+
+head_tilt_joint:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: head_tilt_joint
+    joint_speed: 2
+    motor:
+        id: 10
+        init: 512
+        min: 0
+        max: 1023
+
+head_pan_joint:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: head_pan_joint
+    joint_speed: 2
+    motor:
+        id: 5
+        init: 512
+        min: 900
+        max: 50
+
+
+
+head_traj_controller:
+   controller:
+       package: dynamixel_controllers
+       module: joint_trajectory_action_controller
+       type: JointTrajectoryActionController
+   joint_trajectory_action_node:
+       min_velocity: 0.25
+       constraints:
+           goal_time: 1.0
+
+

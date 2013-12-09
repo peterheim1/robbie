@@ -1,0 +1,720 @@
+<?xml version="1.0"?>
+
+<!-- XML namespaces -->
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro" 
+       
+	   name="omni">
+
+    <property name="M_PI" value="3.14159"/>
+    <property name="AX12_LIMIT" value="2.967059729"/>
+    <property name="M_SCALE" value="0.001"/>
+    <property name="F10_HEIGHT" value="0.004"/>
+    <property name="F4_HEIGHT" value="0.0525"/>
+    <property name="F3_HEIGHT" value="0.009"/>
+    <property name="F3_LENGTH" value="0.038"/>
+    <property name="AX12_HEIGHT" value="0.0385"/>
+    <property name="AX12_WIDTH" value="0.038"/>
+    <property name="AX12_LENGTH" value="0.05"/>
+    <property name="F2_HEIGHT" value="0.0265"/>
+    <property name="SCALE" value="0.0254"/>
+    <property name="base_x" value="0.33"/>
+    <property name="base_y" value="0.33"/>
+    <property name="MESH_EXT" value="stl"/>
+
+	   
+ 	<!-- ============================  A Few Color Macros  ============================ -->
+	
+	<xacro:macro name="black">
+		<material name="black">
+			<color rgba="0.1 0.1 0.1 1.0"/>
+		</material>
+	</xacro:macro>
+	
+	<xacro:macro name="white">
+		<material name="white">
+			<color rgba="1.0 1.0 1.0 1.0"/>
+		</material>
+	</xacro:macro>
+	
+	<xacro:macro name="grey1">
+		<material name="grey1">
+			<color rgba="0.75 0.75 0.75 1.0"/>
+		</material>
+	</xacro:macro>
+	
+	<xacro:macro name="grey2">
+		<material name="grey2">
+			<color rgba="0.6 0.6 0.6 1.0"/>
+		</material>
+	</xacro:macro>
+	
+	<xacro:macro name="grey3">
+		<material name="grey3">
+			<color rgba="0.8 0.8 0.8 1.0"/>
+		</material>
+	</xacro:macro>
+
+	<xacro:macro name="ax12_color">
+		<material name="ax12_color">
+			<color rgba="0.2 0.2 0.2 1.0"/>
+		</material>
+	</xacro:macro>
+	
+	<xacro:macro name="bracket_color">
+		<material name="bracket_color">
+			<color rgba="0.9 0.9 0.9 1.0"/>
+		</material>
+	</xacro:macro>
+
+        <xacro:macro name="cyan1">
+		<material name="cyan1">
+			<color rgba="0 0.9 0.9 1.0"/>
+		</material>
+	</xacro:macro>
+
+	<xacro:macro name="cyan2">	
+		<material name="cyan2">
+	     <color rgba="0 0.7 0.7 1.0"/>
+		</material>
+	</xacro:macro>
+	
+	<xacro:macro name="cyan3">	
+		<material name="cyan3">
+	     <color rgba="0 0.5 0.5 1.0"/>
+		</material>
+	</xacro:macro>
+
+        <xacro:macro name="yellow2">
+		<material name="yellow2">
+			<color rgba="0.8 0.8 0 1.0"/>
+		</material>
+	</xacro:macro>
+	
+	<xacro:macro name="green1">
+		<material name="green1">
+			<color rgba="0 1 0 1.0"/>
+		</material>
+	</xacro:macro>
+	
+	<xacro:macro name="green2">
+		<material name="green2">
+			<color rgba="0.1 0.8 0 1.0"/>
+		</material>
+	</xacro:macro>
+
+        <xacro:macro name="blue1">
+		<material name="blue1">
+			<color rgba="0 0 0.9 1.0"/>
+		</material>
+	</xacro:macro>
+
+        <xacro:macro name="ax12_color">
+		<material name="ax12_color">
+			<color rgba="0.1 0.1 0.1 1.0"/>
+		</material>
+	</xacro:macro>
+	
+ 	<!-- ============================   A Few Shape Macros  ============================ -->
+	<xacro:macro name="ax12" params="name xyz rpy">
+		<link name="${name}">
+			<visual>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+				<geometry>
+					<mesh filename="package://robbie/meshes/ax12_box2.${MESH_EXT}" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+				</geometry>
+				<xacro:ax12_color />
+             </visual>
+             
+             <collision>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+				<geometry>
+					<box size="0.032 0.038 0.05" />
+					<!--
+					<mesh filename="package://robbie/meshes/ax12_box2.${MESH_EXT}" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+					-->
+				</geometry>
+             </collision>
+             <xacro:default_inertial mass="0.055" />   
+        </link>
+        <xacro:default_gazebo name="${name}" material="Gazebo/FlatBlack" />
+	</xacro:macro>
+	
+	<xacro:macro name="F2_bracket" params="name xyz rpy">
+		<link name="${name}">
+			<visual>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+				<geometry>
+          			<mesh filename="package://robbie/meshes/F2.${MESH_EXT}" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+				</geometry>
+				<xacro:bracket_color />
+             </visual>
+             <collision>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+					<geometry>
+						<box size="0.026 0.05 0.038" />
+						<!--
+          				<mesh filename="package://robbie/meshes/F2.${MESH_EXT}" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+          				-->
+					</geometry>
+             </collision>
+             <xacro:default_inertial mass="0.02" />   
+        </link>
+        <xacro:default_gazebo name="${name}" material="Gazebo/WhiteEmissive" />
+	</xacro:macro>
+	
+	<xacro:macro name="F3_bracket" params="name xyz rpy">
+		<link name="${name}">
+			<visual>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+				<geometry>
+          			<mesh filename="package://robbie/meshes/F3.${MESH_EXT}" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+				</geometry><material name="grey1">
+			<color rgba="0.75 0.75 0.75 1.0"/>
+		</material>
+				<xacro:bracket_color />
+             </visual>
+             <collision>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+					<geometry>
+						<!--
+          				<mesh filename="package://robbie/meshes/F3.${MESH_EXT}" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+						-->
+						<box size="0.025 0.04 0.009" />
+					</geometry>
+             </collision>
+             <xacro:default_inertial mass="0.01" />   
+        </link>
+        <xacro:default_gazebo name="${name}" material="Gazebo/WhiteEmissive" />
+	</xacro:macro>
+
+	<xacro:macro name="bracket_f3" params="name xyz rpy">
+		<link name="${name}">
+			<visual>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+				<geometry>
+					<box size="0.025 0.04 0.006" />	
+				</geometry>
+				<xacro:bracket_color />
+             </visual>
+             <collision>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+					<geometry>
+						<box size="0.025 0.04 0.006" />
+					</geometry>
+             </collision>
+             <xacro:default_inertial mass="0.02" />   
+        </link>
+        <xacro:default_gazebo name="${name}" material="Gazebo/WhiteEmissive" />
+	</xacro:macro>
+	
+	<xacro:macro name="bracket2" params="name xyz rpy">
+		<link name="${name}">
+			<visual>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+				<geometry>
+					<box size="0.05 0.115 0.07" />	
+				</geometry>
+				<xacro:bracket_color />
+             </visual>
+             <collision>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+					<geometry>
+					<box size="0.05 0.115 0.07" />	
+					</geometry>
+             </collision>
+             <xacro:default_inertial mass="0.01" />   
+        </link>
+        <xacro:default_gazebo name="${name}" material="Gazebo/WhiteEmissive" />
+	</xacro:macro>
+	
+        <xacro:macro name="bracket3" params="name xyz rpy">
+		<link name="${name}">
+			<visual>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+				<geometry>
+					<box size="0.05 0.032 0.005" />	
+				</geometry>
+				<xacro:bracket_color />
+             </visual>
+             <collision>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+					<geometry>
+					<box size="0.05 0.032 0.005" />	
+					</geometry>
+             </collision>
+             <xacro:default_inertial mass="0.01" />   
+        </link>
+        <xacro:default_gazebo name="${name}" material="Gazebo/WhiteEmissive" />
+	</xacro:macro>	
+
+        <xacro:macro name="h_beam" params="name xyz rpy">
+		<link name="${name}">
+			<visual>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+				<geometry>
+					<box size="0.025 0.11 0.01" />	
+				</geometry>
+				<xacro:bracket_color />
+             </visual>
+             <collision>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+					<geometry>
+					<box size="0.025 0.11 0.01" />	
+					</geometry>
+             </collision>
+             <xacro:default_inertial mass="0.01" />   
+        </link>
+        <xacro:default_gazebo name="${name}" material="Gazebo/WhiteEmissive" />
+	</xacro:macro>	
+
+
+        <xacro:macro name="my_box" params="name lwh xyz rpy mass material *rviz_color">
+		<link name="${name}">
+			<visual>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+				<geometry>
+					<box size="${lwh}" />
+				</geometry>
+			    <xacro:insert_block name="rviz_color" />             
+             </visual>
+             <collision>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+					<geometry>
+						<box size="${lwh}" />
+					</geometry>
+             </collision>
+             <xacro:default_inertial mass="${mass}" />   
+        </link>
+        <xacro:default_gazebo name="${name}" material="${material}" />
+	</xacro:macro>
+
+	<xacro:macro name="my_cylinder" params="name l r xyz rpy mass material *rviz_color">
+		<link name="${name}">
+			<visual>	
+				<origin xyz="${xyz}" rpy="${rpy}" />
+				<geometry>
+					<cylinder length="${l}" radius="${r}" />
+				</geometry>
+            	<xacro:insert_block name="rviz_color" />
+            </visual>
+            <collision>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+					<geometry>
+						<cylinder length="${l}" radius="${r}" />
+					</geometry>
+            </collision>
+            <xacro:default_inertial mass="${mass}" />
+        </link>
+        <xacro:default_gazebo name="${name}" material="${material}" />
+	</xacro:macro>
+
+    <xacro:macro name="default_inertial" params="mass">
+		<inertial>
+			<mass value="${mass}" />
+			<inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                     iyy="0.001" iyz="0.0"
+                     izz="0.001" />                     
+			</inertial>
+    </xacro:macro>
+    
+    <xacro:macro name="default_gazebo" params="name material">
+ 		<gazebo reference="${name}">
+			<material>${material}</material>
+			<selfCollide>false</selfCollide>
+			<turnGravityOff>true</turnGravityOff>
+		</gazebo>
+    </xacro:macro>
+    
+ 	<!-- ============================   Link Definitions  ============================ -->
+
+  <xacro:my_box name="base_link" lwh="0.41 0.35 0.06" xyz="0 0 .135" rpy="0 0 0" mass="0.1" material="Gazebo/FlatBlack">
+	        <xacro:green1 />
+        </xacro:my_box>
+
+  <xacro:my_cylinder name="left_wheel" l="0.035" r="0.1025" xyz="0 0 0" rpy="1.57 0 0" mass="0.1" material="Gazebo/Grey">
+		<xacro:grey1 />
+	</xacro:my_cylinder>
+
+  <xacro:my_cylinder name="right_wheel" l="0.035" r="0.1025" xyz="0 0 0" rpy="1.57 0 0" mass="0.1" material="Gazebo/Grey">
+		<xacro:grey1 />
+	</xacro:my_cylinder>
+
+  <xacro:my_cylinder name="castor_wheel_l" l="0.035" r="0.04" xyz="0 0 0" rpy="1.57 0 0" mass="0.1" material="Gazebo/Grey">
+		<xacro:grey1 />
+	</xacro:my_cylinder>
+
+  <xacro:my_cylinder name="castor_wheel_r" l="0.035" r="0.04" xyz="0 0 0" rpy="1.57 0 0" mass="0.1" material="Gazebo/Grey">
+		<xacro:grey1 />
+	</xacro:my_cylinder>
+
+
+  <xacro:my_cylinder name="deck_link" l="0.520" r="0.175" xyz="0.1 0 0" rpy="0 0 0" mass="0.2" material="Gazebo/grey">
+			<xacro:black />
+		</xacro:my_cylinder>
+
+  <xacro:my_box name="imu_link1" lwh="0.045 0.065 0.01" xyz="0 0 .15" rpy="0 0 0" mass="0.1" material="Gazebo/FlatBlack">
+	        <xacro:black />
+        </xacro:my_box>
+
+  <xacro:my_cylinder name="torso_link" l="0.48" r="0.03" xyz="0 0 0" rpy="0 0 0" mass="0.250" material="Gazebo/WhiteEmissive">
+		<xacro:blue1 />
+	</xacro:my_cylinder>
+
+  <!--<xacro:my_box name="chest_link" lwh="0.1 0.24 0.16" xyz="0 0 0" rpy="0 0 0" mass="0.1" material="Gazebo/FlatBlack">
+		<xacro:blue1 />
+	</xacro:my_box>-->
+  
+	<!--##################right arm links##########################################################################-->
+	
+  <link name="right_arm_tilt_link" >
+   <visual>
+      <geometry>
+        <mesh filename="package://robbie/meshes/Right_tilt_bracket_new.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+      </geometry>
+         <material name="green">
+        <color rgba="0.1 0.8 0 0.8"/>
+      </material>
+      <origin rpy="0 0 0" xyz="0 0 -0.07"/>
+    </visual>
+  </link>
+
+  <link name="right_lift_link" >
+  <visual>
+      <geometry>
+       <mesh filename="package://robbie/meshes/Right_shoulder_lift.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+      </geometry>
+        <material name="yellow2">
+        <color rgba="0.8 0.8 0 1.0"/>
+      </material>
+      <origin rpy="0 1.57 0" xyz="0 0 0"/><!--<origin rpy="0 1.57 0" xyz="0 0 0"/>-->
+    </visual>
+  </link>
+  
+  <link name="right_rotate_link" >
+  <visual>
+      <geometry>
+        <mesh filename="package://robbie/meshes/Right_gearbox.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+      </geometry>
+        <material name="yellow2">
+        <color rgba="0.8 0.8 0 1.0"/>
+      </material>
+      <origin rpy="-1.57 0 0" xyz="0 0 0"/>
+    </visual>
+  </link>
+  
+  <link name="right_elbow_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://robbie/meshes/Right_bicep_frame.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+      </geometry>
+        <material name="green">
+        <color rgba="0.1 0.8 0 0.8"/>
+      </material>
+      <origin rpy="3.14 3.14 0" xyz="0 0 0"/>
+    </visual>
+</link>
+  
+  <link name="right_forearm_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://robbie/meshes/Right_foreArm.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+      </geometry>
+        <material name="green">
+        <color rgba="0.1 0.8 0 1"/>
+      </material>
+      <origin rpy="-1.57 -2.3 0" xyz="0 0.12 0"/>
+    </visual></link>
+
+  <link name="shoulder_bracket_link" >
+   <visual>
+      <geometry>
+        <mesh filename="package://robbie/meshes/shoulder_bracket.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+      </geometry>
+         <material name="green">
+        <color rgba="0.1 0.8 0 0.8"/>
+        </material>
+      <origin rpy="0 0 -1.57" xyz="0 0 -0.07"/>
+    </visual>
+  </link>
+  
+    <xacro:my_box name="right_hand_link" lwh="0.08 0.08 0.08" xyz="0 0 0" rpy="0 0 0" mass="0.1" material="Gazebo/FlatBlack">
+	        <xacro:black />
+        </xacro:my_box>
+  
+<!-- head details-->
+  <xacro:F2_bracket name="head_tilt_bracket" xyz="0 0 0" rpy="0 3.1415 0"/>
+
+  <xacro:ax12 name="head_tilt_link" xyz="0 0 0" rpy="3.1415 0 0">
+	</xacro:ax12>
+
+  <xacro:F3_bracket name="head_pan_bracket" xyz="0 0 0" rpy="0 0 0"/>
+	
+	
+  <xacro:ax12 name="head_pan_link" xyz="0 0 0" rpy=" 1.57 0 1.57">
+	</xacro:ax12>
+
+  <xacro:F3_bracket name="neck_link" xyz="0 0 0" rpy="1.57 0 -1.570" />
+
+  <xacro:my_box name="head_base_link" lwh="0.06 0.08 0.005" xyz="0 0 0" rpy="0 0 0" mass="0.1" material="Gazebo/FlatBlack">
+		<xacro:black />
+	</xacro:my_box>
+
+  <link name="kinect_link">
+      <inertial>
+        <mass value="1.0" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+                 iyy="1.0" iyz="0.0"
+                 izz="1.0" />
+      </inertial>
+
+      <visual>
+        <origin xyz=" 0 0 0 " rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robbie/meshes/kinect.dae"/>
+        </geometry>
+      </visual>
+
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robbie/meshes/kinect.dae"/>
+          </geometry>
+      </collision>
+
+    </link>
+
+  <link name="head_link" >
+   <visual>
+      <geometry>
+        <mesh filename="package://robbie/meshes/head.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+      </geometry>
+         <material name="grey1">
+	  <color rgba="0.75 0.75 0.75 1.0"/>
+	</material>
+      <origin rpy="1.57 0 1.57" xyz="0 0 0"/>
+    </visual>
+  </link>
+ 
+  <link name="chest_link" >
+   <visual>
+      <geometry>
+        <mesh filename="package://robbie/meshes/torso.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+      </geometry>
+         <material name="grey1">
+	  <color rgba="0.75 0.75 0.75 1.0"/>
+	</material>
+      <origin rpy="1.57 0 1.57" xyz="0 0 0"/>
+    </visual>
+  </link>
+
+  
+ 
+   <!-- =================== Joint Definitions ==================== -->
+
+  <joint name="base_link_joint" type="fixed">
+    	<parent link="base_link" />
+    	<child link="deck_link" />
+    	<origin xyz="-0.10 0 .36" rpy="0 0 0" />
+	</joint> 
+
+  <joint name="left_wheel_joint" type="fixed">
+    	<parent link="base_link" />
+    	<child link="left_wheel" />
+    	<origin xyz="0.1 -0.2 0.1" rpy="0 0 0" />
+	</joint>
+
+  <joint name="right_wheel_joint" type="fixed">
+    	<parent link="base_link" />
+    	<child link="right_wheel" />
+    	<origin xyz="0.1 0.2 0.1" rpy="0 0 0" />
+	</joint>
+
+  <joint name="castor_wheel_joint_l" type="fixed">
+    	<parent link="base_link" />
+    	<child link="castor_wheel_l" />
+    	<origin xyz="-0.20 -0.13 0.05" rpy="0 0 0" />
+	</joint>
+
+  <joint name="castor_wheel_joint_r" type="fixed">
+    	<parent link="base_link" />
+    	<child link="castor_wheel_r" />
+    	<origin xyz="-0.20 0.13 0.05" rpy="0 0 0" />
+	</joint>
+
+	<joint name="chest_joint" type="fixed">
+    	<parent link="deck_link" />
+    	<child link="chest_link" />
+    	<origin xyz="0.18 0.085 .48" rpy="0 0 0" />
+	</joint> 
+
+
+<joint name="torso_joint" type="fixed">
+    	<parent link="deck_link" />
+    	<child link="torso_link" />
+    	<origin xyz="0.1 0 0.38" rpy="0 0 0" />
+	</joint>
+
+<joint name="imu_joint" type="fixed">
+    	<parent link="base_link" />
+    	<child link="imu_link1" />
+    	<origin xyz="-0. 0 0.25" rpy="0 0 0" />
+	</joint>
+  
+	<!--#############################right arm Joints###################################-->
+	<joint name="right_arm_tilt_joint" type="revolute">
+    <parent link="chest_link"/>
+    <child link="right_arm_tilt_link"/>
+    <origin xyz="-0.02 -0.23 0.13" rpy="0 0 1.57" />
+    <axis xyz="0 1 0" />
+   <limit lower="0" upper="1.5" effort="10" velocity="0" />
+  </joint>
+  
+  <joint name="right_arm_lift_joint" type="revolute">
+    <parent link="right_arm_tilt_link"/>
+    <child link="right_lift_link"/>
+    <origin xyz="-0.045 0 -0.03" rpy="1.57 0 0" />
+    <axis xyz="1 0 0" />
+   <limit lower="0" upper="3" effort="10" velocity="0" />
+  </joint>
+  
+  <joint name="right_bicep" type="fixed">
+    <parent link="right_lift_link"/>
+    <child link="shoulder_bracket_link"/>
+    <origin xyz="-0.05 -0.03 0.05" rpy="0 -0.5 1.57" /><!--pitch will adjust bicep angle0.9  x is in out y is- down-->
+    <axis xyz="-1 0 0" />
+  </joint>
+
+  <joint name="right_rotate_gear" type="fixed">
+    <parent link="shoulder_bracket_link"/>
+    <child link="right_rotate_link"/>
+    <origin xyz="-0.02 -0.04 -0.03" rpy="0 0 0 " /><!--done-->
+    <axis xyz="-1 0 0" />
+  </joint>
+  
+  <joint name="right_arm_rotate_joint" type="revolute">
+    <parent link="right_rotate_link"/>
+    <child link="right_elbow_link"/>
+    <origin xyz="-0.115 0.06 0.0" rpy="0 0 0 " />
+    <axis xyz="-1 0 0" />
+   <limit lower=".02" upper="3" effort="10" velocity="0" /><!--angle out a little-->
+  </joint>
+  
+  <joint name="right_arm_elbow_joint" type="revolute">
+    <parent link="right_elbow_link"/>
+    <child link="right_forearm_link"/>
+    <origin xyz="-0.16 -0. -0.037" rpy="0 0 1.5" />
+    <axis xyz="0 0 1" />
+   <limit lower="0.4" upper="1.65" effort="10" velocity="0" />
+  </joint>
+  
+    <joint name="right_hand" type="fixed">
+    <parent link="right_forearm_link"/>
+    <child link="right_hand_link"/>
+    <origin xyz="0.01 0.35 0.01" rpy="0 0 0 " />
+    <axis xyz="0 0 1" />
+   <limit lower="-1.57" upper="1.57" effort="10" velocity="0" />
+  </joint>
+  
+  
+<!-- #####################################Head joints#########################################-->
+  <joint name="head_tilt_servo" type="fixed">
+    	<parent link="torso_link" />
+    	<child link="head_tilt_bracket" />
+    	<origin xyz="0 0 0.27" rpy="0 0 0" />
+	</joint>
+<!-- Head tilt joint-->
+  <joint name="head_tilt_joint" type="revolute">
+    	<parent link="head_tilt_bracket" />
+    	<child link="head_tilt_link" />
+    	<origin xyz="0 0 0.0" rpy="0 0 0" />
+    	<axis xyz="0 1 0" />
+    	<limit lower="-1.57" upper="1.57" effort="10" velocity="0" />
+      	<dynamics damping="0.0"/>
+	</joint>
+
+  <joint name="head_pan_servo" type="fixed">
+    	<parent link="head_tilt_link" />
+    	<child link="head_pan_bracket" />
+    	<origin xyz="-0.0 0 0.04" rpy="0 0 0" />
+	</joint>
+
+  <!-- head_pan_joint-->	
+	<joint name="head_pan_joint" type="revolute">
+    	<parent link="head_pan_bracket" />
+    	<child link="head_pan_link" />
+    	<origin xyz="0.0 0 0.02" rpy="0 0 0" />
+        <origin xyz="0 0 0.0" rpy="0 0 0" />
+    	<axis xyz="0 0 1" />
+    	<limit lower="-2" upper="2" effort="10" velocity="0" />
+      	<dynamics damping="0.0"/>
+	</joint>
+
+  <joint name="head_neck_link" type="fixed">
+    	<parent link="head_pan_link" />
+    	<child link="neck_link" />
+    	<origin xyz="-0.04 0 0.0" rpy="0 0 0" />
+	</joint>
+
+  <joint name="neck_joint" type="fixed">
+    	<parent link="neck_link" />
+    	<child link="head_base_link" />
+    	<origin xyz="0.02 0 0.0" rpy="0 0 0" />
+	</joint>
+	
+  <joint name="head_joint" type="fixed">
+    	<parent link="head_base_link" />
+    	<child link="head_link" />
+    	<origin xyz="-0.02 -0.097 -0.45" rpy="0 0 0" />
+	</joint>
+	
+	<joint name="kinect_joint" type="fixed">
+    	<parent link="torso_link" />
+    	<child link="kinect_link" />
+    	<origin xyz="0.03 0 0.05" rpy="0 0 0" />
+	</joint>
+
+
+  <joint name="kinect_depth_joint" type="fixed">
+      <origin xyz="0 0.018 0" rpy="0 0 0" />
+      <parent link="kinect_link" />
+      <child link="kinect_depth_frame" />
+    </joint>
+    
+    <link name="kinect_depth_frame">
+      <inertial>
+        <mass value="0.0001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+                 iyy="0.0001" iyz="0.0"
+                 izz="0.0001" />
+      </inertial>
+    </link>
+    
+    <joint name="kinect_depth_optical_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
+      <parent link="kinect_depth_frame" />
+      <child link="kinect_depth_optical_frame" />
+    </joint>
+    
+    <link name="kinect_depth_optical_frame">
+      <inertial>
+        <mass value="0.0001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+                 iyy="0.0001" iyz="0.0"
+                 izz="0.0001" />
+      </inertial>
+    </link>
+
+
+    
+  
+
+  
+<gazebo reference="omni">
+  	</gazebo>
+</robot>

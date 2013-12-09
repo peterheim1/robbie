@@ -1,0 +1,4 @@
+<launch>
+
+    <rosparam file="$(find robbie)/params/params.yaml" command="load" />
+</launch>

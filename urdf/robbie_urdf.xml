@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<robot name="robbie">
+        <link name="base_link">
+                <visual>
+                        <origin xyz="0 0 0.10" rpy="0 0 0" />
+                                <geometry>
+                                        <box size="0.41 0.34 0.20" />
+                                </geometry>
+                        <material name="Cyan1">
+                                <color rgba="0 1 1 1.0"/>
+                        </material>
+                </visual>
+        </link>
+       
+        <link name="base_laser">
+                <visual>
+                        <origin xyz="0 0 .05" rpy="0 0 0" />
+                                <geometry>
+                                        <cylinder radius="0.015" length="0.10" />
+                                </geometry>
+                                <material name="black">
+                                        <color rgba="0 0 0 1"/>
+                                </material>
+                </visual>
+        </link>
+         
+        <link name="upper_base_link">
+                <visual>
+                        <origin xyz="0 0 0.10" rpy="0 0 0" />
+                        <geometry>
+                                <cylinder radius="0.085" length="0.20" />
+                        </geometry>
+                        <material name="Cyan2">
+                                <color rgba="0 0.5 0.5 0"/>
+                        </material>
+                </visual>
+        </link>
+  
+        <link name="head_link">
+                <visual>
+                        <origin xyz="0 0 0.03" rpy="0 0 1.57" />
+                        <geometry>
+                                <box size="0.13 0.01 0.06" />
+                        </geometry>
+                        <material name="white">
+                                <color rgba="1 1 1 1"/>
+                        </material>
+                </visual>
+        </link>
+
+<!--
+ <link name="right_back_wheel">
+    <visual>
+      <geometry>
+        <cylinder length=".05" radius="0.035"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length=".05" radius="0.035"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="right_back_wheel_joint" type="continuous">
+    <axis xyz="0 0 1"/>
+    <parent link="base_link"/>
+    <child link="right_back_wheel"/>
+    <origin rpy="0 1.57075 0" xyz=".151 -0.15 -0.005"/>
+    <limit effort="100" velocity="100"/>
+    <joint_properties damping="0.0" friction="0.0"/>
+  </joint>
+  
+<link name="left_back_wheel">
+    <visual>
+      <geometry>
+        <cylinder length=".05" radius="0.035"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length=".05" radius="0.035"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="left_back_wheel_joint" type="continuous">
+    <axis xyz="0 0 1"/>
+    <parent link="base_link"/>
+    <child link="left_back_wheel"/>
+    <origin rpy="0 1.57075 0" xyz="-0.151 -0.15 -0.005"/>
+    <limit effort="100" velocity="100"/>
+    <joint_properties damping="0.0" friction="0.0"/>
+  </joint>
+
+<link name="right_front_wheel">
+    <visual>
+      <geometry>
+        <cylinder length=".05" radius="0.075"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length=".05" radius="0.075"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="right_front_wheel_joint" type="continuous">
+    <axis xyz="0 0 1"/>
+    <parent link="base_link"/>
+    <child link="right_front_wheel"/>
+    <origin rpy="0 1.57075 0" xyz=".20 0.15 -0.005"/>
+    <limit effort="100" velocity="100"/>
+    <joint_properties damping="0.0" friction="0.0"/>
+  </joint>
+  
+<link name="left_front_wheel">
+    <visual>
+      <geometry>
+        <cylinder length=".05" radius="0.075"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length=".05" radius="0.075"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1"/>
+      <inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="left_front_wheel_joint" type="continuous">
+    <axis xyz="0 0 1"/>
+    <parent link="base_link"/>
+    <child link="left_front_wheel"/>
+    <origin rpy="0 1.57075 0" xyz="-0.20 0.15 -0.005"/>
+    <limit effort="100" velocity="100"/>
+    <joint_properties damping="0.0" friction="0.0"/>
+  </joint>
+-->
+
+  <joint name="joint1" type="fixed">
+    <parent link="base_link"/>
+    <child link="base_laser"/>
+    <origin xyz="0.155 0.14 0.25" rpy="0 0 0" />
+  </joint>
+
+  <joint name="joint2" type="fixed">
+    <parent link="base_link"/>
+    <child link="upper_base_link"/>
+    <origin xyz="0.05 0 0.20" rpy="0 0 0" />
+  </joint>
+
+  <joint name="head_pan_joint" type="revolute">
+    <parent link="upper_base_link"/>
+    <child link="head_link"/>
+    <origin xyz="0 0 0.20" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit lower="-3.1416" upper="3.1416" effort="10" velocity="3" />
+  </joint>
+</robot>
+

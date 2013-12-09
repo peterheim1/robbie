@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "change to directory";
+cd /home/robbie/groovy_workspace/robbie_chat/nodes
+rosrun robbie_chat test2.py
+

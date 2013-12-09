@@ -1,0 +1,39 @@
+<!--
+
+april 2012 launches a turtle bor arm and urdf
+
+
+use file from turtle bot bringup 
+
+
+
+-->
+
+<launch>	
+    <param name="use_sim_time" value="false" />
+    <param name="robot_description" command="$(find xacro)/xacro.py '$(find omni_bot)/urdf/arm.urdf.xacro'" />
+    <node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher" output="screen">
+    <param name="publish_frequency" type="double" value="30.0" />
+    </node>
+
+
+    <node name="arbotix" pkg="arbotix_python" type="driver.py">
+    <rosparam file="$(find omni_bot)/params/arbotix_tur.yaml" command="load" />
+    </node>
+
+    <node name="gripper_controller" pkg="arbotix_controllers" type="one_side_gripper_controller.py">
+      <param name="invert" value="false"/>
+      <param name="pad_width" value="0.0254"/>
+   </node>
+
+<!-- simple arm server-->
+   <include file="$(find turtlebot_arm_bringup)/launch/simple_arm_server.launch">
+    
+   </include>
+  <!-- Monitoring and Diagnostics -->
+ 
+   <node pkg="diagnostic_aggregator" type="aggregator_node" name="diagnostic_aggregator" >
+   <rosparam command="load" file="$(find robbie)/params/diagnostics.yaml" />
+   </node>
+  
+</launch>

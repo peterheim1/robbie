@@ -1,0 +1,651 @@
+<?xml version="1.0"?>
+
+<!-- XML namespaces -->
+<robot xmlns:sensor="http://playerstage.sourceforge.net/gazebo/xmlschema/#sensor"
+       xmlns:controller="http://playerstage.sourceforge.net/gazebo/xmlschema/#controller"
+       xmlns:interface="http://playerstage.sourceforge.net/gazebo/xmlschema/#interface"
+       xmlns:xacro="http://ros.org/wiki/xacro" 
+       
+	   name="robbie">
+
+    <property name="M_PI" value="3.14159"/>
+    <property name="SCALE" value="0.0254"/>
+    <property name="M_SCALE" value="0.001"/>
+	   
+ 	<!-- ============================  A Few Color Macros  ============================ -->
+	
+	<xacro:macro name="black">
+		<material name="black">
+			<color rgba="0.1 0.1 0.1 1.0"/>
+		</material>
+	</xacro:macro>
+	
+	<xacro:macro name="white">
+		<material name="white">
+			<color rgba="1.0 1.0 1.0 1.0"/>
+		</material>
+	</xacro:macro>
+	
+	<xacro:macro name="grey1">
+		<material name="grey1">
+			<color rgba="0.75 0.75 0.75 1.0"/>
+		</material>
+	</xacro:macro>
+	
+	<xacro:macro name="grey2">
+		<material name="grey2">
+			<color rgba="0.6 0.6 0.6 1.0"/>
+		</material>
+	</xacro:macro>
+	
+	<xacro:macro name="grey3">
+		<material name="grey3">
+			<color rgba="0.8 0.8 0.8 1.0"/>
+		</material>
+	</xacro:macro>
+
+	<xacro:macro name="ax12_color">
+		<material name="ax12_color">
+			<color rgba="0.2 0.2 0.2 1.0"/>
+		</material>
+	</xacro:macro>
+	
+	<xacro:macro name="bracket_color">
+		<material name="bracket_color">
+			<color rgba="0.9 0.9 0.9 1.0"/>
+		</material>
+	</xacro:macro>
+
+        <xacro:macro name="cyan1">
+		<material name="cyan1">
+			<color rgba="0 0.9 0.9 1.0"/>
+		</material>
+	</xacro:macro>
+
+	<xacro:macro name="cyan2">	
+		<material name="cyan2">
+	     <color rgba="0 0.7 0.7 1.0"/>
+		</material>
+	</xacro:macro>
+	
+	<xacro:macro name="cyan3">	
+		<material name="cyan3">
+	     <color rgba="0 0.5 0.5 1.0"/>
+		</material>
+	</xacro:macro>
+
+        <xacro:macro name="yellow2">
+		<material name="yellow2">
+			<color rgba="0.8 0.8 0 1.0"/>
+		</material>
+	</xacro:macro>
+	
+	<xacro:macro name="green1">
+		<material name="green1">
+			<color rgba="0 1 0 1.0"/>
+		</material>
+	</xacro:macro>
+	
+	<xacro:macro name="green2">
+		<material name="green2">
+			<color rgba="0.1 0.8 0 1.0"/>
+		</material>
+	</xacro:macro>
+
+        <xacro:macro name="blue1">
+		<material name="blue1">
+			<color rgba="0 0 0.9 1.0"/>
+		</material>
+	</xacro:macro>
+
+        <xacro:macro name="ax12_color">
+		<material name="ax12_color">
+			<color rgba="0.1 0.1 0.1 1.0"/>
+		</material>
+	</xacro:macro>
+	
+ 	<!-- ============================   A Few Shape Macros  ============================ -->
+	
+	<xacro:macro name="ax12" params="name xyz rpy">
+		<link name="${name}">
+			<visual>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+				<geometry>
+					<box size="0.05 0.032 0.038" />
+				</geometry>
+				<xacro:ax12_color />
+             </visual>
+             <collision>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+					<geometry>
+						<box size="0.05 0.032 0.038" />
+					</geometry>
+             </collision>
+             <xacro:default_inertial mass="0.055" />   
+        </link>
+        <xacro:default_gazebo name="${name}" material="Gazebo/FlatBlack" />
+	</xacro:macro>
+	
+	<xacro:macro name="bracket1" params="name xyz rpy">
+		<link name="${name}">
+			<visual>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+				<geometry>
+					<box size="0.05 0.025 0.035" />	
+				</geometry>
+				<xacro:bracket_color />
+             </visual>
+             <collision>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+					<geometry>
+						<box size="0.05 0.025 0.038" />
+					</geometry>
+             </collision>
+             <xacro:default_inertial mass="0.02" />   
+        </link>
+        <xacro:default_gazebo name="${name}" material="Gazebo/WhiteEmissive" />
+	</xacro:macro>
+
+	<xacro:macro name="bracket_f3" params="name xyz rpy">
+		<link name="${name}">
+			<visual>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+				<geometry>
+					<box size="0.025 0.04 0.006" />	
+				</geometry>
+				<xacro:bracket_color />
+             </visual>
+             <collision>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+					<geometry>
+						<box size="0.025 0.04 0.006" />
+					</geometry>
+             </collision>
+             <xacro:default_inertial mass="0.02" />   
+        </link>
+        <xacro:default_gazebo name="${name}" material="Gazebo/WhiteEmissive" />
+	</xacro:macro>
+	
+	<xacro:macro name="bracket2" params="name xyz rpy">
+		<link name="${name}">
+			<visual>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+				<geometry>
+					<box size="0.05 0.115 0.07" />	
+				</geometry>
+				<xacro:bracket_color />
+             </visual>
+             <collision>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+					<geometry>
+					<box size="0.05 0.115 0.07" />	
+					</geometry>
+             </collision>
+             <xacro:default_inertial mass="0.01" />   
+        </link>
+        <xacro:default_gazebo name="${name}" material="Gazebo/WhiteEmissive" />
+	</xacro:macro>
+	
+        <xacro:macro name="bracket3" params="name xyz rpy">
+		<link name="${name}">
+			<visual>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+				<geometry>
+					<box size="0.05 0.032 0.005" />	
+				</geometry>
+				<xacro:bracket_color />
+             </visual>
+             <collision>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+					<geometry>
+					<box size="0.05 0.032 0.005" />	
+					</geometry>
+             </collision>
+             <xacro:default_inertial mass="0.01" />   
+        </link>
+        <xacro:default_gazebo name="${name}" material="Gazebo/WhiteEmissive" />
+	</xacro:macro>	
+
+        <xacro:macro name="h_beam" params="name xyz rpy">
+		<link name="${name}">
+			<visual>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+				<geometry>
+					<box size="0.025 0.11 0.01" />	
+				</geometry>
+				<xacro:bracket_color />
+             </visual>
+             <collision>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+					<geometry>
+					<box size="0.025 0.11 0.01" />	
+					</geometry>
+             </collision>
+             <xacro:default_inertial mass="0.01" />   
+        </link>
+        <xacro:default_gazebo name="${name}" material="Gazebo/WhiteEmissive" />
+	</xacro:macro>	
+
+
+        <xacro:macro name="my_box" params="name lwh xyz rpy mass material *rviz_color">
+		<link name="${name}">
+			<visual>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+				<geometry>
+					<box size="${lwh}" />
+				</geometry>
+			    <xacro:insert_block name="rviz_color" />             
+             </visual>
+             <collision>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+					<geometry>
+						<box size="${lwh}" />
+					</geometry>
+             </collision>
+             <xacro:default_inertial mass="${mass}" />   
+        </link>
+        <xacro:default_gazebo name="${name}" material="${material}" />
+	</xacro:macro>
+
+	<xacro:macro name="my_cylinder" params="name l r xyz rpy mass material *rviz_color">
+		<link name="${name}">
+			<visual>	
+				<origin xyz="${xyz}" rpy="${rpy}" />
+				<geometry>
+					<cylinder length="${l}" radius="${r}" />
+				</geometry>
+            	<xacro:insert_block name="rviz_color" />
+            </visual>
+            <collision>
+				<origin xyz="${xyz}" rpy="${rpy}" />
+					<geometry>
+						<cylinder length="${l}" radius="${r}" />
+					</geometry>
+            </collision>
+            <xacro:default_inertial mass="${mass}" />
+        </link>
+        <xacro:default_gazebo name="${name}" material="${material}" />
+	</xacro:macro>
+
+    <xacro:macro name="default_inertial" params="mass">
+		<inertial>
+			<mass value="${mass}" />
+			<inertia ixx="0.001" ixy="0.0" ixz="0.0"
+                     iyy="0.001" iyz="0.0"
+                     izz="0.001" />                     
+			</inertial>
+    </xacro:macro>
+    
+    <xacro:macro name="default_gazebo" params="name material">
+ 		<gazebo reference="${name}">
+			<material>${material}</material>
+			<selfCollide>false</selfCollide>
+			<turnGravityOff>true</turnGravityOff>
+		</gazebo>
+    </xacro:macro>
+    
+ 	<!-- ============================   Link Definitions  ============================ -->
+
+  <xacro:my_box name="base_link" lwh="0.4 0.34 0.23" xyz="0 0 .17" rpy="0 0 0" mass="0.1" material="Gazebo/FlatBlack">
+	        <xacro:green1 />
+        </xacro:my_box>
+
+ 
+  <xacro:my_cylinder name="r_wheel_link" l="0.04" r="0.075" xyz="0 0 0" rpy="1.57 0 0" mass="0.1" material="Gazebo/FlatBlack">
+		<xacro:black />
+        </xacro:my_cylinder>
+
+  <xacro:my_cylinder name="l_wheel_link" l="0.04" r="0.075" xyz="0 0 0" rpy="1.57 0 0" mass="0.1" material="Gazebo/FlatBlack">
+		<xacro:black />
+        </xacro:my_cylinder>
+
+  <xacro:my_box name="deck_link" lwh="0.4 0.2 0.09" xyz="0 0 0" rpy="0 0 0" mass="0.1" material="Gazebo/FlatBlack">
+	        <xacro:blue1 />
+        </xacro:my_box>
+
+  <xacro:my_box name="arm_shoulder_tilt_link" lwh="0.075 0.2 0.007" xyz="0 0 0" rpy="0 0 0" mass="2.91" material="Gazebo/Grey">
+		<xacro:grey1 />
+	</xacro:my_box>
+
+  <xacro:bracket_f3 name="arm_pan_tilt_bracket" xyz="0 0 0" rpy="0 0 0">
+	</xacro:bracket_f3>
+
+  <xacro:my_box name="elbow_tilt_link" lwh="0.03 0.03 0.05" xyz="0 0 0" rpy="0 0 0" mass="0.055" material="Gazebo/FlatBlack">
+	     <xacro:ax12_color />
+	</xacro:my_box>
+  
+  <xacro:my_box name="arm_tilt_link" lwh="0.03 0.03 0.05" xyz="0 0 0" rpy="0 0 0" mass="0.055" material="Gazebo/FlatBlack">
+	     <xacro:ax12_color />
+	</xacro:my_box>
+
+  <xacro:my_box name="arm_bracket" lwh="0.025 0.05 0.038" xyz="0 0 0.021" rpy="0 0 0" mass="0.05" material="Gazebo/WhiteEmissive">
+			<xacro:green1 />
+		</xacro:my_box>
+
+  <xacro:my_box name="elbow_bracket" lwh="0.05 0.025 0.07" xyz="0 0 0.021" rpy="0 0 0" mass="0.05" material="Gazebo/WhiteEmissive">
+			<xacro:green1 />
+		</xacro:my_box>
+
+
+  <xacro:my_box name="wrist_pan_link" lwh="0.03 0.03 0.05" xyz="0 0 0.021" rpy="0 0 0" mass="0.055" material="Gazebo/FlatBlack">
+	     <xacro:ax12_color />
+	</xacro:my_box>
+
+  <xacro:my_box name="wrist_bracket" lwh="0.025 0.05 0.038" xyz="0 0 0.021" rpy="0 0 0" mass="0.05" material="Gazebo/WhiteEmissive">
+			<xacro:green1 />
+		</xacro:my_box>
+
+  <xacro:my_box name="wrist_tilt_link" lwh="0.03 0.03 0.05" xyz="0 0 0.021" rpy="0 0 0" mass="0.055" material="Gazebo/FlatBlack">
+	     <xacro:ax12_color />
+	</xacro:my_box>
+
+  <xacro:my_box name="gripper_bracket" lwh="0.025 0.05 0.038" xyz="0 0 0.021" rpy="0 0 0" mass="0.05" material="Gazebo/WhiteEmissive">
+			<xacro:green1 />
+		</xacro:my_box>
+
+  <xacro:my_box name="gripper_link" lwh="0.03 0.03 0.05" xyz="0 0 0.021" rpy="0 0 0" mass="0.055" material="Gazebo/FlatBlack">
+	     <xacro:ax12_color />
+	</xacro:my_box>
+
+  <xacro:my_box name="right_finger_link" lwh="0.035 0.005 0.08" xyz="0 0 0.08" rpy="0 0 0" mass="0.1" material="Gazebo/FlatBlack">
+	        <xacro:grey3 />
+        </xacro:my_box>
+  <xacro:my_box name="left_finger_link" lwh="0.005 0.005 0.08" xyz="0 0 0.08" rpy="0 0 0" mass="0.1" material="Gazebo/FlatBlack">
+	        <xacro:grey3 />
+        </xacro:my_box>
+
+
+  <xacro:my_cylinder name="torso_link" l="0.20" r="0.04" xyz="0 0 0" rpy="0 0 0" mass="0.250" material="Gazebo/WhiteEmissive">
+		<xacro:blue1 />
+	</xacro:my_cylinder>
+	
+	<xacro:ax12 name="head_pan_link" xyz="0 0 0" rpy="0 0 0">
+	</xacro:ax12>
+	
+	<xacro:bracket1 name="pan_tilt_bracket" xyz="0 0 0" rpy="0 0 0">
+	</xacro:bracket1>
+	
+	<xacro:ax12 name="head_tilt_link" xyz="0 0 0" rpy="0 1.57 0">
+	</xacro:ax12>
+	
+	<xacro:my_box name="neck_link" lwh="0.028 0.048 0.01" xyz="0 0 0.02" rpy="0 0 0" mass="0.05" material="Gazebo/WhiteEmissive">
+		<xacro:bracket_color />
+	</xacro:my_box>
+	
+	<xacro:my_box name="head_base_link" lwh="0.06 0.08 0.01" xyz="0 0 0" rpy="0 0 0" mass="0.1" material="Gazebo/FlatBlack">
+		<xacro:black />
+	</xacro:my_box>
+	
+	<xacro:my_cylinder name="head_post_link" l="0.01" r="0.005" xyz="0 0 0" rpy="0 0 0" mass="0.1" material="Gazebo/WhiteEmissive">
+		<xacro:grey3 />
+	</xacro:my_cylinder>
+
+    <link name="kinect_link">
+  <visual>
+    <geometry>
+      <box size="0.064 0.121 0.0381" />
+    </geometry>
+    <material name="black">
+         <color rgba="0 0 0.9 1.0"/>
+    </material>
+  </visual>
+  <inertial>
+      <mass value="0.0001" />
+      <origin xyz="0 0 0" />
+      <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+               iyy="0.0001" iyz="0.0" 
+               izz="0.0001" />
+  </inertial>
+  </link>
+
+   <!-- =================== Joint Definitions ==================== -->
+  <joint name="base_link_joint" type="fixed">
+    	<parent link="base_link" />
+    	<child link="deck_link" />
+    	<origin xyz="0 0 .33" rpy="0 0 0" />
+	</joint> 
+
+  <joint name="r_wheel_joint" type="fixed">
+    	<parent link="base_link" />
+    	<child link="r_wheel_link" />
+    	<origin xyz="0.15 0.2 0.075" rpy="0 0 0" />
+	</joint> 
+
+  <joint name="l_wheel_joint" type="fixed">
+    	<parent link="base_link" />
+    	<child link="l_wheel_link" />
+    	<origin xyz="0.15 -0.2 0.075" rpy="0 0 0" />
+	</joint>  
+
+  
+
+  <joint name="arm_pan_tilt_bracket" type="fixed">
+    	<parent link="deck_link" />
+    	<child link="arm_shoulder_tilt_link" />
+    	<origin xyz="0.165 0 .045" rpy="0 0 0" />
+    	<axis xyz="0 0 1" />
+    	<limit lower="-3.1416" upper="3.1416" effort="10" velocity="0" />
+      	<dynamics damping="0.0"/>
+	</joint>
+
+  <joint name="shoulder_pan_joint" type="revolute">
+    	<parent link="arm_shoulder_tilt_link" />
+    	<child link="arm_pan_tilt_bracket" />
+    	<origin xyz=".02 0 .006" rpy="0 0 0" />
+        <axis xyz="0 0 1" />
+    	<limit lower="-1.57" upper="1.57" effort="10" velocity="0" />
+	</joint> 
+
+ <joint name="arm_tilt1_joint" type="fixed">
+    	<parent link="arm_pan_tilt_bracket" />
+    	<child link="arm_tilt_link" />
+    	<origin xyz="0 0 0.02" rpy="0 0 0" />
+    	<axis xyz="0 0 0" />
+    	<limit lower="-1.57" upper="1.57" effort="10" velocity="0" />
+      	<dynamics damping="0.0"/>
+	</joint>
+
+  <joint name="arm_tilt_joint" type="revolute">
+    	<parent link="arm_tilt_link" />
+    	<child link="arm_bracket" />
+    	<origin xyz="0 0 0.0" rpy="0 0 0" />
+    	<axis xyz="0 1 0" />
+    	<limit lower="-1.57" upper="1.57" effort="10" velocity="0" />
+      	<dynamics damping="0.0"/>
+	</joint>
+
+   <joint name="arm_bracket" type="fixed">
+    	<parent link="arm_bracket" />
+    	<child link="elbow_tilt_link" />
+    	<origin xyz="0 0 0.05" rpy="0 0 0" />
+	</joint> 
+
+
+  <joint name="elbow_tilt_joint" type="revolute">
+    	<parent link="elbow_tilt_link" />
+    	<child link="elbow_bracket" />
+    	<origin xyz="0 0 0.01" rpy="0 0 0" />
+    	<axis xyz="0 1 0" />
+    	<limit lower="-1.57" upper="1.57" effort="10" velocity="0" />
+      	<dynamics damping="0.0"/>
+	</joint>
+
+  <joint name="wrist_pan_joint" type="revolute">
+    	<parent link="elbow_bracket" />
+    	<child link="wrist_pan_link" />
+    	<origin xyz="0 0 0.04" rpy="0 0 0" />
+        <axis xyz="1 0 0" />
+    	<limit lower="-3.1416" upper="3.1416" effort="10" velocity="0" />
+      	<dynamics damping="0.0"/>
+	</joint> 
+
+  <joint name="wrist_joint" type="fixed">
+    	<parent link="wrist_pan_link" />
+    	<child link="wrist_bracket" />
+    	<origin xyz="0 0 0.018" rpy="0 0 0" />
+	</joint>
+
+   <joint name="wrist_tilt_joint" type="revolute">
+    	<parent link="wrist_bracket" />
+    	<child link="wrist_tilt_link" />
+    	<origin xyz="0 0 0.02" rpy="0 0 0" />
+    	<axis xyz="0 1 0" />
+    	<limit lower="-1.57" upper="1.57" effort="10" velocity="0" />
+      	<dynamics damping="0.0"/>
+	</joint>
+
+   <joint name="gripper_bracket" type="fixed">
+    	<parent link="wrist_tilt_link" />
+    	<child link="gripper_bracket" />
+    	<origin xyz="0 0 0.038" rpy="0 0 0" />
+	</joint> 
+
+   <joint name="gripper_link" type="fixed">
+    	<parent link="gripper_bracket" />
+    	<child link="gripper_link" />
+    	<origin xyz="0 0 0.02" rpy="0 0 0" />
+    	<axis xyz="0 1 0" />
+    	<limit lower="-1.57" upper="1.57" effort="10" velocity="0" />
+      	<dynamics damping="0.0"/>
+	</joint>
+
+   <joint name="palm_link" type="fixed">
+    	<parent link="gripper_link" />
+    	<child link="left_finger_link" />
+    	<origin xyz="0 0.0 0.01" rpy="-0.4 0 0" />
+	</joint> 
+
+  <joint name="gripper_joint" type="revolute">
+    	<parent link="gripper_link" />
+    	<child link="right_finger_link" />
+    	<origin xyz="0 -0.01 0.01" rpy="0.6 0 0" />
+    	<axis xyz="1 0 0" />
+    	<limit lower="-0.98" upper="0.15" effort="10" velocity="0" />
+      	<dynamics damping="0.0"/>
+	</joint>
+
+      <joint name="torso_joint" type="fixed">
+    	<parent link="deck_link" />
+    	<child link="torso_link" />
+    	<origin xyz="-0.13 0 0.15" rpy="0 0 0" />
+	</joint>
+  
+	<joint name="head_pan_servo" type="fixed">
+    	<parent link="torso_link" />
+    	<child link="head_pan_link" />
+    	<origin xyz="0 0 0.119" rpy="0 0 0" />
+	</joint>
+	
+	<joint name="pan_tilt_bracket" type="fixed">
+    	<parent link="head_pan_link" />
+    	<child link="pan_tilt_bracket" />
+    	<origin xyz="0.01 0 0.04" rpy="0 0 0" />
+	</joint>
+	
+	<joint name="head_pan_joint" type="revolute">
+    	<parent link="pan_tilt_bracket" />
+    	<child link="head_tilt_link" />
+    	<origin xyz="0 0 0.0175" rpy="0 0 0" />
+    	<axis xyz="0 0 1" />
+    	<limit lower="-3.1416" upper="3.1416" effort="10" velocity="0" />
+      	<dynamics damping="0.0"/>
+	</joint>
+  	
+ 	<joint name="head_tilt_joint" type="revolute">
+    	<parent link="head_tilt_link" />
+    	<child link="neck_link" />
+    	<origin xyz="0 0 0.01" rpy="0 0 0" />
+    	<axis xyz="0 1 0" />
+    	<limit lower="-1.57" upper="1.57" effort="10" velocity="0" />
+      	<dynamics damping="0.0"/>
+	</joint>
+  	
+ 	<joint name="neck_joint" type="fixed">
+    	<parent link="neck_link" />
+    	<child link="head_base_link" />
+    	<origin xyz="0 0 0.03" rpy="0 0 0" />
+	</joint>
+	
+	<joint name="head_base_joint" type="fixed">
+    	<parent link="head_base_link" />
+    	<child link="head_post_link" />
+    	<origin xyz="0 0 0.0" rpy="0 0 0" />
+	</joint>
+	
+	<joint name="head_joint" type="fixed">
+    	<parent link="head_post_link" />
+    	<child link="kinect_link" />
+    	<origin xyz="0 0 0.0235" rpy="0 0 0" />
+	</joint>
+
+
+ <joint name="kinect_depth_joint" type="fixed">
+      <origin xyz="0 0.018 0" rpy="0 0 0" />
+      <parent link="kinect_link" />
+      <child link="kinect_depth_frame" />
+    </joint>
+    
+    <link name="kinect_depth_frame">
+      <inertial>
+        <mass value="0.0001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+                 iyy="0.0001" iyz="0.0"
+                 izz="0.0001" />
+      </inertial>
+    </link>
+    
+    <joint name="kinect_depth_optical_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
+      <parent link="kinect_depth_frame" />
+      <child link="kinect_depth_optical_frame" />
+    </joint>
+    
+    <link name="kinect_depth_optical_frame">
+      <inertial>
+        <mass value="0.0001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+                 iyy="0.0001" iyz="0.0"
+                 izz="0.0001" />
+      </inertial>
+    </link>
+    
+    
+    <joint name="kinect_rgb_joint" type="fixed">
+      <origin xyz="0 -0.005 0" rpy="0 0 0" />
+      <parent link="kinect_link" />
+      <child link="kinect_rgb_frame" />
+    </joint>
+    
+    <link name="kinect_rgb_frame">
+      <inertial>
+        <mass value="0.0001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+                 iyy="0.0001" iyz="0.0"
+                 izz="0.0001" />
+      </inertial>
+    </link>
+    
+
+    <joint name="kinect_rgb_optical_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
+      <parent link="kinect_rgb_frame" />
+      <child link="kinect_rgb_optical_frame" />
+    </joint>
+    
+    <link name="kinect_rgb_optical_frame">
+      <inertial>
+        <mass value="0.0001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+                 iyy="0.0001" iyz="0.0"
+                 izz="0.0001" />
+      </inertial>
+    </link>
+
+
+<gazebo reference="robbie">
+  	</gazebo>
+</robot>

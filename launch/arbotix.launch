@@ -1,0 +1,110 @@
+<launch>
+        
+       <!-- Start Power monitering 
+   <node name="Power" pkg="m4atx" type="m4atx"/>
+-->
+       <!-- Read in the URDF model of our robot. -->
+    <param name="robot_description" command="$(find xacro)/xacro.py '$(find robbie)/urdf/robbie_long.xacro'" />
+    <param name="/use_sim_time" value="False" />
+
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+
+  
+<!---->
+    <node name="arbotix" pkg="arbotix_python" type="driver.py">
+       <rosparam file="$(find robbie)/params/arbotix.yaml" command="load" />
+    </node>
+
+   <node name="serializer" pkg="serializer" type="serializer_node.py" output="screen">
+      <rosparam file="$(find robbie)/params/serializer.yaml" command="load" />
+   </node>
+
+    <!-- start the kinect and laser  -->
+   <include file="$(find robbie)/launch/openni_electric.launch"/>
+
+   <!-- Monitoring and Diagnostics -->
+  
+
+   <node name="cpu_monitor" pkg="pr2_computer_monitor" type="cpu_monitor.py"
+        args="--diag-hostname=robot" >
+    <param name="check_ipmi_tool" value="false" type="bool" />
+    <param name="enforce_clock_speed" value="false" type="bool" />
+    <param name="num_cores" value="-1" type="int" />
+   </node>
+<!--
+   <node pkg="robbie" type="laptop_battery.py" name="laptop_battery" />
+-->
+   <node pkg="diagnostic_aggregator" type="aggregator_node" name="diagnostic_aggregator" >
+    <rosparam command="load" file="$(find robbie)/params/diagnostics.yaml" />
+   </node>
+
+     <!-- Arm action server  
+    <node name="ax12_to_pr2_msg" pkg="robbie" type="ax12_to_pr2_state_msgs.py" output="screen"/>
+    <node name="robbie_arm_action" pkg="robbie" type="robbie_arm_action_ik.py" output="screen"/>
+-->
+     <!-- Move_base action server 
+    <node name="robbie_move_base_action" pkg="robbie" type="robbie_base_action.py" output="screen"/>
+-->
+     <!-- Head action server  
+    <node name="robbie_head_action" pkg="robbie" type="robbie_head_action.py" output="screen"/>
+
+  <node name="arm_kinematics" pkg="arm_kinematics" type="arm_kinematics" output="screen">
+        <param name="root_name" value="base_link" />
+        <param name="tip_name" value="gripper_link" />
+    </node>
+-->
+
+<!--
+  <node name="head_traj_controller" pkg="arbotix_controllers" type="traj_controller.py" output="screen">
+	 <rosparam param="joints">[head_pan_joint, head_tilt_joint]</rosparam>
+  </node>
+
+  <node name="head_track_traj" pkg="pi_actions" type="head_track_traj.py">
+	</node>
+ 
+
+   <node name="arm_controller" pkg="arbotix_controllers" type="traj_controller.py" output="screen">
+      <rosparam param="joints">[shoulder_pan_joint, arm_tilt_joint, elbow_tilt_joint, wrist_pan_joint, wrist_tilt_joint]</rosparam>
+  </node>
+-->
+  <node name="gripper_controller" pkg="arbotix_controllers" type="one_side_gripper_controller.py" output="screen">
+      <param name="invert" value="false"/>
+      <param name="pad_width" value="0.0254"/>
+  </node>
+<!--
+  <node name="head_joint_controller" pkg="arbotix_controllers" type="joint_controller.py">
+    <rosparam param="joints">[head_pan_joint, head_tilt_joint]</rosparam>
+</node>
+-->
+  <!-- Run the map server -->
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find robbie)/maps/map.yaml"/>
+  
+  <!--- Run AMCL 
+   <include file="$(find robbie)/launch/amcl_robbie.launch" />
+-->
+<!---->
+  <include file="$(find amcl)/examples/amcl_diff.launch" />
+  
+  
+  <!-- Run Fake Localization -->
+  <node pkg="fake_localization" type="fake_localization" name="fake_localization" output="screen" />
+    
+  <!-- For fake localization we need static transforms between /odom and /map and /map and /world 
+   <node pkg="tf" type="static_transform_publisher" name="odom_map_broadcaster" args="0 0 0 0 0 0 /odom /map 100" />
+   <node pkg="tf" type="static_transform_publisher" name="world_map_broadcaster" args="0 0 0 0 0 0 /map /world 100" /> 
+  -->
+  
+<node pkg="tf" type="static_transform_publisher" name="odom_map_broadcaster" args="0 0 0 0 0 0 /odom /map 100" />
+  
+  <!-- move base files -->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find robbie)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find robbie)/params/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find robbie)/params/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find robbie)/params/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find robbie)/params/base_local_planner_params.yaml" command="load" />
+  </node>
+
+       
+   
+</launch>

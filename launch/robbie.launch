@@ -1,0 +1,59 @@
+<launch>
+        
+      
+
+    <!-- start the kinect and laser  -->
+     <include file="$(find ardros)/launch/kinect_laser.launch"/>
+
+    <!-- start the robot base controller -->
+     <include file="$(find robbie)/launch/robbie_base.launch"/>
+    <!--<include file="$(find ros_arduino_python)/launch/arduino.launch"/>-->
+
+
+    <!-- start the dynamixel servos --> 
+     <include file="$(find robbie)/launch/dynamixels.launch"/>
+
+    
+    <!-- start action servers   -->
+     <include file="$(find robbie)/launch/action.launch"/>
+
+    <!-- start imu
+     <include file="$(find omni_bot)/launch/imu.launch" />
+-->
+
+   <!-- Start rosbridge and voice-->
+
+     <include file="$(find robbie)/launch/1_stage.launch"/>
+
+  <!-- Start arm control-->
+
+     <include file="$(find robbie)/launch/arm.launch"/>
+ 
+ <!-- Start move base-->
+     <include file="$(find robbie)/launch/move_base.launch"/>
+
+<!-- launch Face tracker-->
+  <include file="$(find robbie)/launch/face_tracker_uvc_cam.launch"/>
+
+   <!-- launch head tracking-->
+   <include file="$(find robbie)/launch/tf_head_tracker.launch"/>
+
+  <node name="robbie_chat" pkg="robbie" type="./robbie_chat" />
+
+
+
+
+    
+   <!-- Monitoring and Diagnostics 
+ 
+   <node pkg="diagnostic_aggregator" type="aggregator_node" name="diagnostic_aggregator" >
+   <rosparam command="load" file="$(find robbie)/params/diagnostics.yaml" />
+   </node>
+
+  -->
+
+
+     
+       
+   
+</launch>

@@ -1,0 +1,113 @@
+#! /usr/bin/env python
+
+# Copyright (c) 2010, Arizona Robotics Research Group, University of Arizona
+# All rights reserved.
+# 
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+# 
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above copyright
+#       notice, this list of conditions and the following disclaimer in the
+#       documentation and/or other materials provided with the distribution.
+#     * Neither the name of the Willow Garage, Inc. nor the names of its
+#       contributors may be used to endorse or promote products derived from
+#       this software without specific prior written permission.
+# 
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 'AS IS'
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+# ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+# LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+# INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+# CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+# ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+
+# Author: Anh Tran
+
+PKG = 'robbie'
+NAME = 'move_arm_demo'
+
+import roslib; roslib.load_manifest(PKG)
+import rospy
+
+from actionlib import SimpleActionClient
+from geometry_msgs.msg import PointStamped
+from robbie.msg import *
+
+
+def move_arm(j1, j2, j3, j4):
+
+    # Creates a goal to send to the action server.
+    goal = RobbieArmGoal()
+    goal.target_joints = [j1, j2, j3, j4]
+
+    # Sends the goal to the action server.
+    client.send_goal(goal)
+
+    # Waits for the server to finish performing the action.
+    client.wait_for_result()
+
+    # Return result
+    return client.get_result()
+
+
+def reach_at(frame_id, x, y, z):
+
+    # Creates a goal to send to the action server.
+    goal = RobbieArmGoal()
+    goal.target_point = PointStamped()
+    goal.target_point.header.frame_id = frame_id
+    goal.target_point.point.x = x
+    goal.target_point.point.y = y
+    goal.target_point.point.z = z
+
+    # Sends the goal to the action server.
+    client.send_goal(goal)
+
+    # Waits for the server to finish performing the action.
+    client.wait_for_result()
+
+    # Return result
+    return client.get_result()
+
+
+if __name__ == '__main__':
+    try:
+        rospy.init_node(NAME, anonymous=True)
+        client = SimpleActionClient("robbie_arm_action", RobbieArmAction)
+
+        print "Waiting for Server..."
+        client.wait_for_server()
+
+        print "Straighten arm"
+        result = move_arm(0.0, 0.0, 0.0, 0.0, 0.0 );
+        if result.success == False:
+            print "Action failed"
+        else:
+            print "Result: [" + str(result.arm_position[0]) + ", " + str(result.arm_position[1]) + \
+                str(result.arm_position[2]) + ", " + str(result.arm_position[3]) + ", " + str(result.arm_position[4]) + "]"
+        
+        print "Reach point [0.2, 0.124256, -0.192411, 0.0242112 + 0.145] from /deck_link"
+        result = reach_at("/deck_link", 0.124256, -0.192411, 0.0242112 + 0.145)
+        if result.success == False:
+            print "Action failed"
+        else:
+            print "Result: [" + str(result.arm_position[0]) + ", " + str(result.arm_position[1]) + \
+                str(result.arm_position[2]) + ", " + str(result.arm_position[3]) + ", " + str(result.arm_position[4]) + "]"
+
+        print "Reset arm to cobra"
+        result = move_arm(0.0, 1.572222, -1.572222, 0.0, -1.57222);
+        if result.success == False:
+            print "Action failed"
+        else:
+            print "Result: [" + str(result.arm_position[0]) + ", " + str(result.arm_position[1]) + \
+                str(result.arm_position[2]) + ", " + str(result.arm_position[3]) + ", " + str(result.arm_position[4]) + "]"
+    
+    except rospy.ROSInterruptException:
+        pass
+

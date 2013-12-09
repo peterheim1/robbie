@@ -1,0 +1,37 @@
+<launch>
+   <!-- sets robot name and type for android-->
+        <param name="robot/name" value="robbie"/>
+        <param name="robot/type" value="pr2"/>
+
+   <!-- Load the URDF/Xacro model of our robot -->
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find omni_bot)/urdf/omni_turtle_arm.xacro'" />
+
+    <!-- Publish the robot state -->
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+    	<param name="publish_frequency" value="20.0"/>
+        </node>
+   <!-- omni_bot launch with out imu do not use omni_driver no tf-->
+        <node name="arduino" pkg="omni_bot" type="arduino2.py" output="screen">
+        <rosparam file="$(find omni_bot)/params/omni_bot1.yaml" command="load" />
+        </node>
+
+   <!-- Run the map server -->
+        <node name="map_server" pkg="map_server" type="map_server" args="$(find robbie)/maps/feb5_map.yaml"/>
+  
+  
+  <!--- Run AMCL -->
+        <include file="$(find robbie)/launch/amcl_robbie.launch" />
+  
+
+ 
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <rosparam file="$(find robbie)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find robbie)/params/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find robbie)/params/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find robbie)/params/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find robbie)/params/base_local_planner_params.yaml" command="load" />
+    </node>
+
+ 
+ 
+</launch>

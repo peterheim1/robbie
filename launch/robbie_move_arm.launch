@@ -1,0 +1,6 @@
+<launch>
+
+<!-- main launch file for arm navigation-->
+    <include file="$(find turtlebot_arm_arm_navigation)/launch/turtlebot_arm_arm_navigation.launch" />
+
+</launch>

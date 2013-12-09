@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "run face recognition server";
+cd /home/robbie/groovy_workspace/procrob_functional/face_recognition/bin
+./Fserver
+

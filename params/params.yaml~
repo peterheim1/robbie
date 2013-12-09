@@ -1,0 +1,6 @@
+
+
+
+arm_controller: [right_arm_tilt_joint, right_arm_lift_joint, right_arm_rotate_joint, right_arm_elbow_joint, right_arm_wrist_tilt_joint]
+
+
