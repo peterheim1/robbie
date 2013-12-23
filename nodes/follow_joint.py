@@ -63,7 +63,7 @@ class FollowController():
         #self.joints = rospy.get_param('~' + self.ns + '/arm_joints')
         #self.joints = [right_arm_tilt, right_arm_lift, right_arm_rotate, right_arm_elbow, right_arm_wrist_tilt]
         namespace = rospy.get_namespace()
-        self.joints = rospy.get_param('right_arm/arm_controller', '')
+        self.joints = rospy.get_param('right_arm/joints', '')
         #self.joints = rospy.get_param('~controllers/'+name+'/joints')
         rospy.loginfo('Configured for ' + str(len(self.joints)) + 'joints')
         #rospy.logerr(self.joints)

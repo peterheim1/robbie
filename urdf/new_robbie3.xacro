@@ -355,7 +355,7 @@
 			<xacro:black />
 		</xacro:my_cylinder>
 
-  <xacro:my_box name="imu_link1" lwh="0.045 0.065 0.01" xyz="0 0 .15" rpy="0 0 0" mass="0.1" material="Gazebo/FlatBlack">
+  <xacro:my_box name="imu_link" lwh="0.045 0.065 0.01" xyz="0 0 .15" rpy="0 0 0" mass="0.1" material="Gazebo/FlatBlack">
 	        <xacro:black />
         </xacro:my_box>
 
@@ -560,7 +560,7 @@
 
 <joint name="imu_joint" type="fixed">
     	<parent link="base_link" />
-    	<child link="imu_link1" />
+    	<child link="imu_link" />
     	<origin xyz="-0. 0 0.25" rpy="0 0 0" />
 	</joint>
   

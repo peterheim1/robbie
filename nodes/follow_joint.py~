@@ -67,8 +67,10 @@ class FollowController():
         #self.joints = rospy.get_param('~controllers/'+name+'/joints')
         rospy.loginfo('Configured for ' + str(len(self.joints)) + 'joints')
         #rospy.logerr(self.joints)
-        self.joint_subs = [JointSubscriber(name + '_controller') for name in self.joints]
-        self.joint_pubs = [JointCommander(name + '_controller') for name in self.joints]
+        #self.joint_subs = [JointSubscriber(name + '_controller') for name in self.joints]
+        #self.joint_pubs = [JointCommander(name + '_controller') for name in self.joints]
+        self.joint_subs = [JointSubscriber(name) for name in self.joints]
+        self.joint_pubs = [JointCommander(name) for name in self.joints]
            
         self.joints_names = []
            

@@ -26,23 +26,19 @@ void DoWork()
   Serial.print(90 + LeftPower, 3);
   Serial.print("\t");
   Serial.print("\n");
-  /*
-  Serial.print("b"); // o indicates battery message
+  
+  Serial.print("m"); // o indicates battery message
   Serial.print("\t");
   Serial.print(SpeedRight);
   Serial.print("\t");
-  Serial.print(RightPower);
-  Serial.print("\t");
-  Serial.print(SpeedRight_req);
+  Serial.print("\n");
+  
+  Serial.print("n"); // o indicates battery message
   Serial.print("\t");
   Serial.print(SpeedLeft);
   Serial.print("\t");
-  Serial.print(LeftPower);
-  Serial.print("\t");
-  Serial.print(SpeedLeft_req);
-  Serial.print("\t");
   Serial.print("\n");
-  */
+ 
   
   Serial.print("b"); // o indicates battery message
   Serial.print("\t");
@@ -50,12 +46,7 @@ void DoWork()
   Serial.print("\t");
   Serial.print(Amps);
   Serial.print("\t");
-  Serial.print(FrontRightDistance);
-  Serial.print("\t");
-  Serial.print(FrontLeftDistance);
-  Serial.print("\t");
-  Serial.print(SpeedLeft_req);
-  Serial.print("\t");
   Serial.print("\n");
+  
  
 }

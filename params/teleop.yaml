@@ -6,12 +6,12 @@ axis_pan: 3
 axis_tilt: 4
 
 # base velocities
-max_vw: 0.25
+max_vw: 0.5
 max_vx: 0.25
 max_vy: 0.25
-max_vw_run: 0.3
-max_vx_run: 0.3
-max_vy_run: 0.3
+max_vw_run: 0.8
+max_vx_run: 0.5
+max_vy_run: 0.5
 
 # Head 
 max_pan: 2.7

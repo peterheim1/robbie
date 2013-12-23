@@ -73,8 +73,8 @@ Messenger _Messenger = Messenger();
 
 bool _IsInitialized = false;
 //arduino pid*******************************************************************************************************************PID  PID
-PID Front_right(&SpeedRight, &RightPower, &SpeedRight_req, 0.55,0.2,0.00, DIRECT);
-PID Front_left(&SpeedLeft, &LeftPower, &SpeedLeft_req, 0.55,0.2,0.00, DIRECT);
+PID Front_right(&SpeedRight, &RightPower, &SpeedRight_req,0.2,0.5,0.01, DIRECT);
+PID Front_left(&SpeedLeft, &LeftPower, &SpeedLeft_req, 0.21,0.5,0.01, DIRECT);
 
 
 /*

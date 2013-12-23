@@ -70,6 +70,12 @@ class Arduino(object):
                         if (lineParts[0] == 'b'):
                                 self._BroadcastBatteryInfo(lineParts)
                                 return
+                        if (lineParts[0] == 'm'):
+                                self._Broadcastright(lineParts)
+                                return
+                        if (lineParts[0] == 'n'):
+                                self._Broadcastleft(lineParts)
+                                return
                         if (lineParts[0] == "InitializeDriveGeometry"):
                                 # controller requesting initialization
                                 self._InitializeDriveGeometry()
@@ -150,21 +156,65 @@ class Arduino(object):
 		
 		try:
 			batteryVoltage = float(lineParts[1])
-                        batteryCurrent = float(lineParts[2])
-			batteryState = BatteryState()
-			batteryState.voltage = batteryVoltage
-                        batteryState.current = batteryCurrent
+                        #batteryCurrent = float(lineParts[2])
+			#batteryState = Float32()
+			#batteryState.voltage = batteryVoltage
+                        #batteryState.current = batteryCurrent
 			
 			
 
-			self._BatteryStatePublisher.publish(batteryState)
+			self._BatteryStatePublisher.publish(batteryVoltage)
 			
-			rospy.loginfo(batteryState)
+			rospy.loginfo(batteryVoltage)
 		
 		except:
-			rospy.logwarn("Unexpected error battery:" + str(sys.exc_info()[0]))
+                        pass
+			#rospy.logwarn("Unexpected error battery:" + str(sys.exc_info()[0]))
 
-	def _WriteSerial(self, message):
+	def _Broadcastleft(self, lineParts):
+		partsCount = len(lineParts)
+		#rospy.logwarn(partsCount)
+
+		if (partsCount  < 1):
+			pass
+		
+		try:
+			V_left = float(lineParts[1])
+                        
+			
+			
+
+			self._V_leftPublisher.publish(V_left)
+			
+			rospy.loginfo(V_left)
+		
+		except:
+                        pass
+			#rospy.logwarn("Unexpected error V_left:" + str(sys.exc_info()[0]))
+
+        def _Broadcastright(self, lineParts):
+		partsCount = len(lineParts)
+		#rospy.logwarn(partsCount)
+
+		if (partsCount  < 1):
+			pass
+		
+		try:
+			V_right = float(lineParts[1])
+                        
+			
+			
+
+			self._V_rightPublisher.publish(V_right)
+			
+			rospy.loginfo(V_right)
+		
+		except:
+                        pass
+			#rospy.logwarn("Unexpected error V_right:" + str(sys.exc_info()[0]))
+
+
+        def _WriteSerial(self, message):
 		self._SerialPublisher.publish(String(str(self._Counter) + ", out: " + message))
 		self._SerialDataGateway.Write(message)
 
@@ -193,7 +243,9 @@ class Arduino(object):
 
 		self._VoltageLowlimit = rospy.get_param("~batteryStateParams/voltageLowlimit", "12.0")
 		self._VoltageLowLowlimit = rospy.get_param("~batteryStateParams/voltageLowLowlimit", "11.7")
-		self._BatteryStatePublisher = rospy.Publisher("battery", BatteryState)
+		self._BatteryStatePublisher = rospy.Publisher("battery", Float32)
+                self._V_leftPublisher = rospy.Publisher("v_left", Float32)
+                self._V_rightPublisher = rospy.Publisher("v_right", Float32)
 		
 		#self._SetDriveGainsService = rospy.Service('setDriveControlGains', SetDriveControlGains, self._HandleSetDriveGains)
 
@@ -218,17 +270,17 @@ class Arduino(object):
 
                 if x == 0:
                     # Turn in place
-                    right = th * 0.435 / 2.0
+                    right = th * 0.43 / 2.0
                     left = -right
                 elif th == 0:
                     # Pure forward/backward motion
                     left = right = x
                 else:
                     # Rotation about a point in space
-                    left = x - th * 0.435 / 2.0
-                    right = x + th * 0.435 / 2.0
+                    left = x - th * 0.43 / 2.0
+                    right = x + th * 0.43 / 2.0
             
-                v_des_left = int(left * 15915 / 30)
+                v_des_left = int(left * 15315 / 30)# reduced tisck per meter by 200
                 v_des_right = int(right * 15915 / 30)#ticks_per_meter
 		rospy.logwarn("Handling twist command: " + str(v_des_left) + "," + str(v_des_right))
 

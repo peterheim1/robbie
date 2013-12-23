@@ -36,37 +36,14 @@ client.wait_for_server()
 action_goal = FollowJointTrajectoryActionGoal()
 action_goal.goal_id.id = "wave"
 action_goal.goal.trajectory.header.stamp = rospy.Time.now() + rospy.Duration(0.2)
-action_goal.goal.trajectory.joint_names = ['right_arm_tilt_joint', 'right_arm_lift_joint', 'right_arm_rotate_joint', 'right_arm_elbow_joint', 'right_arm_wrist_tilt_joint']
+action_goal.goal.trajectory.joint_names = ['right_arm_tilt_joint_controller', 'right_arm_lift_joint_controller', 'right_arm_rotate_joint_controller', 'right_arm_elbow_joint_controller', 'right_arm_wrist_tilt_joint_controller']
 
 action_goal.goal.trajectory.points.append(
-    JointTrajectoryPoint(positions = [-1.0, 1, .33, 0.55, -1.06], 
+    JointTrajectoryPoint(positions = [0.1, 0.2, 1.7, 0.5, -1.06], 
                          velocities = [0, 0, 0, 0, 0],
                          time_from_start = rospy.Duration(0.0 * traj_speed)))
 
-action_goal.goal.trajectory.points.append(
-    JointTrajectoryPoint(positions = [-1.0, 1, .33, 0.55, 1.06], 
-                         velocities = [0, 0, 0, 0, 0],
-                         time_from_start = rospy.Duration(2.0 * traj_speed)))
 
-action_goal.goal.trajectory.points.append(
-    JointTrajectoryPoint(positions = [-1.0, 1, .33, 0.55, -1.06], 
-                         velocities = [0, 0, 0, 0, 0],
-                         time_from_start = rospy.Duration(3.0 * traj_speed)))
-
-action_goal.goal.trajectory.points.append(
-    JointTrajectoryPoint(positions = [-1.0, 1, .33, 0.55, 1.06], 
-                         velocities = [0, 0, 0, 0, 0],
-                         time_from_start = rospy.Duration(3.5 * traj_speed)))
-
-action_goal.goal.trajectory.points.append(
-    JointTrajectoryPoint(positions = [-1.0, 1, .33, 0.55, -1.06], 
-                         velocities = [0, 0, 0, 0, 0],
-                         time_from_start = rospy.Duration(4.0 * traj_speed)))
-
-action_goal.goal.trajectory.points.append(
-    JointTrajectoryPoint(positions = [0, -1.4, 0, 0, 0], 
-                         velocities = [0, 0, 0, 0, 0],
-                         time_from_start = rospy.Duration(7.0 * traj_speed)))
 
 client.send_goal(action_goal.goal)
 client.wait_for_result()

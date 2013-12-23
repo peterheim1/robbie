@@ -2,9 +2,9 @@
         
       
 
-    <!-- start the kinect and laser  
+    <!-- start the kinect and laser  -->
      <include file="$(find ardros)/launch/kinect_laser.launch"/>
--->
+
     <!-- start the robot base controller -->
      <include file="$(find robbie)/launch/robbie_base.launch"/>
     <!--<include file="$(find ros_arduino_python)/launch/arduino.launch"/>-->
@@ -35,9 +35,9 @@
 <!-- launch Face tracker-->
   <include file="$(find robbie)/launch/face_tracker_uvc_cam.launch"/>
 
-   <!-- launch head tracking-->
+   <!-- launch head tracking
    <include file="$(find robbie)/launch/tf_head_tracker.launch"/>
-
+-->
   <node name="robbie_chat" pkg="robbie" type="./robbie_chat" />
 
 

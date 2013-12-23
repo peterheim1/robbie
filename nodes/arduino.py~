@@ -150,19 +150,20 @@ class Arduino(object):
 		
 		try:
 			batteryVoltage = float(lineParts[1])
-                        batteryCurrent = float(lineParts[2])
-			batteryState = BatteryState()
-			batteryState.voltage = batteryVoltage
-                        batteryState.current = batteryCurrent
+                        #batteryCurrent = float(lineParts[2])
+			#batteryState = Float32()
+			#batteryState.voltage = batteryVoltage
+                        #batteryState.current = batteryCurrent
 			
 			
 
-			self._BatteryStatePublisher.publish(batteryState)
+			self._BatteryStatePublisher.publish(batteryVoltage)
 			
-			rospy.loginfo(batteryState)
+			rospy.loginfo(batteryVoltage)
 		
 		except:
-			rospy.logwarn("Unexpected error battery:" + str(sys.exc_info()[0]))
+                        pass
+			#rospy.logwarn("Unexpected error battery:" + str(sys.exc_info()[0]))
 
 	def _WriteSerial(self, message):
 		self._SerialPublisher.publish(String(str(self._Counter) + ", out: " + message))
@@ -193,9 +194,9 @@ class Arduino(object):
 
 		self._VoltageLowlimit = rospy.get_param("~batteryStateParams/voltageLowlimit", "12.0")
 		self._VoltageLowLowlimit = rospy.get_param("~batteryStateParams/voltageLowLowlimit", "11.7")
-		self._BatteryStatePublisher = rospy.Publisher("battery", BatteryState)
+		self._BatteryStatePublisher = rospy.Publisher("battery", Float32)
 		
-		self._SetDriveGainsService = rospy.Service('setDriveControlGains', SetDriveControlGains, self._HandleSetDriveGains)
+		#self._SetDriveGainsService = rospy.Service('setDriveControlGains', SetDriveControlGains, self._HandleSetDriveGains)
 
 		self._State = Arduino.CONTROLLER_RESET_REQUIRED
 
@@ -218,17 +219,17 @@ class Arduino(object):
 
                 if x == 0:
                     # Turn in place
-                    right = th * 0.435 / 2.0
+                    right = th * 0.43 / 2.0
                     left = -right
                 elif th == 0:
                     # Pure forward/backward motion
                     left = right = x
                 else:
                     # Rotation about a point in space
-                    left = x - th * 0.435 / 2.0
-                    right = x + th * 0.435 / 2.0
+                    left = x - th * 0.43 / 2.0
+                    right = x + th * 0.43 / 2.0
             
-                v_des_left = int(left * 15915 / 30)
+                v_des_left = int(left * 15315 / 30)# reduced tisck per meter by 200
                 v_des_right = int(right * 15915 / 30)#ticks_per_meter
 		rospy.logwarn("Handling twist command: " + str(v_des_left) + "," + str(v_des_right))
 

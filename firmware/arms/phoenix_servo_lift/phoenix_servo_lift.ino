@@ -39,7 +39,7 @@ int FrameRate = 30;
 //volatile boolean haveData = false;
 volatile long Target = 550;
 
-PID Right_tilt(&Encoder_Position, &Right_pwm, &target_pos, 5,1,0, DIRECT);
+PID Right_tilt(&Encoder_Position, &Right_pwm, &target_pos, 3,0.1,0.001, DIRECT);
 /*
 ##############################################################################
 ##############################################################################
@@ -126,7 +126,7 @@ void requestEvent()
 // sends data back to master
 void sendSensor (const byte which)
   {
-  int val = analogRead (which);
+  int val = getFeedback(which);//analogRead (which);
   byte buf [2];
   
     buf [0] = val >> 8;
@@ -165,5 +165,39 @@ void Right_drive()
     analogWrite(Right_tilt_pwm, right_power);
   }
 }
+
+///feedback
+int getFeedback(int a){
+int j;
+int mean;
+int result;
+int test;
+int reading[20];
+boolean done;
+
+for (j=0; j<20; j++){
+reading[j] = analogRead(a); //get raw data from servo potentiometer
+delay(3);
+} // sort the readings low to high in array
+done = false; // clear sorting flag
+while(done != true){ // simple swap sort, sorts numbers from lowest to highest
+done = true;
+for (j=0; j<20; j++){
+if (reading[j] > reading[j + 1]){ // sorting numbers here
+test = reading[j + 1];
+reading [j+1] = reading[j] ;
+reading[j] = test;
+done = false;
+}
+}
+}
+mean = 0;
+for (int k=6; k<14; k++){ //discard the 6 highest and 6 lowest readings
+mean += reading[k];
+}
+result = mean/8; //average useful readings
+return(result);
+}    // END GET FEEDBACK
+
   
 

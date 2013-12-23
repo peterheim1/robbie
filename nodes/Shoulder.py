@@ -100,8 +100,8 @@ class R_shoulder(object):
                 if (partsCount  < 7):
                         pass
                 try:
-                        P1 = 0.45-(float(lineParts[1])* 0.001533203)# position
-                        P2 = float(lineParts[2])# target
+                        P1 = 0-(0.45-(float(lineParts[1])* 0.001533203))# position
+                        P2 = 0-(0.45-(float(lineParts[2])* 0.001533203))#float(lineParts[2])# target
                         P3 = float(lineParts[3])# current
                         P4 = float(lineParts[4])# speed
                         val = [P1, P2, P3, P4]
@@ -136,8 +136,10 @@ class R_shoulder(object):
                 if (partsCount  < 7):
                         pass
                 try:
-                        P1 = 2.0 -(float(lineParts[1])* 0.004597701)# position
-                        P2 = float(lineParts[2])# target
+                        A1 = 450 -float(lineParts[1])
+                        P1 = 0 - (A1* 0.004597701)#(3.8-((float(lineParts[1])* 0.004597701)))# position
+                        A2 = 450 -float(lineParts[2])
+                        P2 = 0 - (A2* 0.004597701)#float(lineParts[2])# target
                         P3 = float(lineParts[3])# current
                         P4 = float(lineParts[4])# speed
                         val = [P1, P2, P3, P4]
@@ -173,7 +175,7 @@ class R_shoulder(object):
                         pass
                 try:
                         P1 = float(lineParts[1])* 0.003064878
-                        P2 = float(lineParts[2])
+                        P2 = float(lineParts[2])* 0.003064878
                         P3 = float(lineParts[3])
                         P4 = float(lineParts[4])
                         val = [P1, P2, P3, P4]
@@ -210,7 +212,7 @@ class R_shoulder(object):
                         pass
                 try:
                         P1 = float(lineParts[1])* 0.0174532925
-                        P2 = float(lineParts[2])
+                        P2 = float(lineParts[2])* 0.0174532925
                         P3 = float(lineParts[3])
                         P4 = float(lineParts[4])
                         val = [P1, P2, P3, P4]
@@ -247,7 +249,7 @@ class R_shoulder(object):
                         pass
                 try:
                         P1 = float(lineParts[1])* 0.0174532925
-                        P2 = float(lineParts[2])
+                        P2 = float(lineParts[2])* 0.0174532925
                         P3 = float(lineParts[3])
                         P4 = float(lineParts[4])
                         val = [P1, P2, P3, P4]
@@ -285,7 +287,7 @@ class R_shoulder(object):
                         pass
                 try:
                         P1 = float(lineParts[1])* 0.0174532925
-                        P2 = float(lineParts[2])
+                        P2 = float(lineParts[2])* 0.0174532925
                         P3 = float(lineParts[3])
                         P4 = float(lineParts[4])
                         val = [P1, P2, P3, P4]
@@ -324,7 +326,7 @@ class R_shoulder(object):
                         pass
                 try:
                         P1 = float(lineParts[1])* 0.0174532925
-                        P2 = float(lineParts[2])
+                        P2 = float(lineParts[2])* 0.0174532925
                         P3 = float(lineParts[3])
                         P4 = float(lineParts[4])
                         val = [P1, P2, P3, P4]
@@ -363,7 +365,7 @@ class R_shoulder(object):
                         pass
                 try:
                         P1 = float(lineParts[1])* 0.0174532925
-                        P2 = float(lineParts[2])
+                        P2 = float(lineParts[2])* 0.0174532925
                         P3 = float(lineParts[3])
                         P4 = float(lineParts[4])
                         val = [P1, P2, P3, P4]
@@ -402,7 +404,7 @@ class R_shoulder(object):
                         pass
                 try:
                         P1 = float(lineParts[1])* 0.0174532925
-                        P2 = float(lineParts[2])
+                        P2 = float(lineParts[2])* 0.0174532925
                         P3 = float(lineParts[3])
                         P4 = float(lineParts[4])
                         val = [P1, P2, P3, P4]
@@ -441,7 +443,7 @@ class R_shoulder(object):
                         pass
                 try:
                         P1 = float(lineParts[1])* 0.0174532925
-                        P2 = float(lineParts[2])
+                        P2 = float(lineParts[2])* 0.0174532925
                         P3 = float(lineParts[3])
                         P4 = float(lineParts[4])
                         val = [P1, P2, P3, P4]
@@ -528,8 +530,8 @@ class R_shoulder(object):
 
                
                 
-                self.P1_MotorPublisher = rospy.Publisher("/right_arm_lift/motor_state", MotorState)
-                self.P2_MotorPublisher = rospy.Publisher("/right_arm_tilt/motor_state", MotorState)
+                self.P1_MotorPublisher = rospy.Publisher("/right_arm_tilt/motor_state", MotorState)
+                self.P2_MotorPublisher = rospy.Publisher("/right_arm_lift/motor_state", MotorState)
                 self.P3_MotorPublisher = rospy.Publisher("/right_arm_rotate/motor_state", MotorState)
                 self.P4_MotorPublisher = rospy.Publisher("/right_arm_elbow/motor_state", MotorState)
                 self.P5_MotorPublisher = rospy.Publisher("/right_arm_wrist_tilt/motor_state", MotorState)
@@ -539,8 +541,8 @@ class R_shoulder(object):
                 self.P9_MotorPublisher = rospy.Publisher("/right_arm_f4/motor_state", MotorState)
                 self.P10_MotorPublisher = rospy.Publisher("/right_arm_f5/motor_state", MotorState)
 
-                self._P1_JointPublisher = rospy.Publisher("/right_arm_lift_joint_controller/state", JointState)#geterrors
-                self._P2_JointPublisher = rospy.Publisher("/right_arm_tilt_joint_controller/state", JointState)
+                self._P1_JointPublisher = rospy.Publisher("/right_arm_tilt_joint_controller/state", JointState)#geterrors
+                self._P2_JointPublisher = rospy.Publisher("/right_arm_lift_joint_controller/state", JointState)
                 self._P3_JointPublisher = rospy.Publisher("/right_arm_rotate_joint_controller/state", JointState)
                 self._P4_JointPublisher = rospy.Publisher("/right_arm_elbow_joint_controller/state", JointState)#add joint
                 self._P5_JointPublisher = rospy.Publisher("/right_arm_wrist_tilt_joint_controller/state", JointState)
@@ -580,11 +582,11 @@ class R_shoulder(object):
                 if v1 < 243: v1 = 243
                 #y = twistCommand.linear.y        # m/s
                 #omega = twistCommand.angular.z      # rad/s
-                rospy.logwarn("Handling twist command: " + str(v1) + "," + str(v) + ","+ str(v1))
+                #rospy.logwarn("Handling tilt command: " + str(v1) + "," + str(v) + ","+ str(v1))
 
                 #message = 's %.2f %.2f %.2f\r' % self._GetBaseAndExponents((v1))
                 message = 'j2 %d \r' % (v1)#% self._GetBaseAndExponents((v1)
-                rospy.loginfo("Sending arm tilt message: " + (message))
+                rospy.logwarn("Sending arm tilt message: " + (message))
                 self._WriteSerial(message)
 
         def _HandleJoint_2_Command(self, twistCommand):#lift
@@ -595,22 +597,23 @@ class R_shoulder(object):
                 if v1 < 550: v1 = 550          
                
                 message = 'j1 %d \r' % (v1)#% self._GetBaseAndExponents((v1)
-                rospy.loginfo("Sending lift command message: " + (message))
+                rospy.logwarn("Sending lift command message: " + (message))
                 self._WriteSerial(message)
                
         def _HandleJoint_3_Command(self, twistCommand):
-                """ Handle movement requests. """
+                """ rotate elbow function"""
                 v = twistCommand.data      # m/s
-                v1 =float((v * 57.2957795) )
-                v2 = 180 - v1
+                v1 =float(v * 325.95)
+                #v2 = 180 - v1
                 #y = twistCommand.linear.y        # m/s
                 #omega = twistCommand.angular.z      # rad/s
-                rospy.logwarn("Handling twist command: " + str(v1) + "," + str(v) + ","+ str(v1))
+                #rospy.logwarn("Handling twist command: " + str(v1) + "," + str(v) + ","+ str(v1))
 
                 #message = 's %.2f %.2f %.2f\r' % self._GetBaseAndExponents((v1))
-                message = 'j3 %d \r' % (v2)#% self._GetBaseAndExponents((v1)
-                #rospy.loginfo("Sending speed command message: " + (message))
+                message = 'j3 %d \r' % (v1)#% self._GetBaseAndExponents((v1)
+                rospy.logwarn("Sending rotate command message: " + (message))
                 self._WriteSerial(message)
+                #self._WriteSerial(message)
                
         def _HandleJoint_4_Command(self, twistCommand):
                 """ Handle movement requests. """
@@ -621,7 +624,7 @@ class R_shoulder(object):
                 if v1 > 75: v1 = 75
                 #y = twistCommand.linear.y        # m/s
                 #omega = twistCommand.angular.z      # rad/s
-                #rospy.logwarn("Handling twist command: " + str(v1) + "," + str(v) + ","+ str(v1))
+                rospy.logwarn("Handling elbow command: " + str(v1) + "," + str(v) + ","+ str(v1))
 
                 #message = 's %.2f %.2f %.2f\r' % self._GetBaseAndExponents((v1))
                 message = 'j4 %d \r' % (v1)#% self._GetBaseAndExponents((v1)
@@ -636,7 +639,7 @@ class R_shoulder(object):
                 v2 = 180 - v1
                 
                 message = 'j5 %d \r' % (v2)#% self._GetBaseAndExponents((v1)
-                #rospy.loginfo("Sending speed command message: " + (message))
+                rospy.logwarn("Sending wrist tilt command message: " + (message))
                 self._WriteSerial(message) 
                 
         def _HandleJoint_6_Command(self, twistCommand):
@@ -646,7 +649,7 @@ class R_shoulder(object):
                 v2 = 180 - v1
                 
                 message = 'j6 %d \r' % (v2)#% self._GetBaseAndExponents((v1)
-                #rospy.loginfo("Sending speed command message: " + (message))
+                rospy.logwarn("Sending f1 command message: " + (message))
                 self._WriteSerial(message)    
                 
         def _HandleJoint_7_Command(self, twistCommand):

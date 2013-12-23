@@ -39,8 +39,8 @@ class JointStatePublisher():
         
         # The namespace and joints parameter needs to be set by the servo controller
         # (The namespace is usually null.)
-        namespace = rospy.get_namespace()
-        self.joints = rospy.get_param('/joints', '')
+        namespace ='right_arm'# rospy.get_namespace()
+        self.joints = rospy.get_param('right_arm/joints', '')
                                                                 
         self.servos = list()
         self.controllers = list()
