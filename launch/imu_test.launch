@@ -1,0 +1,13 @@
+<launch>
+    <node pkg="imu_um6" type="imu_um6_node.py" name="imu_um6_node" output="screen" respawn="true">
+        <param name="port" type="string" value="/dev/sensors/ftdi_A700eDQw"/>
+        <remap from="imu/data" to="imu_data"/>
+    </node>
+
+   
+   
+    <node pkg="imu_um6" type="imu_pose.py" name="imu_pose" output="screen" respawn="false">
+        <remap from="imu_data" to="imu/data"/>
+    </node>
+
+</launch>
