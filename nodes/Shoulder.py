@@ -211,8 +211,8 @@ class R_shoulder(object):
                 if (partsCount  < 7):
                         pass
                 try:
-                        P1 = float(lineParts[1])* 0.0174532925
-                        P2 = float(lineParts[2])* 0.0174532925
+                        P1 = float(lineParts[1])* 0.001533203
+                        P2 = float(lineParts[2])* 0.001533203
                         P3 = float(lineParts[3])
                         P4 = float(lineParts[4])
                         val = [P1, P2, P3, P4]
@@ -616,15 +616,15 @@ class R_shoulder(object):
                 #self._WriteSerial(message)
                
         def _HandleJoint_4_Command(self, twistCommand):
-                """ Handle movement requests. """
+                """ Handle elbob lift movement requests. """
                 v = twistCommand.data      # m/s
                 #if v < 0.4: v = 0.4
                 #if v > 1.65: v = 1.65
-                v1 =float(v * 57.2957795)
-                if v1 > 75: v1 = 75
+                v1 =float(v * 325.95)
+                if v1 > 900: v1 = 900
                 #y = twistCommand.linear.y        # m/s
                 #omega = twistCommand.angular.z      # rad/s
-                rospy.logwarn("Handling elbow command: " + str(v1) + "," + str(v) + ","+ str(v1))
+                rospy.logwarn("Handling elbow command: " + str(v1) )
 
                 #message = 's %.2f %.2f %.2f\r' % self._GetBaseAndExponents((v1))
                 message = 'j4 %d \r' % (v1)#% self._GetBaseAndExponents((v1)

@@ -24,7 +24,7 @@ turn off motor driver when not moving
 #define Right_tilt_in2			5
 // change to actuator
 //int MinVal = 10;
-double target_pos = 100;
+double target_pos = 180;
 const byte MY_ADDRESS = 46;
 
 double Encoder_Position  = 0;
@@ -39,7 +39,7 @@ int FrameRate = 30;
 //volatile boolean haveData = false;
 volatile long Target = 20;
 
-PID Right_tilt(&Encoder_Position, &Right_pwm, &target_pos, 1.5,0.05,0.00, DIRECT);
+PID Right_tilt(&Encoder_Position, &Right_pwm, &target_pos, 1.0,0.05,0.00, DIRECT);
 //PID Right_tilt(&Encoder_Position, &Right_pwm, &target_pos, 3.5,0.09,0.001, DIRECT);
 /*
 ##############################################################################
@@ -136,7 +136,7 @@ void Right_drive()
 {
   
   Right_tilt.Compute();
-  Right_tilt.SetOutputLimits(-170 ,170);//reduce speed to minamize bounce
+  Right_tilt.SetOutputLimits(-250 ,250);//reduce speed to minamize bounce
   
   if (Right_pwm < 0){
     digitalWrite(Right_tilt_in1, HIGH);

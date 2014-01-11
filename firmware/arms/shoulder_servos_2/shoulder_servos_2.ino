@@ -51,7 +51,7 @@ int Servo_pos= 90;
 double Right_lift_target        = 550; //sholder lift  motor position
 int Right_tilt_target        = 240;  // sholder tilt  motor position
 int Right_rotate_target      = 140; //works
-int Right_elbow_target       = 80;
+int Right_elbow_target       = 160;
 int Wrist_tilt_target = 20;
 int Thumb_target = 30;//works
 int Index_target = 20;
@@ -86,7 +86,7 @@ void setup()
 // Attach Servos
 //Right_Shoulder_tilt.attach(49);//not realy working
 //Right_Shoulder_Rotate.attach(53);
-Right_Elbow_lift.attach(37,1000, 1300);// need to set limits 0 80 for start
+//Right_Elbow_lift.attach(37,1000, 1300);// need to set limits 0 80 for start
 Wrist_tilt.attach(33);//no 2
 Thumb.attach(29);//no 3
 Index.attach(27);//ono 4
@@ -113,7 +113,7 @@ void loop()
   ReadSerial();
 
 //Right_Shoulder_Rotate.write(Right_rotate_target);
-Right_Elbow_lift.write(Right_elbow_target);
+//Right_Elbow_lift.write(Right_elbow_target);
 Wrist_tilt.write(Wrist_tilt_target);
 Thumb.write(Thumb_target);
 Index.write(Index_target);
@@ -166,9 +166,9 @@ void Ser_print()
   
   Serial.print("P4");// joint message arm elbow
   Serial.print("\t");
-  Serial.print(getFeedback(A2));//current position
+  Serial.print(RequestData(46));//current position
   Serial.print("\t");
-  Serial.print(Right_Elbow_lift.read());//target
+  Serial.print(Right_elbow_target);//target
   Serial.print("\t");
   Serial.print("0");// current in amps
   Serial.print("\t");
@@ -407,7 +407,8 @@ void J3()
 
 void J4()
 {
-  Right_elbow_target = _Messenger.readInt();  
+  Right_elbow_target = _Messenger.readInt(); 
+  SetTarget(46, Right_elbow_target); 
 }
 
 void J5()

@@ -17,7 +17,7 @@ GNU General Public License for more details at:
 http://www.gnu.org/licenses/gpl.html
 """
 
-import roslib; roslib.load_manifest('omni_bot')
+import roslib; roslib.load_manifest('robbie')
 import rospy
 
 from sensor_msgs.msg import JointState as JointStatePR2

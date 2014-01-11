@@ -35,7 +35,7 @@ double Right_lift_enc  = 0;
 
 //Servos on arm total 9
 //Servo Right_Shoulder_tilt;
-Servo Right_Shoulder_Rotate;
+//Servo Right_Shoulder_Rotate;
 Servo Right_Elbow_lift;
 Servo Wrist_tilt;
 Servo Thumb;
