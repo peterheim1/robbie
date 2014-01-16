@@ -13,9 +13,9 @@ void DoWork()
   Serial.print("\t");
   Serial.print(Omega, 3);//vel y
   Serial.print("\t");
-  Serial.print(readEncoder(LEFT));//vel in z in radians
+  Serial.print(readEncoder(RIGHT));//vel in z in radians
   Serial.print("\t");
-  Serial.print(readEncoder(RIGHT));
+  Serial.print(readEncoder(LEFT));
   Serial.print("\t");
   Serial.print(SpeedRight_req);
   Serial.print("\t");
