@@ -144,7 +144,7 @@ class Arduino(object):
 			#rospy.loginfo(odometry)
 		
 		except:
-			rospy.logwarn("Unexpected error odom :" + str(sys.exc_info()[0]))
+			rospy.logwarn("Unexpected error odomfrom arduino.py   :" + str(sys.exc_info()[0]))
 
 
 	def _BroadcastBatteryInfo(self, lineParts):
@@ -280,9 +280,9 @@ class Arduino(object):
                     left = x - th * 0.43 / 2.0
                     right = x + th * 0.43 / 2.0
             
-                v_des_left = int(left * 15315 / 30)# reduced tisck per meter by 200
-                v_des_right = int(right * 15915 / 30)#ticks_per_meter
-		rospy.logwarn("Handling twist command: " + str(v_des_left) + "," + str(v_des_right))
+                v_des_left = int(left * 16065 / 30)# 
+                v_des_right = int(right * 16028/ 30)#ticks_per_meter 15915
+		#rospy.logwarn("Handling twist ommand: " + str(v_des_left) + "," + str(v_des_right))
 
 		#message = 's %.2f %.2f\r' % (v_des_left, v_des_right)
                 message = 's %d %d %d %d \r' % self._GetBaseAndExponents((v_des_left, v_des_right))

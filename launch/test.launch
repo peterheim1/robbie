@@ -1,4 +1,6 @@
 <launch>
 
-    <rosparam file="$(find robbie)/params/params.yaml" command="load" />
+   <node name="arduino" pkg="robbie" type="arduino.py">
+    <rosparam file="$(find robbie)/params/robbie_base.yaml" command="load" />
+  </node>
 </launch>

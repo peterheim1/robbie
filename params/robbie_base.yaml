@@ -5,7 +5,7 @@ baudRate: 57600
 batteryStateParams: {voltageLowlimit: 11.5, voltageLowLowlimit: 11.1}
 
 # wheel diameter [m], trackwidth [m], ticks per revolution
-driveGeometry: {wheelDiameter: 0.155, trackWidth: 0.325, countsPerRevolution: 2500}
+driveGeometry: {wheelDiameter: 0.155, trackWidth: 0.325, countsPerRevolution: 10000}
 #driveGeometry: {wheelDiameter: 0.155, trackWidth: 0.325, countsPerRevolution: 2500}
 
 # The speed controller parameters inlcude the P and I gains for the three PI controllers and the command timeout for the speed controller in seconds.
