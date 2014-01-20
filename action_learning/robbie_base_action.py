@@ -70,7 +70,7 @@ class RobbieBaseActionServer():
         self.result = RobbieBaseResult()
         self.feedback = RobbieBaseFeedback()
         self.server = SimpleActionServer(NAME, RobbieBaseAction, self.execute_callback, auto_start=False)
-
+        self.server.start()
         rospy.loginfo("%s: Ready to accept goals", NAME)
 
 

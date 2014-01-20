@@ -32,8 +32,8 @@
 		<param name="transform_tolerance" value="0.2"/> <!-- Default 0.1; time with which to post-date the transform that is published, to indicate that this transform is valid into the future. -->
 		<param name="recovery_alpha_slow" value="0.001"/> <!-- Exponential decay rate for the slow average weight filter, used in deciding when to recover by adding random poses. -->
 		<param name="recovery_alpha_fast" value="0.1"/> <!-- Exponential decay rate for the fast average weight filter, used in deciding when to recover by adding random poses. -->
-                <param name="initial_pose_x" value="4.124"/>
-                <param name="initial_pose_y" value="3.961"/>
-                <param name="initial_pose_a" value="-2.329"/>
+                <param name="initial_pose_x" value="0"/>
+                <param name="initial_pose_y" value="0"/>
+                <param name="initial_pose_a" value="0"/>
 	</node>
 </launch>

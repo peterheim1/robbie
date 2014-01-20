@@ -34,6 +34,7 @@ NAME = 'move_base_demo'
 
 import roslib; roslib.load_manifest(PKG)
 import rospy
+import tf
 
 from actionlib import SimpleActionClient
 from move_base_msgs.msg import *
@@ -42,20 +43,20 @@ from geometry_msgs.msg import *
 from robbie.msg import *
 
 
-def move_to(frame_id, position, orientation, vicinity=0.0):
-    goal = RobbieBaseGoal()
+def move_to(frame='/map', x=0, y=0, yaw=0):
+    goal = MoveBaseGoal()
     goal.target_pose.header.stamp = rospy.Time.now()
-    goal.target_pose.header.frame_id = frame_id
-    goal.target_pose.pose.position = position
-    goal.target_pose.pose.orientation = orientation
-    goal.vicinity_range = vicinity
+    goal.target_pose.header.frame_id = frame
+    quat = tf.transformations.quaternion_from_euler(0, 0, yaw)
+    goal.target_pose.pose.orientation = Quaternion(*quat)
+    goal.target_pose.pose.position = Point(x, y, 0)
 
     client.send_goal(goal)
     client.wait_for_result()
 
     if client.get_state() == GoalStatus.SUCCEEDED:
         result = client.get_result()
-        print "Result: " + str(result.base_position)
+        print "Result: SUCCEEDED " 
     elif client.get_state() == GoalStatus.PREEMPTED:
         print "Action pre-empted"
     else:
@@ -65,13 +66,14 @@ def move_to(frame_id, position, orientation, vicinity=0.0):
 if __name__ == '__main__':
     try:
         rospy.init_node(NAME, anonymous=True)
-        client = SimpleActionClient("robbie_base_action", RobbieBaseAction)
+        client = SimpleActionClient("move_base", MoveBaseAction)
         client.wait_for_server()
         
         print "Go to staging area.... "
-        position = Point(x=2.279, y=2.651)
-        orientation = Quaternion(z=-0.673918593079,w=0.73880561036)
-        move_to('/map', position, orientation) # No vicinity specified
+        x = 0.859
+        y = 0.133
+        yaw = 0
+        move_to('/map', x, y, yaw) 
         rospy.sleep(2.0)
 
       
