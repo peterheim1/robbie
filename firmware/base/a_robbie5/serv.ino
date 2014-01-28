@@ -48,5 +48,17 @@ void DoWork()
   Serial.print("\t");
   Serial.print("\n");
   
+  Serial.print("d"); // o indicates docking message
+  Serial.print("\t");
+  Serial.print(Right_Ir_State);
+  Serial.print("\t");
+  Serial.print(Left_Ir_State);
+  Serial.print("\t");
+  Serial.print(Rear_Bumper_State);
+  Serial.print("\t");
+  Serial.print(Auto_Dock_Cmd);
+  Serial.print("\t");
+  Serial.print("\n");
+  
  
 }

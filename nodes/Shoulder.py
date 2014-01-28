@@ -116,7 +116,7 @@ class R_shoulder(object):
                         self.P2_MotorPublisher.publish(Motor_State)
                        
                         Joint_State = JointState()
-                        Joint_State.name = "right_arm_tilt_joint"
+                        Joint_State.name = "right_arm_tilt_joint_controller"
                         Joint_State.goal_pos = P2
                         Joint_State.current_pos = P1
                         Joint_State.velocity = P4
@@ -154,7 +154,7 @@ class R_shoulder(object):
                         self.P2_MotorPublisher.publish(Motor_State)
                        
                         Joint_State = JointState()
-                        Joint_State.name = "right_arm_lift_joint"
+                        Joint_State.name = "right_arm_lift_joint_controller"
                         Joint_State.goal_pos = P2
                         Joint_State.current_pos = P1
                         Joint_State.velocity = P4
@@ -192,7 +192,7 @@ class R_shoulder(object):
                         #rospy.logwarn(val)
 
                         Joint_State = JointState()
-                        Joint_State.name = "right_arm_rotate_joint"
+                        Joint_State.name = "right_arm_rotate_joint_controller"
                         Joint_State.goal_pos = P2
                         Joint_State.current_pos = P1
                         Joint_State.velocity = P4
@@ -229,7 +229,7 @@ class R_shoulder(object):
                         #rospy.logwarn(val)
 
                         Joint_State = JointState()
-                        Joint_State.name = "right_arm_elbow_joint"
+                        Joint_State.name = "right_arm_elbow_joint_controller"
                         Joint_State.goal_pos = P2
                         Joint_State.current_pos = P1
                         Joint_State.velocity = P4
@@ -265,7 +265,7 @@ class R_shoulder(object):
                         #rospy.logwarn(Motor_State)
 
                         Joint_State = JointState()
-                        Joint_State.name = "right_arm_wrist_tilt_joint"
+                        Joint_State.name = "right_arm_wrist_tilt_joint_controller"
                         Joint_State.goal_pos = P2
                         Joint_State.current_pos = P1
                         Joint_State.velocity = P4
@@ -303,7 +303,7 @@ class R_shoulder(object):
                         #rospy.logwarn(Motor_State)
 
                         Joint_State = JointState()
-                        Joint_State.name = "right_arm_f1_joint"
+                        Joint_State.name = "right_arm_f1_joint_controller"
                         Joint_State.goal_pos = P2
                         Joint_State.current_pos = P1
                         Joint_State.velocity = P4
@@ -342,7 +342,7 @@ class R_shoulder(object):
                         #rospy.logwarn(Motor_State)
 
                         Joint_State = JointState()
-                        Joint_State.name = "right_arm_f2_joint"
+                        Joint_State.name = "right_arm_f2_joint_controller"
                         Joint_State.goal_pos = P2
                         Joint_State.current_pos = P1
                         Joint_State.velocity = P4
@@ -381,7 +381,7 @@ class R_shoulder(object):
                         #rospy.logwarn(Motor_State)
 
                         Joint_State = JointState()
-                        Joint_State.name = "right_arm_f3_joint"
+                        Joint_State.name = "right_arm_f3_joint_controller"
                         Joint_State.goal_pos = P2
                         Joint_State.current_pos = P1
                         Joint_State.velocity = P4
@@ -420,7 +420,7 @@ class R_shoulder(object):
                         #rospy.logwarn(Motor_State)
 
                         Joint_State = JointState()
-                        Joint_State.name = "right_arm_f4_joint"
+                        Joint_State.name = "right_arm_f4_joint_controller"
                         Joint_State.goal_pos = P2
                         Joint_State.current_pos = P1
                         Joint_State.velocity = P4
@@ -459,7 +459,7 @@ class R_shoulder(object):
                         #rospy.logwarn(Motor_State)
 
                         Joint_State = JointState()
-                        Joint_State.name = "right_arm_f5_joint"
+                        Joint_State.name = "right_arm_f5_joint_controller"
                         Joint_State.goal_pos = P2
                         Joint_State.current_pos = P1
                         Joint_State.velocity = P4

@@ -76,6 +76,9 @@ class Arduino(object):
                         if (lineParts[0] == 'n'):
                                 self._Broadcastleft(lineParts)
                                 return
+                        if (lineParts[0] == 'd'):
+                                self._BroadcastAuto(lineParts)
+                                return
                         if (lineParts[0] == "InitializeDriveGeometry"):
                                 # controller requesting initialization
                                 self._InitializeDriveGeometry()
@@ -211,7 +214,22 @@ class Arduino(object):
 		
 		except:
                         pass
-			#rospy.logwarn("Unexpected error V_right:" + str(sys.exc_info()[0]))
+			rospy.logwarn("Unexpected error V_right:" + str(sys.exc_info()[0]))
+
+        def _BroadcastAuto(self, lineParts):
+		partsCount = len(lineParts)
+		#rospy.logwarn(partsCount)
+
+		if (partsCount  < 1):
+			pass
+		
+		try:
+                       self.auto_left = int(lineParts[1]) 
+                       self.auto_left = int(lineParts[2])
+                       self.auto_bumper = int(lineParts[3])
+                except:
+                        #pass
+                        rospy.logwarn("Unexpected error auto dock:" + str(sys.exc_info()[0])) 
 
 
         def _WriteSerial(self, message):
@@ -236,6 +254,7 @@ class Arduino(object):
 
 		# subscriptions
 		rospy.Subscriber("cmd_vel", Twist, self._HandleVelocityCommand)
+                rospy.Subscriber("auto_dock", String, self._AutoDock)
 		self._SerialPublisher = rospy.Publisher('serial', String)
 
 		self._OdometryTransformBroadcaster = tf.TransformBroadcaster()
@@ -351,6 +370,16 @@ class Arduino(object):
 
 		message = 'bm %f\r' % self._VoltageLowLowlimit
 		rospy.logdebug("Sending battery monitor params message: " + message)
+		self._WriteSerial(message)
+
+        def _AutoDock(self, data):
+		x = data.data
+                if x == "dock":
+		    message = 'd 1\r' 
+                else:
+                    message = 'd 0\r'
+
+		rospy.logwarn("Sending Auto Docks message: " + message)
 		self._WriteSerial(message)
 
 	def _GetBaseAndExponent(self, floatValue, resolution=4):

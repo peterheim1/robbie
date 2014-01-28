@@ -23,7 +23,8 @@ turn off motor driver when not moving
 #define Right_tilt_in1			4
 #define Right_tilt_in2			5
 // change to actuator
-int MinVal = 500;
+int MinVal = 100;
+int MaxVal = 900;
 double target_pos = 140;
 const byte MY_ADDRESS = 44;
 
@@ -39,7 +40,7 @@ int FrameRate = 30;
 //volatile boolean haveData = false;
 volatile long Target = 550;
 
-PID Right_tilt(&Encoder_Position, &Right_pwm, &target_pos, 5,3,0, DIRECT);
+PID Right_tilt(&Encoder_Position, &Right_pwm, &target_pos, 3,3,0, DIRECT);
 /*
 ##############################################################################
 ##############################################################################
@@ -110,9 +111,12 @@ void receiveEvent (int howMany)
      
    I2C_readAnything (Target); 
    target_pos = Target; 
-   //if (target_pos < MinVal){
-    //target_pos = MinVal;
-   //} 
+   if (target_pos < MinVal){
+    target_pos == MinVal;}
+   if (target_pos > MaxVal){
+    target_pos == MaxVal;}
+   
+   
    //haveData = true;     
    }  // end if have enough data
  }  // end of receiveEvent

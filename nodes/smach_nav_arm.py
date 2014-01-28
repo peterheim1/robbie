@@ -20,8 +20,8 @@ from control_msgs.msg import *
 
 # main
 def main():
-    rospy.init_node('smach_example_state_machine')
-    #client = SimpleActionClient("robbie_base_action", RobbieBaseAction)
+    rospy.init_node('smach_arm_navigation')
+    
     #start speech service
     rospy.wait_for_service('speak_text')
     try:
@@ -29,7 +29,7 @@ def main():
     except rospy.ServiceException, e:
         print "Failed to acquire Festival SpeakText service: %s"%e
 
-    Speak_text_service("  Robbie is on line   Navigation Test 2 way points")
+    Speak_text_service("  Robbie is on line   arm testing")
 
 
     # Create a SMACH state machine
@@ -42,7 +42,7 @@ def main():
         action_goal.goal.trajectory.header.stamp = rospy.Time.now() + rospy.Duration(0.2)
         action_goal.goal.trajectory.joint_names = ['right_arm_tilt_joint_controller', 'right_arm_lift_joint_controller', 'right_arm_rotate_joint_controller',    'right_arm_elbow_joint_controller', 'right_arm_wrist_tilt_joint_controller']
         action_goal.goal.trajectory.points.append(
-            JointTrajectoryPoint(positions = [0.1, 0.2, 1.7, 0.5, -1.06], 
+            JointTrajectoryPoint(positions = [0.3, 0.4, 1.8, 0.9, -1.06], 
                          velocities = [0, 0, 0, 0, 0],))
    
         smach.StateMachine.add("STAGE_1",

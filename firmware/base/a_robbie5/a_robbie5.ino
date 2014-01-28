@@ -7,7 +7,8 @@ use PID from pi robot
 
 
 */
-#define ROBOGAIA
+#define ROBOGAIA//encoder
+
 
 #include <math.h>
 #include <Servo.h>
@@ -28,6 +29,16 @@ double test = 0;
 float Voltage = 0;
 float Amps = 0;
 
+//auto dock
+int Right_Ir = 10;
+int Left_Ir = 11;
+int Rear_bumper = 12;
+int Rear_Bumper_State = 0;
+int Right_Ir_State =0;
+int Left_Ir_State = 0;
+int Auto_Dock_Cmd = 0;
+
+
 /* Serial port baud rate */
 #define BAUDRATE  57600   
 
@@ -47,13 +58,12 @@ double SpeedLeft = 0;
 double SpeedRight_req = 0;
 double SpeedLeft_req = 0;
 
-int RearBumper = 2;
-int RearBumperState = 0;
 
-int FrontLeftIR = 2;
-int FrontRightIR = 3;
-float FrontRightDistance =0;
-float FrontLeftDistance =0;
+
+//int FrontLeftIR = 0;
+//int FrontRightIR = 1;
+//float FrontRightDistance =0;
+//float FrontLeftDistance =0;
 
 
 double DistancePerCount_left = 0.0000625317;//.0001944;   pi*dia/encoder res
@@ -93,7 +103,10 @@ void setup()
   Serial.begin(BAUDRATE);
   _Messenger.attach(OnMssageCompleted);
  
-  pinMode(2, INPUT);
+  
+  pinMode(Right_Ir, INPUT);
+  pinMode(Left_Ir, INPUT);
+  pinMode(Rear_bumper, INPUT);
   
   
   //hb25
@@ -120,11 +133,14 @@ void loop()
 {
    
    ReadSerial();
-   Voltage = (analogRead(0)*0.00488)*3.75;
-   Amps = (analogRead(1)*0.0133);
+   Voltage = (analogRead(2)*0.00488)*3.75;
+   Amps = (analogRead(9)*0.0133);
+   Right_Ir_State = digitalRead(Right_Ir);
+   Left_Ir_State = digitalRead(Left_Ir);
+   Rear_Bumper_State = digitalRead(Rear_bumper);
    //FrontRightDistance = analogRead(FrontRightIR);
    //FrontLeftDistance = read_gp2d12_range(FrontLeftIR);
-   RearBumperState = digitalRead(RearBumper);
+   Rear_Bumper_State = digitalRead(Rear_bumper);
    
    
    //timing loop
@@ -136,6 +152,9 @@ void loop()
     move_L();
     Pose();
     DoWork();
+    if (Auto_Dock_Cmd > 0)
+        AutoDock1();
+    
 
     CurrentTime = millis();
     
@@ -173,7 +192,7 @@ void OnMssageCompleted()
   
   if (_Messenger.checkString("d"))
   {
-    //InitializeDriveGeometry();
+    AutoDock();
     return;
   }
   if (_Messenger.checkString("j"))
@@ -224,6 +243,31 @@ float read_gp2d12_range(byte pin) {
 		return -1; // invalid value
 
 	return (6787.0 /((float)tmp - 3.0)) - 4.0;
+
+}
+
+void AutoDock(){
+  
+  Auto_Dock_Cmd = GetFloatFromBaseAndExponent(_Messenger.readInt(), _Messenger.readInt());
+  
+ 
+}
+
+void AutoDock1(){
+  
+  
+  if (Right_Ir_State < 1 && Rear_Bumper_State == 1){ 
+  SpeedRight_req = -15; }
+  else{SpeedRight_req = 0; }
+  
+  if (Left_Ir_State < 1 && Rear_Bumper_State == 1){ 
+  SpeedLeft_req = -15; }
+  else{SpeedLeft_req = 0; }
+  
+  if (Rear_Bumper_State == 0)
+  Auto_Dock_Cmd = 0;
+  //LeftWheel.write(90);
+  //RightWheel.write(90);}
 
 }
 
