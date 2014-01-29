@@ -37,10 +37,10 @@
 
    <!-- launch head tracking-->
    <include file="$(find robbie)/launch/tf_head_tracker.launch"/>
-
+<!--
   <node name="robbie_chat" pkg="robbie" type="./robbie_chat" />
 
-
+-->
 
 
     

@@ -15,22 +15,7 @@ from geometry_msgs.msg import *
 
 
 
-# Create a trivial action server
-class TestServer:
-    def __init__(self,name):
-        self._sas = SimpleActionServer(name,
-                RobbieBaseAction,
-                execute_cb=self.execute_cb)
 
-    def execute_cb(self, msg):
-        if msg.goal == 0:
-            self._sas.set_succeeded()
-        elif msg.goal == 1:
-            self._sas.set_aborted()
-        elif msg.goal == 2:
-            self._sas.set_preempted()
-        elif msg.goal == 3:
-            self._sas.set_failed()
     
 
 
@@ -38,7 +23,7 @@ def main():
     rospy.init_node('smach_example_actionlib')
 
     # Start an action server
-    server = TestServer('Robbie_Base_action')
+    #server = TestServer('Robbie_Base_action')
 
     # Create a SMACH state machine
     sm0 = smach.StateMachine(outcomes=['succeeded','aborted','preempted', 'failed'])
@@ -81,8 +66,8 @@ def main():
     outcome = sm0.execute()
 
     # Wait for ctrl-c to stop the application
-    rospy.spin()
-    sis.stop()
+    #rospy.spin()
+    #sis.stop()
 
 
 if __name__ == '__main__':
