@@ -1,0 +1,7 @@
+<launch>
+
+     <!-- run battery monitor--> 
+    <node name="robbie_battery_monitor" pkg="robbie" type="Phoenix_smach.py" output="screen" launch-prefix="xterm -e"/>
+
+
+</launch>
