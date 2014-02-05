@@ -17,8 +17,8 @@ from festival.srv import *
 from datetime import datetime, timedelta
 from time import localtime, strftime
 #from nltk_interpret.srv import *
-#from robbie.forex import *
-import forex
+from robbie.forex import *
+#import forex
 
 
 class Greeting():

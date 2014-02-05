@@ -42,7 +42,7 @@ from geometry_msgs.msg import Quaternion
 from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
 from std_msgs.msg import String
-from std_msgs.msg import Float32
+from std_msgs.msg import Float32, Int16
 from robbie.srv import *
 from robbie.msg import *
 
@@ -227,6 +227,7 @@ class Arduino(object):
                        self.auto_left = int(lineParts[1]) 
                        self.auto_left = int(lineParts[2])
                        self.auto_bumper = int(lineParts[3])
+                       self._dock_state_Publisher.publish(self.auto_bumper)
                 except:
                         #pass
                         rospy.logwarn("Unexpected error auto dock:" + str(sys.exc_info()[0])) 
@@ -265,6 +266,7 @@ class Arduino(object):
 		self._BatteryStatePublisher = rospy.Publisher("battery", Float32)
                 self._V_leftPublisher = rospy.Publisher("v_left", Float32)
                 self._V_rightPublisher = rospy.Publisher("v_right", Float32)
+                self._dock_state_Publisher = rospy.Publisher("dock_state", Int16)
 		
 		#self._SetDriveGainsService = rospy.Service('setDriveControlGains', SetDriveControlGains, self._HandleSetDriveGains)
 

@@ -1,5 +1,5 @@
 dynamixels: ['head_pan_joint', 'head_tilt_joint']
-joints: ['head_pan_joint', 'head_tilt_joint', 'right_arm_tilt_joint_controller', 'right_arm_lift_joint_controller', 'right_arm_rotate_joint_controller', 'right_arm_elbow_joint_controller', 'right_arm_wrist_tilt_joint_controller']
+joints: ['head_pan_joint', 'head_tilt_joint', 'right_arm_tilt_joint', 'right_arm_lift_joint', 'right_arm_rotate_joint', 'right_arm_elbow_joint', 'right_arm_wrist_tilt_joint']
 
 
 
@@ -26,8 +26,8 @@ head_pan_joint:
     motor:
         id: 4
         init: 512
-        min: 50
-        max: 900
+        min: 900
+        max: 50
 
 
 
