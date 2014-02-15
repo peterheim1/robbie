@@ -4,7 +4,7 @@
     <param name="/use_sim_time" value="False" />
     
     <!-- Read in the URDF model of our robot. -->
-    <param name="robot_description" command="$(find xacro)/xacro.py '$(find robbie)/urdf/new_robbie3.xacro'" />
+    <param name="robot_description" command="$(find xacro)/xacro.py '$(find robbie)/urdf/robbie5.xacro'" />
     <param name="/use_gui" value="True" />
  
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />   

@@ -1,0 +1,44 @@
+<launch>
+
+  <rosparam ns="/robbie">
+     max_linear_speed: 0.27
+     max_angular_speed: 1.0
+     turtlebot: False
+     video_fps: 10
+     video_topic: /camera/image_raw
+     video_quality: 70
+     namebattery_number: 1
+
+
+  </rosparam>
+
+ 
+
+  <node pkg="uvc_camera" type="uvc_camera_node" name="uvc_camera" output="screen">
+    <param name="width" type="int" value="320" />
+    <param name="height" type="int" value="240" />
+    <param name="fps" type="int" value="30" />
+    <param name="frame" type="string" value="wide_stereo" />
+    <param name="device" type="string" value="/dev/video0" />
+    </node>
+
+
+   
+  <node name="rosbridge" pkg="rosbridge" type="rosbridge.py" output="screen" />
+
+  <node name="mjpeg_server" pkg="mjpeg_server" type="mjpeg_server" output="screen" />
+
+  <!-- Launch pocketsphinx for speech recognition 
+    <node pkg="pocketsphinx" type="speech_text.py" name="speech_text" output="screen" >
+        <param name="lm_path" value="$(find pocketsphinx)/model/mini_meet_greet2/" />
+    </node>
+-->
+  <!-- Launch festival text-to-speech node -->
+    <node pkg="festival" type="speak_text.py" name="speak_text_service" output="screen" />
+
+<!-- Launch a node to push terminal input instead of speech recognition -->
+    <node pkg="robbie" type="terminal_input.py" name="terminal_input" output="screen" >
+    </node>
+
+  
+</launch>
