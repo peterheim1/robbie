@@ -60,7 +60,7 @@ class tfTracker():
         self.servos_centered = False
 
         """ Remap these in the launch file or command line if necessary """
-        self.camera_link = 'kinect_link'
+        self.camera_link = 'head_cam_link'
         self.head_pan_joint = 'head_pan_joint'
         self.head_tilt_joint = 'head_tilt_joint'
         self.head_pan_link = 'head_pan_link'
@@ -148,7 +148,7 @@ class tfTracker():
         """ Subscribe to the target point topic """
         #rospy.Subscriber('target_point', PointStamped, self.update_head_position)
         rospy.Subscriber('roi', RegionOfInterest, self.update_head_position)
-        rospy.Subscriber('camera/camera_info', CameraInfo, self.getCameraInfo)
+        rospy.Subscriber('head_cam/rgb/camera_info', CameraInfo, self.getCameraInfo)
                 
         while not rospy.is_shutdown():
             if self.last_tracking_seq == self.tracking_seq:

@@ -156,6 +156,7 @@
 
 # C extensions
 *.so
+*.py~
 
 # Packages
 *.egg
@@ -171,6 +172,8 @@ develop-eggs
 .installed.cfg
 lib
 lib64
+srv_gen
+msg_gen
 __pycache__
 
 # Installer logs

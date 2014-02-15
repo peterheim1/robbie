@@ -18,7 +18,7 @@
   <depend package="urdf"/>
   <depend package="move_base"/>
   <depend package="arbotix_python"/>
-  <depend package="rviz"/>
+  <depend package="rcommander"/>
   <depend package="opencv2"/>
   <depend package="cv_bridge"/>
   <depend package="joy"/>

@@ -57,13 +57,13 @@ class FollowController():
      
     def __init__(self):
            
-        self.ns = 'arm_controller'
+        self.ns = ''
            
         #self.rate = 50.0 #rospy.get_param('~controllers/'+name+'/rate',50.0)
         #self.joints = rospy.get_param('~' + self.ns + '/arm_joints')
-        #self.joints = [right_arm_tilt, right_arm_lift, right_arm_rotate, right_arm_elbow, right_arm_wrist_tilt]
+        self.joints = ['right_arm_elbow_joint', 'right_arm_lift_joint', 'right_arm_rotate_joint', 'right_arm_tilt_joint', 'right_arm_wrist_pan_joint', 'right_arm_wrist_tilt_joint']
         namespace = rospy.get_namespace()
-        self.joints = rospy.get_param('right_arm/joints', '')
+        #self.joints = rospy.get_param('right_arm/joints', '')
         #self.joints = rospy.get_param('~controllers/'+name+'/joints')
         rospy.loginfo('Configured for ' + str(len(self.joints)) + 'joints')
         #rospy.logerr(self.joints)
@@ -97,6 +97,7 @@ class FollowController():
         if set(self.joints_names) != set(traj.joint_names):
             msg = "Trajectory joint names does not match action controlled joints." + str(traj.joint_names )
             rospy.logerr(msg)
+            rospy.logerr(self.joints_names)
             self.server.set_aborted(text=msg)
             return
      
@@ -186,7 +187,7 @@ class FollowController():
        
 if __name__ == '__main__':
        
-    rospy.init_node('follow_joint_controller', anonymous=True)
+    rospy.init_node('follow_joint_controller', anonymous=False)
      
     rospy.loginfo('Follow joint action node.')
        
