@@ -27,7 +27,7 @@
   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
-import roslib; roslib.load_manifest('robbie')
+
 import rospy
 import wx
 
@@ -36,7 +36,7 @@ from math import radians
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import JointState
 from std_msgs.msg import Float64
-#from arbotix_python.servos import *
+from robbie.servos import *
 #from arbotix_msgs.srv import Relax
 
 width = 325
@@ -87,10 +87,11 @@ class controllerGUI(wx.Frame):
         servoBox = wx.StaticBoxSizer(servo,orient=wx.VERTICAL) 
         servoSizer = wx.GridBagSizer(5,5)
 
-        joint_defaults = 1.57, 1.57 #getServosFromURDF()
-        
+        #joint_defaults = 1.57, 1.57 #getServosFromURDF()
+        joint_defaults = getServosFromURDF()
+        #rospy.loginfo(joint_default1s)
         i = 0
-        dynamixels = rospy.get_param('/right_arm/joints', dict())
+        dynamixels = rospy.get_param('/right_arm/servos', dict())
         self.servos = list()
         self.publishers = list()
         #self.relax = list()
@@ -98,9 +99,9 @@ class controllerGUI(wx.Frame):
         # create sliders and publishers
         for name in sorted(dynamixels):
             # pull angles
-            #min_angle, max_angle = joint_defaults
-            min_angle = -1.57
-            max_angle = 1.57
+            min_angle, max_angle = getServoLimits(name, joint_defaults)
+            #min_angle = -1.57
+            #max_angle = 1.57
             # create publisher
             self.publishers.append(rospy.Publisher(name+'/command', Float64))
             #rospy.wait_for_service(name+'/relax')  
@@ -132,6 +133,8 @@ class controllerGUI(wx.Frame):
 
         self.SetSizerAndFit(sizer)
         self.Show(True)
+
+    
 
     def onClose(self, event):
         self.timer.Stop()

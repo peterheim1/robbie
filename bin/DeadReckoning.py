@@ -31,7 +31,7 @@ Created February, 2011
   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 '''
 
-import roslib; roslib.load_manifest('robbie')
+
 import rospy
 import tf
 from tf import transformations

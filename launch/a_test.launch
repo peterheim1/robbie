@@ -1,0 +1,14 @@
+<launch>
+
+  <!-- Launch festival text-to-speech node -->
+    <node pkg="festival" type="speak_text.py" name="speak_text_service" output="screen" />
+
+<!-- Launch a node to push terminal input instead of speech recognition -->
+    <node pkg="robbie" type="terminal_input.py" name="terminal_input" output="screen" >
+    </node>
+  <!-- Launch a node that manages the conversation with the human -->
+    <node pkg="robbie" type="greeting.py" name="robbie_brain" />
+
+
+  
+</launch>

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import roslib; roslib.load_manifest('robbie')
+
 import rospy
 import smach
 import smach_ros
@@ -17,7 +17,7 @@ from robbie.util import *
 # define state BatteryState
 class BatteryState(smach.State):
     def __init__(self):
-        smach.State.__init__(self, outcomes=['in_progress', 'failed'])
+        smach.State.__init__(self, outcomes=['failed', 'in_progress'])
         self.subscriber = rospy.Subscriber('/battery', Float32, self.callback)
         self.counter = 0
 
@@ -26,15 +26,16 @@ class BatteryState(smach.State):
             self.counter = 3
 
     def execute(self, userdata):
-        #rospy.loginfo('Executing state BatteryState waiting for voltage')
-        if self.counter  3:
+        rospy.loginfo(userdata)
+        if self.counter == 3:
             #self.counter += 1
             #self.pos = get_current_robot_position()
             #rospy.loginfo(self.pos)
-            return 'in_progress'
-        else:
-            #rospy.loginfo('voltage trigger')
+            #return 'in_progress'
             return 'failed'
+        else:
+            time.sleep(10)
+            return 'in_progress'
 
 
 class SleepState(smach.State):
@@ -101,7 +102,7 @@ def main():
     with sm:
         # Add states to the container
         smach.StateMachine.add('BatteryState', BatteryState(), 
-                               transitions={'in_progress':'BatteryState', 'failed':'STAGEING'})
+                               transitions={'failed':'STAGEING','in_progress':'BatteryState'})
 
         _goal = MoveBaseGoal()
         _goal.target_pose.header.stamp = rospy.Time.now()

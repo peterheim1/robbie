@@ -1,0 +1,8 @@
+<launch>
+
+ <!-- Launch pocketsphinx for speech recognition -->
+    <node pkg="pocketsphinx" type="recognizer.py" name="robbie_listen" output="screen" >
+        
+    </node>
+   
+</launch>

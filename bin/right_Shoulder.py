@@ -83,10 +83,13 @@ class R_shoulder(object):
                 if (partsCount  < 7):
                         pass
                 try:
-                        #P1 = 0-(118-(float(lineParts[1])* 0.001533203))# position
-                        #P2 = 0-(118-(float(lineParts[2])* 0.001533203))#float(lineParts[2])# target
-                        P1 = (float(lineParts[1])-118)* 0.001533203# position
-                        P2 = (float(lineParts[1])-118)* 0.001533203# position#float(lineParts[2])# target
+                        cal = -20
+                        A1 = (1023 + cal) - float(lineParts[1])
+                        A2 = (1023 + cal) - float(lineParts[2])
+                        #P1 = 0-(1023 -(float(lineParts[1]))* 0.001533203))# position
+                        #P2 = 0-(1023 -(float(lineParts[2])* 0.001533203))#float(lineParts[2])# target
+                        P1 = (A1 * 0.001533203)
+                        P2 = (A2 * 0.001533203)
                         P3 = float(lineParts[3])# current
                         P4 = float(lineParts[4])# speed
                         val = [P1, P2, P3, P4]
@@ -121,10 +124,11 @@ class R_shoulder(object):
                 if (partsCount  < 7):
                         pass
                 try:
-                        A1 = 200 -float(lineParts[1])
-                        P1 = 0 - (A1* 0.003070961)#(3.8-((float(lineParts[1])* 0.004597701)))# position
-                        A2 = 200 -float(lineParts[2])
-                        P2 = 0 - (A2* 0.003070961)#float(lineParts[2])# target
+                        cal = 0
+                        A1 = (1023 + cal) - float(lineParts[1])
+                        P1 = (A1 * 0.003070961)#(3.8-((float(lineParts[1])* 0.004597701)))# position
+                        A2 = (1023 + cal) - float(lineParts[1])
+                        P2 = (A2* 0.003070961)#float(lineParts[2])# target
                         P3 = float(lineParts[3])# current
                         P4 = float(lineParts[4])# speed
                         val = [P1, P2, P3, P4]
@@ -159,10 +163,10 @@ class R_shoulder(object):
                 if (partsCount  < 7):
                         pass
                 try:
-                        A1 = 110 +float(lineParts[1])
-                        A2 = 110 +float(lineParts[2])
-                        P1 = float(A1)* 0.003070961
-                        P2 = float(A2)* 0.003070961
+                        A1 = 1023 -float(lineParts[1])
+                        A2 = 1023 -float(lineParts[2])
+                        P1 = 0 - (float(A1)* 0.003070961)
+                        P2 = 0 - (float(A2)* 0.003070961)
                         P3 = float(lineParts[3])
                         P4 = float(lineParts[4])
                         val = [P1, P2, P3, P4]
@@ -198,8 +202,8 @@ class R_shoulder(object):
                 if (partsCount  < 7):
                         pass
                 try:
-                        P1 = float(lineParts[1])* 0.003070961
-                        P2 = float(lineParts[2])* 0.003070961
+                        P1 = 0 -((float((lineParts[1]))* 0.005817764)- 2.641264856)
+                        P2 = (float((lineParts[2]))* 0.005817764)- 0
                         P3 = float(lineParts[3])
                         P4 = float(lineParts[4])
                         val = [P1, P2, P3, P4]
@@ -226,7 +230,7 @@ class R_shoulder(object):
                         Joint_State.header.stamp = rospy.Time.now()
                         self._P4_JointPublisher.publish(Joint_State)
                 except:
-                        rospy.logwarn("Unexpected error:4" + str(sys.exc_info()[0]))
+                        rospy.logwarn("Unexpected error:4 ELBOW  " + str(sys.exc_info()[0]))
 
 
         
@@ -309,8 +313,9 @@ class R_shoulder(object):
                 """ Handle movement requests. tilt"""
                 v = twistCommand.data      # m/s
                 #if v > 1.58: v = 1.58
-                v1 =float(v * 647.468354435)+243#57.2957795)
-                if v1 < 243: v1 = 243
+                v1 = 1023 -float(v * 647.468354435)
+                #if v1 < 100: v1 = 100
+                #if v1 > 800: v1 = 800
                 #y = twistCommand.linear.y        # m/s
                 #omega = twistCommand.angular.z      # rad/s
                 #rospy.logwarn("Handling tilt command: " + str(v1) + "," + str(v) + ","+ str(v1))
@@ -324,9 +329,9 @@ class R_shoulder(object):
                 """ Handle movement requests. """
                 v = twistCommand.data      # m/s
                 
-                v1 =float(v * 325.95)+200
-                if v1 < 200: v1 = 2000          
-               
+                v1 = 1023 -float(v * 325.95)
+                if v1 < 100: v1 = 100          
+                if v1 > 900: v1 = 900
                 message = 'j1 %d \r' % (v1)#% self._GetBaseAndExponents((v1)
                 rospy.logwarn("Sending lift command message: " + (message))
                 self._WriteSerial(message)
@@ -334,7 +339,10 @@ class R_shoulder(object):
         def _HandleJoint_3_Command(self, twistCommand):
                 """ rotate arm function"""
                 v = twistCommand.data      # m/s
-                v1 =float(v * 325.95)
+                
+                v1 =float(v * 325.95) + 1023
+                if v1 < 60: v1 = 60
+                if v1 > 980: v1 = 980
                 #v2 = 180 - v1
                 #y = twistCommand.linear.y        # m/s
                 #omega = twistCommand.angular.z      # rad/s
@@ -349,10 +357,11 @@ class R_shoulder(object):
         def _HandleJoint_4_Command(self, twistCommand):
                 """ Handle elbow lift movement requests. """
                 v = twistCommand.data      # m/s
-                #if v < 0.4: v = 0.4
-                #if v > 1.65: v = 1.65
-                v1 =float(v * 325.95)
-                if v1 > 900: v1 = 900
+                #if v < 0: v = 0
+                #if v > 1.9: v = 1.9
+                v1 = 100 +(0 -(float(v * 57.2957795)))
+                if v1 < 80: v1 = 80
+                if v1 > 178: v1 = 178
                 #y = twistCommand.linear.y        # m/s
                 #omega = twistCommand.angular.z      # rad/s
                 rospy.logwarn("Handling elbow command: " + str(v1) )

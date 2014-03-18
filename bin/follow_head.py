@@ -3,7 +3,7 @@
 # freely inspired by http://www.ros.org/wiki/arbotix_python/follow_controller
      
 import roslib
-roslib.load_manifest('robbie')
+#roslib.load_manifest('robbie')
      
 import rospy, actionlib
      
@@ -57,18 +57,18 @@ class FollowController():
      
     def __init__(self):
            
-        self.ns = 'arm_controller'
+        self.ns = 'head_controller'
            
         #self.rate = 50.0 #rospy.get_param('~controllers/'+name+'/rate',50.0)
         #self.joints = rospy.get_param('~' + self.ns + '/arm_joints')
-        #self.joints = [right_arm_tilt, right_arm_lift, right_arm_rotate, right_arm_elbow, right_arm_wrist_tilt]
+        self.joints = ['head_pan_joint', 'head_tilt_mod_joint']
         namespace = rospy.get_namespace()
-        self.joints = rospy.get_param('dynamixels', '')
+        #self.joints = rospy.get_param('dynamixels', '')
         #self.joints = rospy.get_param('~controllers/'+name+'/joints')
         rospy.loginfo('Configured for ' + str(len(self.joints)) + 'joints')
         #rospy.logerr(self.joints)
-        self.joint_subs = [JointSubscriber(name + '_controller') for name in self.joints]
-        self.joint_pubs = [JointCommander(name + '_controller') for name in self.joints]
+        self.joint_subs = [JointSubscriber(name) for name in self.joints]
+        self.joint_pubs = [JointCommander(name) for name in self.joints]
            
         self.joints_names = []
            
@@ -82,7 +82,7 @@ class FollowController():
         self.name = self.ns + '/head_trajectory'
         self.server = actionlib.SimpleActionServer(self.name, FollowJointTrajectoryAction, execute_cb=self.actionCb, auto_start=False)
      
-        rospy.loginfo("Started FollowController ("+self.name+"). Joints: " + str(self.joints))
+        rospy.loginfo("Started head_Controller ("+self.name+"). Joints: " + str(self.joints))
      
     def startup(self):
         self.server.start()

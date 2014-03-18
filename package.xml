@@ -30,9 +30,10 @@
   <run_depend>smach</run_depend>
   <run_depend>smach_ros</run_depend>
   <run_depend>smach_msgs</run_depend>
+  <run_depend>executive_smach</run_depend>
   <run_depend>diagnostic_msgs</run_depend>
   <run_depend>festival</run_depend>
-  
+  <run_depend>message_runtime</run_depend>
   
  
  

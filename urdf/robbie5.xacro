@@ -284,7 +284,7 @@
 						<box size="${lwh}" />
 					</geometry>
              </collision>
-             <xacro:default_inertial mass="${mass}" />   
+               
         </link>
         <xacro:default_gazebo name="${name}" material="${material}" />
 	</xacro:macro>
@@ -387,7 +387,7 @@
         <material name="yellow2">
         <color rgba="0.8 0.8 0 1.0"/>
       </material>
-      <origin rpy="0 1.57 0" xyz="0 0 0"/><!--<origin rpy="0 1.57 0" xyz="0 0 0"/>-->
+      <origin rpy="0 1.57 1.57" xyz="0 0 0"/><!--<origin rpy="0 1.57 0" xyz="0 0 0"/>-->
     </visual>
   </link>
   
@@ -399,7 +399,7 @@
         <material name="yellow2">
         <color rgba="0.8 0.8 0 1.0"/>
       </material>
-      <origin rpy="-1.57 0 0" xyz="0 0 0"/>
+      <origin rpy="1.57 3.14 0" xyz="0 0 0"/>
     </visual>
   </link>
   
@@ -411,7 +411,7 @@
         <material name="green">
         <color rgba="0.1 0.8 0 0.8"/>
       </material>
-      <origin rpy="3.14 3.14 0" xyz="0 0 0"/>
+      <origin rpy="3.14 0 0" xyz="0 0 -0.025"/>
     </visual>
 </link>
   
@@ -423,7 +423,7 @@
         <material name="green">
         <color rgba="0.1 0.8 0 1"/>
       </material>
-      <origin rpy="-1.57 -2.3 0" xyz="0 0.12 0"/>
+      <origin rpy="0 1.57 0" xyz="0.12 0 0"/>
     </visual></link>
 
   <link name="shoulder_bracket_link" >
@@ -434,12 +434,12 @@
          <material name="green">
         <color rgba="0.1 0.8 0 0.8"/>
         </material>
-      <origin rpy="0 0 -1.57" xyz="0 0 -0.07"/>
+      <origin rpy="0 3.14 3.14" xyz="0.06 0 -0.015"/>
     </visual>
   </link>
 
   <!-- wrist_pan_ joint--> 
-  <xacro:ax12 name="wrist_pan_servo" xyz="0 0 0" rpy="0 -0.6 0" />
+  <xacro:ax12 name="wrist_pan_servo" xyz="0 0 0" rpy="0 0 0" />
   <xacro:F3_bracket name="wrist_pan_servo_bracket_f3" xyz="0 0.005 0" rpy="1.57 0 0" />
  <!-- <xacro:F3_bracket name="wrist_pan_servo_bracket2_f3" xyz="0 0 0" rpy="0 -1.57 0" />-->
     
@@ -547,6 +547,16 @@
       <origin rpy="1.57 0 1.57" xyz="0 0 0"/>
     </visual>
   </link>
+
+  <link name="head_link_fake">
+      <inertial>
+        <mass value="0.0001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+                 iyy="0.0001" iyz="0.0"
+                 izz="0.0001" />
+      </inertial>
+    </link>
  
   <link name="chest_link" >
    <visual>
@@ -617,54 +627,54 @@
 	<joint name="right_arm_tilt_joint" type="revolute">
     <parent link="chest_link"/>
     <child link="right_arm_tilt_link"/>
-    <origin xyz="-0.02 -0.23 0.13" rpy="0 0 1.57" />
-    <axis xyz="0 1 0" />
-   <limit lower="0" upper="1.5" effort="10" velocity="0" />
+    <origin xyz="-0.02 -0.24 0.12" rpy="-1.57 0 0" />
+    <axis xyz="1 0 0" />
+   <limit lower="0" upper="1.57" effort="10" velocity="0" />
   </joint>
   
   <joint name="right_arm_lift_joint" type="revolute">
     <parent link="right_arm_tilt_link"/>
     <child link="right_lift_link"/>
-    <origin xyz="-0.045 0 -0.03" rpy="1.57 0 0" />
-    <axis xyz="-1 0 0" />
-   <limit lower="0" upper="3" effort="10" velocity="0" />
+    <origin xyz="-0.015 -0.058 -0.03" rpy="0 0 0" />
+    <axis xyz="0 1 0" />
+   <limit lower="-1.57" upper="1.8" effort="10" velocity="0" />
   </joint>
   
   <joint name="right_bicep" type="fixed">
     <parent link="right_lift_link"/>
     <child link="shoulder_bracket_link"/>
-    <origin xyz="-0.05 -0.03 0.05" rpy="0 -0.5 1.57" /><!--pitch will adjust bicep angle0.9  x is in out y is- down-->
-    <axis xyz="-1 0 0" />
+    <origin xyz="-0.05 -0.04 0.05" rpy="0 0 0" /><!--pitch will adjust bicep angle0.9  x is in out y is- down-->
+    
   </joint>
 
   <joint name="right_rotate_gear" type="fixed">
     <parent link="shoulder_bracket_link"/>
     <child link="right_rotate_link"/>
-    <origin xyz="-0.02 -0.04 -0.03" rpy="0 0 0 " /><!--done-->
-    <axis xyz="-1 0 0" />
+    <origin xyz="0.085 0.045 -0.034" rpy="0 0 0 " />
+    
   </joint>
   
   <joint name="right_arm_rotate_joint" type="revolute">
     <parent link="right_rotate_link"/>
     <child link="right_elbow_link"/>
-    <origin xyz="-0.115 0.06 0.0" rpy="0 0 0 " />
-    <axis xyz="-1 0 0" />
-   <limit lower=".02" upper="3" effort="10" velocity="0" /><!--angle out a little-->
+    <origin xyz="0.115 -0.05 -0.0" rpy="-1.57 0 0 " />
+    <axis xyz="1 0 0" />
+   <limit lower="-3.14" upper="0" effort="10" velocity="0" />
   </joint>
   
   <joint name="right_arm_elbow_joint" type="revolute">
     <parent link="right_elbow_link"/>
     <child link="right_forearm_link"/>
-    <origin xyz="-0.16 -0. -0.037" rpy="0 0 1.5" />
+    <origin xyz="0.16 0 0." rpy="0 0 0" />
     <axis xyz="0 0 1" />
-   <limit lower="0.0" upper="1.9" effort="10" velocity="0" />
+   <limit lower="-1.57" upper="0.50" effort="10" velocity="0" />
   </joint>
 
   <!--right_arm_wrist_pan_joint-->
   <joint name="right_arm_wrist_pan_bracket" type="fixed">
     	<parent link="right_forearm_link" />
     	<child link="wrist_pan_servo" />
-    	<origin xyz="0.015 0.3 0.0" rpy="0 0 0" />
+    	<origin xyz="0.3 0.02 0.025" rpy="0 0 -1.57" /><!--now-->
     	
 	</joint>
   <joint name="right_arm_wrist_pan_joint" type="revolute">
@@ -672,7 +682,7 @@
     	<child link="wrist_pan_servo_bracket_f3" />
     	<origin xyz="0. 0.015 0.0" rpy="0 1.57 0" />
         <axis xyz="0 1 0" />
-    	<limit lower="-1.57" upper="1.57" effort="10" velocity="0" />
+    	<limit lower="-2.61" upper="2.61" effort="10" velocity="0" />
       	<dynamics damping="0.0"/>
 	</joint>   
 
@@ -700,13 +710,13 @@
   <joint name="right_arm_gripper_bracket" type="fixed">
     	<parent link="wrist_tilt_bracket_f2" />
     	<child link="gripper_bracket_f3" />
-    	<origin xyz="0.0 0.025 -0.015" rpy="0 0 0" />
+    	<origin xyz="0.0 0.025 0.015" rpy="0 0 0" />
 	</joint> 
 
    <joint name="right_arm_gripper_servo" type="fixed">
     	<parent link="gripper_bracket_f3" />
     	<child link="gripper_servo" />
-    	<origin xyz="0.0 0.02 0.02" rpy="0 0 0" />
+    	<origin xyz="0.0 0.02 -0.02" rpy="0 3.14 0" />
 	</joint>
 
 
@@ -716,7 +726,7 @@
     	<child link="gripper_bracket_f2" />
     	<origin xyz="0 0.0 0.0" rpy="0 0 0" />
         <axis xyz="1 0 0" />
-    	<limit lower="-0.98" upper="0.15" effort="10" velocity="0" />
+    	<limit lower="-0.36" upper="0.28" effort="10" velocity="0" />
       	<dynamics damping="0.0"/>
 	</joint> 
 
@@ -744,12 +754,22 @@
     	<origin xyz="0 0 0.27" rpy="0 0 0" />
 	</joint>
 <!-- Head tilt joint-->
-  <joint name="head_tilt_joint" type="revolute">
+  <joint name="head_tilt_mod_joint" type="revolute">
     	<parent link="head_tilt_bracket" />
     	<child link="head_tilt_link" />
     	<origin xyz="0 0 0.0" rpy="0 0 0" />
     	<axis xyz="0 1 0" />
-    	<limit lower="-1.57" upper="1.57" effort="10" velocity="0" />
+    	<limit lower="-2.6" upper="2.6" effort="10" velocity="0" />
+      	<dynamics damping="0.0"/>
+	</joint>
+
+<!-- Head tilt joint fake-->
+  <joint name="head_tilt_joint" type="revolute">
+    	<parent link="head_tilt_bracket" />
+    	<child link="head_link_fake" />
+    	<origin xyz="0 0 0.0" rpy="0 0 0" />
+    	<axis xyz="0 1 0" />
+    	<limit lower="-2.6" upper="2.6" effort="10" velocity="0" />
       	<dynamics damping="0.0"/>
 	</joint>
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import roslib; roslib.load_manifest('robbie')
+
 import rospy
 import smach
 import smach_ros

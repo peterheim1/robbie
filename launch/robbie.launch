@@ -37,6 +37,9 @@
  <!-- Start move base-->
      <include file="$(find robbie)/launch/move_base.launch"/>
 
+  <!-- Start moveit 
+     <include file="$(find robbie)/launch/robbie_moveit.launch"/>
+-->
 <!-- launch Face tracker
   <include file="$(find robbie)/launch/face_tracker_kinect.launch"/>
 -->

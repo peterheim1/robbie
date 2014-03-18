@@ -129,7 +129,9 @@ class OneSideGripperModel:
     def setCommand(self, command):
         """ Take an input command of width to open gripper. """
         # compute angle
-        angle = asin((command.position - self.pad_width)/(2*self.finger_length))
+        #angle = asin((command.position - self.pad_width)/(2*self.finger_length))
+        rospy.logwarn(command.position)
+        angle = command.position
         # publish message
         if self.invert:
             self.pub.publish(-angle + self.center)

@@ -12,7 +12,7 @@ exit also works
 
 '''
 
-import roslib; roslib.load_manifest('robbie')
+
 import rospy
 import actionlib
 

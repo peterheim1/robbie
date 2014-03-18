@@ -16,6 +16,7 @@ from std_msgs.msg import String
 from festival.srv import *
 from datetime import datetime, timedelta
 from time import localtime, strftime
+from moveit_commander import MoveGroupCommander
 #from nltk_interpret.srv import *
 from robbie.forex import *
 #import forex
@@ -30,7 +31,8 @@ class Greeting():
         rospy.Subscriber("/face_recognition/feedback", FaceRecognitionActionFeedback, self._feedback)
         rospy.Subscriber("/nltk_interpret", String, self.nltk_callback)
         #self.client.wait_for_server()
-        
+        #self.right_arm = MoveGroupCommander("right_arm")
+        #self.head = MoveGroupCommander("head")
         #define afternoon and morning
         self.noon = strftime("%p:", localtime())
         if self.noon == "AM:":
