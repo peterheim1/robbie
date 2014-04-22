@@ -10,6 +10,9 @@ add_service_files(FILES
    Relax.srv
    TorqueEnable.srv
    Parse.srv
+   AskInfo.srv
+   InternetService.srv
+
  )
 
 generate_messages(DEPENDENCIES std_msgs)

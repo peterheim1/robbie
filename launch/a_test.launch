@@ -1,13 +1,40 @@
 <launch>
 
+<!--
+use this to launch the AI
+robot control
+questions 
+chat
+
+-->
+
   <!-- Launch festival text-to-speech node -->
     <node pkg="festival" type="speak_text.py" name="speak_text_service" output="screen" />
 
-<!-- Launch a node to push terminal input instead of speech recognition -->
+  <!-- Launch a node to push terminal input instead of speech recognition -->
     <node pkg="robbie" type="terminal_input.py" name="terminal_input" output="screen" >
     </node>
   <!-- Launch a node that manages the conversation with the human -->
-    <node pkg="robbie" type="greeting.py" name="robbie_brain" />
+    <node pkg="robbie_chat" type="robbie_chat.py" name="robbie_chatter_box" />
+
+
+  <!-- Launch a node that manages the conversation with the human 
+    <node pkg="robbie" type="greeting.py" name="master_control_program" />
+-->
+  <!-- node to define actions and commands-->
+  <node pkg="nltk_parser" type="nltk_parser.py" name="nltk_parser_service" output="screen" >
+        <param name="grammar_path" value="$(find nltk_parser)" />
+        <param name="grammar_name" value="language.cfg" />
+    </node>
+
+    <node pkg="nltk_parser" type="nltk_interpret.py" name="nltk_interpret" output="screen" />
+
+  <!-- Launch a node that manages user questions -->
+    <node pkg="robbie" type="questions.py" name="questions" />
+
+  <!-- Launch a node that manages plugin system -->
+    <node pkg="robbie" type="plugin_system.py" name="plugin_managar" />
+    <node name="robbie_internet_services" pkg="robbie" type="internet_services.py" />
 
 
   

@@ -19,6 +19,7 @@ from time import localtime, strftime
 from moveit_commander import MoveGroupCommander
 #from nltk_interpret.srv import *
 from robbie.forex import *
+from robbie.questions import *
 #import forex
 
 
@@ -27,12 +28,10 @@ class Greeting():
         
         self.client = actionlib.SimpleActionClient('face_recognition', face_recognition.msg.FaceRecognitionAction)
         self._NamePublisher = rospy.Publisher("name", String)
+        self._chatPublisher = rospy.Publisher("quest_talk", String)
         rospy.Subscriber("/speech_text", String, self.speech_callback)
-        rospy.Subscriber("/face_recognition/feedback", FaceRecognitionActionFeedback, self._feedback)
-        rospy.Subscriber("/nltk_interpret", String, self.nltk_callback)
-        #self.client.wait_for_server()
-        #self.right_arm = MoveGroupCommander("right_arm")
-        #self.head = MoveGroupCommander("head")
+        rospy.Subscriber("/face_detect", String, self.face_callback)
+        self.found = "none"
         #define afternoon and morning
         self.noon = strftime("%p:", localtime())
         if self.noon == "AM:":
@@ -53,21 +52,27 @@ class Greeting():
 
         self.speak_text_service(self.noon1 + "  Robbie is on line" + " the time is   " + self.local)
 
-    def speech_callback(self,text):
-        self.hold = text.data
-        if self.hold == "good morning":
+    def face_callback(self,text):
+        self.found = text.data
+        if self.found == "found":
+            #recognise once
             goal = face_recognition.msg.FaceRecognitionGoal(order_id=1, order_argument="none")
             self.client.send_goal(goal)
-            time.sleep(0.2)
-            #self.hold = "good morning tim"
-            goal = face_recognition.msg.FaceRecognitionGoal(order_id=0, order_argument="none")
-            self.client.send_goal(goal)
-        elif self.hold == "hello":
-            self.hold = forex.ForeX()
-        rospy.logwarn(str(self.hold))
+        
+    def speech_callback(self,text):
+        self.hold = text.data
+        matchObj = re.match( r'^robbie', self.hold, re.M|re.I)
+        if matchObj:
+            self.speak_text_service(self.noon1 + " the time is   " + self.local)
+            # send sentence to NLTK /nltk_parse
+        else:
+            self._chatPublisher.publish(self.hold)
+            #send to chat robbie chat
 
     def _feedback(self, text):
-            
+            '''
+            feed back after face is recognsed
+            '''
             self.name = text.feedback.names 
             self.confidence = text.feedback.confidence
             #rospy.loginfo(self.confidence[0])
@@ -83,6 +88,9 @@ class Greeting():
             self._NamePublisher.publish(self.name1)
 
     def _add_face(self, name):
+        '''
+        add face images to files
+        '''
         goal = face_recognition.msg.FaceRecognitionGoal(order_id=2, order_argument=name)
         self.client.send_goal(goal)
         self.speak_text_service(name + " " +" plase wait while I add your name")
@@ -90,6 +98,9 @@ class Greeting():
         self._train_database()
 
     def _train_database(self):
+        '''
+        add face images to database
+        '''
         goal = face_recognition.msg.FaceRecognitionGoal(order_id=3, order_argument="none")
         self.client.send_goal(goal)
         time.sleep(0.2)
@@ -116,6 +127,7 @@ class Greeting():
     def Stop(self):
 	rospy.logdebug("Stopping")
         self.speak_text_service("Robbie's brain is going to sleep")
+        
 
    
         
@@ -123,9 +135,10 @@ class Greeting():
 if __name__ == '__main__':
     try:
         st = Greeting()
-        rospy.init_node('Greeting_node')
+        rospy.init_node('master_AI')
         rospy.spin()
     except rospy.ROSInterruptException:
+        st.stop()
         pass
 
     

@@ -23,21 +23,21 @@ if __name__=='__main__':
     # clean the scene
     scene.remove_world_object("table")
     scene.remove_world_object("part")
-
-    right_arm.set_named_target("start1")
+    rospy.logwarn("ready")
+    right_arm.set_named_target("ready")
     right_arm.go()
    
-    right_gripper.set_named_target("open")
-    right_gripper.go()
+    #right_gripper.set_named_target("open")
+    #right_gripper.go()
    
-    rospy.sleep(1)
+    rospy.sleep(3)
 
     # publish a demo scene
     p = PoseStamped()
     p.header.frame_id = robot.get_planning_frame()
 
     # add a table
-    p.pose.position.x = 0.7
+    p.pose.position.x = 0.85
     p.pose.position.y = 0.2
     p.pose.position.z = 0.3
     scene.add_box("table", p, (0.7, 1, 0.7))
@@ -48,29 +48,27 @@ if __name__=='__main__':
     p.pose.position.z = 0.7
     scene.add_box("part", p, (0.07, 0.01, 0.2))
    
-    rospy.sleep(1)
-   
+    rospy.sleep(3)
+    rospy.logwarn("moving to test")
     grasps = []
    
     g = Grasp()
     g.id = "test"
     grasp_pose = PoseStamped()
     grasp_pose.header.frame_id = "base_link"
-    grasp_pose.pose.position.x = 0.545478343964
-    grasp_pose.pose.position.y = -0.189870148897
-    grasp_pose.pose.position.z = 0.794633567333
-    grasp_pose.pose.orientation.x = -0.458892136812
-    grasp_pose.pose.orientation.y = -0.532931387424
-    grasp_pose.pose.orientation.z = -0.475872814655
-    grasp_pose.pose.orientation.w = -0.528154551983
+    grasp_pose.pose.position.x = 0.47636
+    grasp_pose.pose.position.y = -0.21886
+    grasp_pose.pose.position.z = 0.7164
+    grasp_pose.pose.orientation.x = 0.00080331
+    grasp_pose.pose.orientation.y = 0.001589
+    grasp_pose.pose.orientation.z = -2.4165e-06
+    grasp_pose.pose.orientation.w = 1
 
-
-
-   
+    rospy.logwarn("moving to arm")
     right_arm.set_pose_target(grasp_pose)
     right_arm.go()
    
-    rospy.sleep(2)
+    rospy.sleep(3)
    
     # set the grasp pose
     g.grasp_pose = grasp_pose
@@ -83,7 +81,7 @@ if __name__=='__main__':
     g.pre_grasp_approach.min_distance = 0.001
     g.pre_grasp_approach.desired_distance = 0.1
    
-    g.pre_grasp_posture.header.frame_id = "right_arm_gripper_bracket"
+    g.pre_grasp_posture.header.frame_id = "wrist_tilt_bracket_f2"
     g.pre_grasp_posture.joint_names = ["right_arm_gripper_joint"]
    
     pos = JointTrajectoryPoint()
@@ -92,7 +90,7 @@ if __name__=='__main__':
     g.pre_grasp_posture.points.append(pos)
    
     # set the grasp posture
-    g.grasp_posture.header.frame_id = "right_arm_gripper_bracket"
+    g.grasp_posture.header.frame_id = "wrist_tilt_bracket_f2"
     g.grasp_posture.joint_names = ["right_arm_gripper_joint"]
 
     pos = JointTrajectoryPoint()
@@ -112,12 +110,12 @@ if __name__=='__main__':
     g.allowed_touch_objects = ["table"]
 
     g.max_contact_force = 0
-   
+    
     # append the grasp to the list of grasps
     grasps.append(g)
 
     rospy.sleep(2)
-
+    rospy.logwarn("pick part")
     # pick the object
     robot.right_arm.pick("part", grasps)
 

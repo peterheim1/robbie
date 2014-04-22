@@ -41,12 +41,25 @@ from geometry_msgs.msg import PoseStamped
 from moveit_msgs.msg import Grasp, GripperTranslation, PlaceLocation
 from trajectory_msgs.msg import JointTrajectoryPoint
 
-if __name__=='__main__':
 
-  group = MoveGroupCommander("head")
+def main():
+    rospy.init_node('moveit_py_demo', anonymous=True)
+    new =[0.0555, 0.0]
+    group = MoveGroupCommander("head")
+    right_arm = MoveGroupCommander("right_arm")
   
-  # move to a random target
-  group.set_named_target("down")
-  group.go()
+    # move to a random target
+    #group.set_named_target("ahead")
+    #group.go()
+    #rospy.sleep(1)
+    right_arm.set_named_target("high")
+    right_arm.go()
+    rospy.sleep(1)
+
+
+if __name__=='__main__':
+    main()
+
+  
 
   

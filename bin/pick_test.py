@@ -30,7 +30,7 @@ if __name__=='__main__':
     #rospy.sleep(1)
 
    
-    right_arm.set_position_target([.75,-0.3, 0.9])
+    right_arm.set_position_target([.75,-0.3, 1])
     right_arm.go()
     rospy.sleep(1)
 

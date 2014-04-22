@@ -22,8 +22,8 @@ This is the launch file for robbies arm for testing
    <node name="right_arm" pkg="robbie" type="right_Shoulder.py">
     <rosparam file="$(find robbie)/params/arms.yaml" command="load" />
    </node>
-
-  <node name="neck" pkg="robbie" type="neck_tilt.py"/>
+<!--
+  <node name="neck" pkg="robbie" type="neck_tilt.py"/>-->
 
  <!-- start action servers  --> 
      <include file="$(find robbie)/launch/action.launch"/>
