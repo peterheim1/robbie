@@ -61,7 +61,7 @@ class FollowController():
            
         #self.rate = 50.0 #rospy.get_param('~controllers/'+name+'/rate',50.0)
         #self.joints = rospy.get_param('~' + self.ns + '/arm_joints')
-        self.joints = ['right_arm_elbow_joint', 'right_arm_lift_joint', 'right_arm_rotate_joint', 'right_arm_tilt_joint', 'right_arm_wrist_pan_joint', 'right_arm_wrist_tilt_joint']
+        self.joints = ['right_arm_elbow_joint', 'right_arm_lift_joint', 'right_arm_rotate_joint', 'right_arm_tilt_joint', 'right_arm_wrist_pan_joint', 'right_arm_wrist_tilt_joint', 'right_arm_pan_joint']
         namespace = rospy.get_namespace()
         #self.joints = rospy.get_param('right_arm/joints', '')
         #self.joints = rospy.get_param('~controllers/'+name+'/joints')

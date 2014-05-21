@@ -5,7 +5,7 @@ This is the launch file foe the inmoov arm
 -->
   
 
- <node name="right_arm" pkg="robbie" type="right_Shoulder.py">
+ <node name="right_arm" pkg="robbie" type="hector_shoulder.py">
     <rosparam file="$(find robbie)/params/arms.yaml" command="load" />
      </node>
   <!-- Start the Dynamixel Joint States Publisher -->

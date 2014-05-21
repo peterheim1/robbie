@@ -5,7 +5,7 @@ This is the launch file for robbies arm for testing
 -->
 
  <!-- Load the URDF/Xacro model of our robot -->
-	<param name="robot_description" command="$(find xacro)/xacro.py '$(find robbie)/urdf/robbie5.xacro'" />
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find robbie)/urdf/robbie7.xacro'" />
 
 
 <!-- Start the Dynamixel Joint States Publisher -->
@@ -19,11 +19,11 @@ This is the launch file for robbies arm for testing
    <!-- start the dynamixel servos --> 
      <include file="$(find robbie)/launch/dynamixels.launch"/>
 
-   <node name="right_arm" pkg="robbie" type="right_Shoulder.py">
+   <node name="right_arm" pkg="robbie" type="hector_shoulder.py">
     <rosparam file="$(find robbie)/params/arms.yaml" command="load" />
    </node>
-<!--
-  <node name="neck" pkg="robbie" type="neck_tilt.py"/>-->
+
+<!--  <node name="neck" pkg="robbie" type="neck_tilt.py"/>-->
 
  <!-- start action servers  --> 
      <include file="$(find robbie)/launch/action.launch"/>
