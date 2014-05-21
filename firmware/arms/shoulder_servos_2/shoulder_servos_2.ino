@@ -81,7 +81,7 @@ void setup()
    Wire.begin();
    Serial.begin(115200);
   _Messenger.attach(OnMssageCompleted);
-  analogReference(INTERNAL2V56); // use AREF for reference voltage
+//analogReference(EXTERNAL); // use AREF for reference voltage
 
 // Attach Servos
 //Right_Shoulder_tilt.attach(49);//not realy working
