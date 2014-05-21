@@ -1,0 +1,4 @@
+<launch>
+    <node pkg="robbie" name="node_Hark" type="2_HARK.sh"/>
+    <node pkg="robbie" name="Hark_julius" type="1_julius.sh"/>
+</launch>

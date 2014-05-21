@@ -16,13 +16,13 @@
 	<param name="frame_rate" value="15.0" />	
 	<param name="absolue_exposure" value="100"/>
     </node>
--->
+
 
    
   <node name="rosbridge" pkg="rosbridge" type="rosbridge.py" output="screen" />
 
   <node name="mjpeg_server" pkg="mjpeg_server" type="mjpeg_server" output="screen" />
-
+-->
   <!-- Launch pocketsphinx for speech recognition 
     <node pkg="pocketsphinx" type="speech_text.py" name="speech_text" output="screen" >
         <param name="lm_path" value="$(find pocketsphinx)/model/mini_meet_greet2/" />

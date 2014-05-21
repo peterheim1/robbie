@@ -5,20 +5,20 @@
     <node pkg="festival" type="speak_text.py" name="speak_text_service" output="screen" />
 
 <!-- Launch a node to push terminal input instead of speech recognition -->
-    <node pkg="pocketsphinx" type="terminal_input.py" name="terminal_input" output="screen" >
+    <node pkg="robbie" type="terminal_input.py" name="terminal_input" output="screen" >
     </node>
 
 <!-- Launch a node that republishes the output of NLTK as a string (representation of a parse tree) 
-  <node pkg="nltk_parser" type="nltk_parser.py" name="nltk_parser_service" output="screen" >-->
+  <node pkg="nltk_parser" type="nltk_parser.py" name="nltk_parser_service" output="screen" >
    <node pkg="nltk_parser" type="language.py" name="simple_chart_parser" output="screen" >
         <param name="grammar_path" value="$(find nltk_parser)" />
         <param name="grammar_name" value="language.cfg" />
     </node>
 
-
-<!-- Node that republishes the output of language.py to be useful for meet_greet_demo -->
+-->
+<!-- Node that republishes the output of language.py to be useful for meet_greet_demo 
     <node pkg="nltk_interpret" type="nltk_interpret.py" name="nltk_interpret" output="screen" />
-
+-->
 
 <!-- Launch battery monitor 
     <node pkg="robbie" type="charge_me.py" name="battery_monitor_service" output="screen" />
@@ -33,10 +33,10 @@
   <!-- Launch Face recognition-->
        
 
-   <!-- start meet and greet  -->
-   <!-- Launch a node that manages the conversation with the human -->
+   <!-- start master  -->
+   <!-- Launch a node that manages the conversation with the human 
     <node pkg="robbie_ai" type="meet_greet_demo.py" name="robbie_greet_demo" output="screen" />
 
-   
+   -->
    
 </launch>

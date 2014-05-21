@@ -1,0 +1,23 @@
+<launch>
+
+  
+  <!-- start the arm control  -->
+     <include file="$(find robbie)/launch/arm_test.launch"/>
+
+  <!-- start moveit  -->
+     <include file="$(find robbie)/launch/robbie_moveit.launch"/>
+
+  <!-- start voice and ears  -->
+     <include file="$(find robbie)/launch/a_test.launch"/>
+
+  <!-- start the kinect and laser --> 
+     <include file="$(find robbie)/launch/openni.launch"/>
+
+  <!-- start the kinect head cam  -->
+     <include file="$(find robbie)/launch/openni2.launch"/>
+
+
+
+
+
+</launch>

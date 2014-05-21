@@ -29,10 +29,15 @@
               --type=simple
         head_pan_joint
         head_tilt_joint
+        right_arm_wrist_pan_joint
+        right_arm_wrist_tilt_joint
+        right_arm_gripper_joint
         "
         output="screen" />
+<!-- node to republish neck tilt with gearing-->
         
-   
+    <node name="neck" pkg="robbie" type="neck_tilt.py"/>
+
    <!-- Start the Dynamixel Joint States Publisher 
    <node name="dynamixel_joint_states_publisher" pkg="omni_bot" type="dynamixel_joint_state_publisher.py" output="screen" />
 -->
