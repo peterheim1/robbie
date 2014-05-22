@@ -19,13 +19,16 @@ turn off motor driver when not moving
 #include <Wire.h>
 #include "Arduino.h"
 #include <I2C_Anything.h>
-#define Right_tilt_pwm			9
-#define Right_tilt_in1			4
-#define Right_tilt_in2			5
+#include "DualVNH5019MotorShield.h"
+
+DualVNH5019MotorShield md;
+
 // change to actuator
-//int MinVal = 10;
-double target_pos = 180;
-const byte MY_ADDRESS = 46;
+int MinVal = 500;
+int MaxVal = 1750;
+double angle ;
+double target_pos = 900;
+const byte MY_ADDRESS = 40;
 
 double Encoder_Position  = 0;
 double Right_pwm = 0;
@@ -37,10 +40,9 @@ unsigned long CurrentTime = 0;
 int FrameRate = 30;
 
 //volatile boolean haveData = false;
-volatile long Target = 20;
+volatile long Target = 8;//why 550 
 
-PID Right_tilt(&Encoder_Position, &Right_pwm, &target_pos, 1.0,0.05,0.00, DIRECT);
-//PID Right_tilt(&Encoder_Position, &Right_pwm, &target_pos, 3.5,0.09,0.001, DIRECT);
+PID Right_tilt(&angle, &Right_pwm, &target_pos, 10,3,0, DIRECT);
 /*
 ##############################################################################
 ##############################################################################
@@ -58,11 +60,8 @@ void setup()
   Serial.begin (57600);
   Wire.onReceive (receiveEvent); //recieve target from master
   Wire.onRequest(requestEvent); // send data to master
-  TCCR1B = TCCR1B & 0b11111000 | 0x01 ;
-
-  pinMode(Right_tilt_in1, OUTPUT);
-  pinMode(Right_tilt_in2, OUTPUT);
-  pinMode(Right_tilt_pwm, OUTPUT);
+  
+  md.init();
   Right_tilt.SetMode(AUTOMATIC);
 }  // end of setup
 /*
@@ -80,16 +79,24 @@ void setup()
 void loop()
 {
   Encoder_Position =  analogRead(0);
+  angle  = map(Encoder_Position, 0, 1023, 0, 1800);
+  //int angleT  = map(target_pos, 0, 1023, 0, 300);
+  Right_Gap = (target_pos - angle)*0.1;
+  //int error = target_pos - angle;
+  
   
   Serial.print(MY_ADDRESS);
   Serial.print(" ");
   Serial.print(target_pos);
   Serial.print(" ");
+  Serial.print(angle);
+  Serial.print(" ");
+  Serial.print(Right_Gap);
+  Serial.print(" ");
   Serial.print(Encoder_Position);
  
   Serial.println(" ");
 
-  Right_Gap = target_pos - Encoder_Position;
   
   //pid timing loop
   milliSecsSinceLastUpdate = millis() - CurrentTime;
@@ -111,7 +118,13 @@ void receiveEvent (int howMany)
      
    I2C_readAnything (Target); 
    target_pos = Target; 
+   if (target_pos < MinVal){
+    target_pos == MinVal;}
+   if (target_pos > MaxVal){
+    target_pos == MaxVal;}
    
+   
+   //haveData = true;     
    }  // end if have enough data
  }  // end of receiveEvent
 
@@ -119,6 +132,7 @@ void requestEvent()
 {
  
   sendSensor (A0);//sends current position
+  //angle;
  
 }
 // sends data back to master
@@ -134,27 +148,20 @@ void sendSensor (const byte which)
 
 void Right_drive()
 {
-  
+  int gap = abs(Right_Gap);
+  if (gap < 50)
+  {
+  Right_tilt.SetTunings(3, 0.1, 0);
+  }
+  else
+  {
+    Right_tilt.SetTunings(5, 0, 0);
+  }
   Right_tilt.Compute();
-  Right_tilt.SetOutputLimits(-250 ,250);//reduce speed to minamize bounce
+  Right_tilt.SetOutputLimits(-400 ,400);
   
-  if (Right_pwm < 0){
-    digitalWrite(Right_tilt_in1, HIGH);
-    digitalWrite(Right_tilt_in2, LOW);
-    int right_power = abs(Right_pwm);
-    if (right_power < 70) 
-    {right_power = 0;}
-    analogWrite(Right_tilt_pwm, right_power);
+    md.setM1Speed(Right_pwm);
   }
-  
-  if (Right_pwm > 0){
-    digitalWrite(Right_tilt_in1, LOW);
-    digitalWrite(Right_tilt_in2, HIGH);
-    int right_power = abs(Right_pwm);
-    if (right_power < 70) 
-    {right_power = 0;}
-    analogWrite(Right_tilt_pwm, right_power);
-  }
-}
+
   
 
