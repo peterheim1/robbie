@@ -1,5 +1,5 @@
 dynamixels: ['head_pan_joint', 'head_tilt_joint']
-joints: ['head_pan_joint', 'head_tilt_joint', 'head_tilt_mod_joint', 'right_arm_tilt_joint', 'right_arm_lift_joint', 'right_arm_rotate_joint', 'right_arm_elbow_joint', 'right_arm_wrist_tilt_joint', 'right_arm_wrist_pan_joint', 'right_arm_gripper_joint']
+joints: ['head_pan_joint', 'head_tilt_joint', 'head_tilt_mod_joint', 'right_arm_pan_joint', 'right_arm_tilt_joint', 'right_arm_lift_joint', 'right_arm_rotate_joint', 'right_arm_elbow_joint', 'right_arm_wrist_tilt_joint', 'right_arm_wrist_pan_joint', 'right_arm_gripper_joint']
 
 
 

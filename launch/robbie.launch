@@ -37,15 +37,15 @@
  <!-- Start move base-->
      <include file="$(find robbie)/launch/move_base.launch"/>
 
-  <!-- Start moveit--> 
+  <!-- Start moveit
      <include file="$(find robbie)/launch/robbie_moveit.launch"/>
-
+-->
   <!-- start the AI system   -->
   <include file="$(find robbie)/launch/a_test.launch"/>
 
-<!-- launch Face tracker-->
+<!-- launch Face tracker
   <include file="$(find robbie)/launch/face_tracker2.launch"/>
-
+-->
    <!-- launch head tracking
    <include file="$(find robbie)/launch/tf_head_tracker.launch"/>
 -->

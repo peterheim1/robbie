@@ -42,7 +42,7 @@
 <link name="upper_torso" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/upper_torso2.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/upper_torso2.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
          <material name="green">
         <color rgba="0.1 0.8 0 0.8"/>
@@ -55,7 +55,7 @@
   <link name="waist_bottom" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/bottom torso.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/bottom torso.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
           <xacro:cyan3 />
       <origin rpy="1.57 0 1.57" xyz="-0.12 -0.29 -0.5"/>
@@ -66,7 +66,7 @@
   <link name="waist_left" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/waist top lower left.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/waist top lower left.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
           <xacro:cyan3 />
       <origin rpy="0 3.14 3.14" xyz="0 0 0"/>
@@ -76,7 +76,7 @@
   <link name="waist_right" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/waist top lower right.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/waist top lower right.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
           <xacro:cyan3 />
       <origin rpy="0 3.14 3.14" xyz="0 0 0"/>
@@ -86,7 +86,7 @@
   <link name="waist_left_mid" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/waist top upper left.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/waist top upper left.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
           <xacro:cyan3 />
       <origin rpy="0 3.14 3.14" xyz="0 0 0"/>
@@ -96,7 +96,7 @@
   <link name="waist_right_mid" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/waist top upper right.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/waist top upper right.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
           <xacro:cyan3 />
       <origin rpy="0 3.14 3.14" xyz="0 0 0"/>
@@ -107,7 +107,7 @@
 <link name="right_shoulder_gear" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/gear_box.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/gear_box.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <material name="OffWhite">
        <color rgba="0.8 0.8 0.8 0.9"/>
@@ -118,7 +118,7 @@
   <link name="right_shoulder_pan" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/shoulder_pan_gear.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/shoulder_pan_gear.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:yellow2 />
       <origin rpy="0 0 -1.57" xyz="-0.05 0.05 0.0"/>
@@ -128,7 +128,7 @@
   <link name="right_shoulder_tilt" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/elbow_pivot.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/elbow_pivot.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:yellow2 />
       <origin rpy="0 0 1.57" xyz="-0.045 0.02 -0.03"/>
@@ -138,7 +138,7 @@
   <link name="right_shoulder_bracket" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/shoulder_lift_bracket.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/shoulder_lift_bracket.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:yellow2 />
       <origin rpy="0 1.57 1.57" xyz="0 0 0"/>
@@ -148,7 +148,7 @@
   <link name="right_shoulder_lift" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/gear_box.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/gear_box.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <material name="OffWhite">
        <color rgba="0.8 0.8 0.8 0.9"/>
@@ -160,7 +160,7 @@
   <link name="right_shoulder_lift2" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/arm_top_left.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/arm_top_left.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:yellow2 />
       <origin rpy="0 0 0" xyz="-0.105 0 -0.09"/>
@@ -170,7 +170,7 @@
   <link name="right_shoulder_mid" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/right_arm _middle front.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/right_arm _middle front.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:blue1 />
       <origin rpy="0 3.14 0" xyz="0 0 0"/>
@@ -180,7 +180,7 @@
   <link name="right_shoulder_lower" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/elbow_plug.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/elbow_plug.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:yellow2 />
       <origin rpy="0 0 0" xyz="-0.05 -0.05 0"/>
@@ -190,7 +190,7 @@
   <link name="right_shoulder_elbow" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/right_arm lower top.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/right_arm lower top.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:blue1 />
       <origin rpy="0 3.14 0" xyz="0 0 0"/>
@@ -200,7 +200,7 @@
   <link name="right_elbow_gearbox" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/gear_box.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/gear_box.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:yellow2 />
       <origin rpy="1.57 0 0" xyz="0 0 0"/>
@@ -210,7 +210,7 @@
   <link name="right_elbow" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/elbow_pivot.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/elbow_pivot.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:yellow2 />
       <origin rpy="3.14 0 0" xyz="0.025 -0.05 0.02"/>
@@ -220,7 +220,7 @@
   <link name="right_forearm_link">
     <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/fore_arm.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/fore_arm.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
         <xacro:yellow2 />
       <origin rpy="0 -1.57 0" xyz="0 0 0"/>
@@ -257,7 +257,7 @@
   <link name="left_shoulder_gear" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/gear_box.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/gear_box.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <material name="green">
         <color rgba="0.1 0.8 0 0.8"/>
@@ -269,7 +269,7 @@
  <link name="left_shoulder_pan" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/shoulder_pan_gear.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/shoulder_pan_gear.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:yellow2 />
       <origin rpy="0 0 -1.57" xyz="-0.05 0.05 0.0"/>
@@ -279,7 +279,7 @@
   <link name="left_shoulder_tilt" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/elbow_pivot.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/elbow_pivot.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:yellow2 />
       <origin rpy="0 0 -1.57" xyz="0.045 -0.02 -0.03"/>
@@ -289,7 +289,7 @@
   <link name="left_shoulder_bracket" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/shoulder_lift_bracket_left.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/shoulder_lift_bracket_left.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:yellow2 />
       <origin rpy="0 0 1.57" xyz="0 0 0"/>
@@ -299,7 +299,7 @@
   <link name="left_shoulder_lift" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/gear_box.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/gear_box.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <material name="OffWhite">
        <color rgba="0.8 0.8 0.8 0.9"/>
@@ -311,7 +311,7 @@
   <link name="left_shoulder_lift2" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/left_top_shoulder.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/left_top_shoulder.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:yellow2 />
       <origin rpy="0 0 3.14" xyz="0.08 0.07 -0.095"/>
@@ -321,7 +321,7 @@
   <link name="left_shoulder_mid" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/left_mid_front.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/left_mid_front.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:blue1 />
       <origin rpy="0 3.14 3.14" xyz="0 0 0"/>
@@ -332,7 +332,7 @@
   <link name="left_shoulder_lower" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/elbow_plug.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/elbow_plug.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:yellow2 />
       <origin rpy="0 0 0" xyz="-0.05 -0.05 0"/>
@@ -342,7 +342,7 @@
   <link name="left_shoulder_elbow" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/right_arm lower top.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/right_arm lower top.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:blue1 />
       <origin rpy="0 3.14 0" xyz="0 0 0"/>
@@ -352,7 +352,7 @@
   <link name="left_elbow_gearbox" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/gear_box.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/gear_box.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:yellow2 />
       <origin rpy="1.57 0 0" xyz="0 0 0"/>
@@ -362,7 +362,7 @@
   <link name="left_elbow" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/elbow_pivot.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/elbow_pivot.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:yellow2 />
       <origin rpy="3.14 0 0" xyz="0.025 -0.05 0.02"/>
@@ -372,7 +372,7 @@
   <link name="left_forearm_link">
     <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/fore_arm.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/fore_arm.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
         <xacro:yellow2 />
       <origin rpy="0 -1.57 0" xyz="0 0 0"/>
@@ -425,7 +425,7 @@
   <link name="head_link" >
    <visual>
       <geometry>
-        <mesh filename="package://robbie/meshes/head.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        <mesh filename="package://robbie/mesh/head.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
          <material name="grey1">
 	  <color rgba="0.75 0.75 0.75 1.0"/>
@@ -443,7 +443,59 @@
                  izz="0.0001" />
       </inertial>
     </link>
+  
+   <link name="kinect_link">
+      <inertial>
+        <mass value="1.0" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+                 iyy="1.0" iyz="0.0"
+                 izz="1.0" />
+      </inertial>
 
+      <visual>
+        <origin xyz=" 0 0 0 " rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robbie/meshes/kinect.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+        </geometry>
+        <xacro:ax12_color />
+      </visual>
+
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robbie/meshes/kinect.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+          </geometry>
+      </collision>
+
+    </link>
+
+  <link name="head_cam_link">
+      <inertial>
+        <mass value="1.0" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
+                 iyy="1.0" iyz="0.0"
+                 izz="1.0" />
+      </inertial>
+
+      <visual>
+        <origin xyz=" 0 0 0 " rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robbie/meshes/kinect.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+          
+        </geometry>
+          <xacro:grey3 />
+      </visual>
+
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+          <mesh filename="package://robbie/meshes/kinect.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
+          </geometry>
+      </collision>
+
+    </link>
 <!-- =================== Joint Definitions ==================== -->
   <joint name="base_link_joint" type="fixed">
     	<parent link="base_link" />
@@ -511,7 +563,7 @@
     	<origin xyz="0.0 0.03 0.01" rpy="0 0 0" />
 	</joint>
 
-<!--###########################3right arm############################################3-->
+<!--########################### right arm############################################3-->
   <joint name="right_arm_pan_joint" type="revolute">
     <parent link="upper_torso"/>
     <child link="right_shoulder_pan"/>
@@ -679,7 +731,7 @@
     	<origin xyz="-0.025 0.05 0.105" rpy="0 0 0" />
 	</joint>
 
-  <joint name="left_arm_pan_joint" type="revolute">
+  <joint name="left_arm_pan_joint" type="fixed"> <!--revolute-->
     <parent link="upper_torso"/>
     <child link="left_shoulder_pan"/>
     <origin xyz="-0.04 0.22 0.0" rpy="0  0 0" />
@@ -687,7 +739,7 @@
    <limit lower="-1.57" upper="1.57" effort="10" velocity="0" />
   </joint>
 
-  <joint name="left_arm_tilt_joint" type="revolute">
+  <joint name="left_arm_tilt_joint" type="fixed"> <!--revolute-->
     <parent link="left_shoulder_gear"/>
     <child link="left_shoulder_tilt"/>
     <origin xyz="0.02 -0.03 -0.03" rpy="0 0 0" />
@@ -707,10 +759,10 @@
     	<origin xyz="0.03 0.005 -0.055" rpy="0 0 0" />
 	</joint>
 
-  <joint name="left_arm_lift_joint" type="revolute">
+  <joint name="left_arm_lift_joint" type="fixed"> <!--revolute-->
     <parent link="left_shoulder_lift"/>
     <child link="left_shoulder_lift2"/>
-    <origin xyz="-0.025 -0.03 0.035" rpy="0 -1.57 0" />
+    <origin xyz="-0.025 -0.03 0.035" rpy="0 0 0" /><!--rpy="0 -1.57 0"-->
     <axis xyz="0 1 0" />
    <limit lower="-1.57" upper="1.9" effort="10" velocity="0" />
   </joint>
@@ -721,7 +773,7 @@
     	<origin xyz="-0.067 0.07 -0.093" rpy="0 0 0" />
 	</joint>
 
-  <joint name="left_arm_rotate_joint" type="revolute">
+  <joint name="left_arm_rotate_joint" type="fixed"> <!--revolute-->
     	<parent link="left_shoulder_mid" />
     	<child link="left_shoulder_lower" />
     	<origin xyz="0.07 -0.06 -0.131" rpy="0 0 0" />
@@ -741,7 +793,7 @@
     	<origin xyz="-0.09 0.08 -0.13" rpy="0 0 0" />
 	</joint>
 
-  <joint name="left_arm_elbow_joint" type="revolute">
+  <joint name="left_arm_elbow_joint" type="fixed"> <!--revolute-->
     <parent link="left_elbow_gearbox"/>
     <child link="left_elbow"/>
     <origin xyz="0.02 -0.02 0.025" rpy="0 -1.57 0" />
@@ -762,7 +814,7 @@
     	<origin xyz="-0.21 0.0 0.0" rpy="0 0 1.57" /><!--now-->
     	
 	</joint>
-  <joint name="left_arm_wrist_pan_joint" type="revolute">
+  <joint name="left_arm_wrist_pan_joint" type="fixed"> <!--revolute-->
     	<parent link="left_wrist_pan_servo" />
     	<child link="left_wrist_pan_servo_bracket_f3" />
     	<origin xyz="0. 0.015 0.0" rpy="0 0 0" />
@@ -782,7 +834,7 @@
 
 
 <!--wrist_tilt_joint-->
-  <joint name="left_arm_wrist_tilt_joint" type="revolute">
+  <joint name="left_arm_wrist_tilt_joint" type="fixed"> <!--revolute-->
     	<parent link="left_wrist_tilt_servo" />
     	<child link="left_wrist_tilt_bracket_f2" />
     	<origin xyz="-0.04 0.05 0" rpy="0 0 0" />
@@ -805,7 +857,7 @@
 	</joint>
 
   <!-- left gripper_joint-->
-   <joint name="left_arm_gripper_joint" type="revolute">
+   <joint name="left_arm_gripper_joint" type="fixed"> <!--revolute-->
     	<parent link="left_gripper_servo" />
     	<child link="left_gripper_bracket_f2" />
     	<origin xyz="0 0.0 0.0" rpy="0 0 0" />
@@ -889,6 +941,116 @@
 	</joint>
   
 
+
+  <joint name="kinect_joint" type="fixed">
+    	<parent link="base_link" />
+    	<child link="kinect_link" />
+    	<origin xyz="0.2 0 0.26" rpy="0 0 0" />
+	</joint>
+
+
+  <joint name="kinect_depth_joint" type="fixed">
+      <origin xyz="0 0.018 0" rpy="0 0 0" />
+      <parent link="kinect_link" />
+      <child link="kinect_depth_frame" />
+    </joint>
+    
+    <link name="kinect_depth_frame">
+      <inertial>
+        <mass value="0.0001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+                 iyy="0.0001" iyz="0.0"
+                 izz="0.0001" />
+      </inertial>
+    </link>
+    
+    <joint name="kinect_depth_optical_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
+      <parent link="kinect_link" />
+      <child link="kinect_depth_optical_frame" />
+    </joint>
+    
+    <link name="kinect_depth_optical_frame">
+      <inertial>
+        <mass value="0.0001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+                 iyy="0.0001" iyz="0.0"
+                 izz="0.0001" />
+      </inertial>
+    </link>
+
+
+    <joint name="kinect_rgb_optical_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
+      <parent link="kinect_depth_optical_frame" />
+      <child link="kinect_rgb_optical_frame" />
+    </joint>
+    <link name="kinect_rgb_optical_frame">
+      <inertial>
+        <mass value="0.001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+                 iyy="0.0001" iyz="0.0"
+                 izz="0.0001" />
+      </inertial>
+    </link>
+
+  <joint name="head_cam_joint" type="fixed">
+    	<parent link="head_link" />
+    	<child link="head_cam_link" />
+    	<origin xyz="0.15 0.1 0.58" rpy="0 0 0" />
+	</joint>
+
+
+  <joint name="head_cam_depth_joint" type="fixed">
+      <origin xyz="0 0.018 0" rpy="0 0 0" />
+      <parent link="head_cam_link" />
+      <child link="head_cam_depth_frame" />
+    </joint>
+    
+    <link name="head_cam_depth_frame">
+      <inertial>
+        <mass value="0.0001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+                 iyy="0.0001" iyz="0.0"
+                 izz="0.0001" />
+      </inertial>
+    </link>
+    
+    <joint name="head_cam_depth_optical_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
+      <parent link="head_cam_link" />
+      <child link="head_cam_depth_optical_frame" />
+    </joint>
+    
+    <link name="head_cam_depth_optical_frame">
+      <inertial>
+        <mass value="0.0001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+                 iyy="0.0001" iyz="0.0"
+                 izz="0.0001" />
+      </inertial>
+    </link>
+
+
+    <joint name="head_cam_rgb_optical_joint" type="fixed">
+      <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
+      <parent link="head_cam_depth_optical_frame" />
+      <child link="head_cam_rgb_optical_frame" />
+    </joint>
+    <link name="head_cam_rgb_optical_frame">
+      <inertial>
+        <mass value="0.001" />
+        <origin xyz="0 0 0" />
+        <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+                 iyy="0.0001" iyz="0.0"
+                 izz="0.0001" />
+      </inertial>
+    </link>
 
 
 

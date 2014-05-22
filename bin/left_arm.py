@@ -85,8 +85,8 @@ class R_shoulder(object):
                 if (partsCount  < 7):
                         pass
                 try:
-                        P1 = 0-((float(lineParts[1])* 0.00174532925)-(2.68 + self.cal_pan))# position
-                        P2 = 0-((float(lineParts[2])* 0.00174532925)- (2.68 + self.cal_pan))# target
+                        P1 = 0-((float(lineParts[1])* 0.00174532925)-2.68)# position
+                        P2 = 0-((float(lineParts[2])* 0.00174532925)- 2.68)# target
                         P3 = float(lineParts[3])# current
                         P4 = float(lineParts[4])# speed
                         val = [P1, P2, P3, P4]
@@ -101,7 +101,7 @@ class R_shoulder(object):
                         self.P2_MotorPublisher.publish(Motor_State)
                        
                         Joint_State = JointState()
-                        Joint_State.name = "right_arm_pan_joint"
+                        Joint_State.name = "left_arm_pan_joint"
                         Joint_State.goal_pos = P2
                         Joint_State.current_pos = P1
                         Joint_State.velocity = P4
@@ -139,7 +139,7 @@ class R_shoulder(object):
                         self.P2_MotorPublisher.publish(Motor_State)
                        
                         Joint_State = JointState()
-                        Joint_State.name = "right_arm_tilt_joint"
+                        Joint_State.name = "left_arm_tilt_joint"
                         Joint_State.goal_pos = P2
                         Joint_State.current_pos = P1
                         Joint_State.velocity = P4
@@ -177,7 +177,7 @@ class R_shoulder(object):
                         #rospy.logwarn(val)
 
                         Joint_State = JointState()
-                        Joint_State.name = "right_arm_lift_joint"
+                        Joint_State.name = "left_arm_lift_joint"
                         Joint_State.goal_pos = P2
                         Joint_State.current_pos = P1
                         Joint_State.velocity = P4
@@ -214,7 +214,7 @@ class R_shoulder(object):
                         #rospy.logwarn(val)
 
                         Joint_State = JointState()
-                        Joint_State.name = "right_arm_rotate_joint"
+                        Joint_State.name = "left_arm_rotate_joint"
                         Joint_State.goal_pos = P2
                         Joint_State.current_pos = P1
                         Joint_State.velocity = P4
@@ -250,7 +250,7 @@ class R_shoulder(object):
                         #rospy.logwarn(Motor_State)
 
                         Joint_State = JointState()
-                        Joint_State.name = "right_arm_elbow_joint"
+                        Joint_State.name = "left_arm_elbow_joint"
                         Joint_State.goal_pos = P2
                         Joint_State.current_pos = P1
                         Joint_State.velocity = P4
@@ -295,16 +295,11 @@ class R_shoulder(object):
                 #self.name = name
                 self.rate = rospy.get_param("~rate", 100.0)
                 self.fake = rospy.get_param("~sim", False)
-                self.cal_pan = rospy.get_param("~cal_pan", 0)
-                self.cal_tilt = rospy.get_param("~cal_tilt", 0)
-                self.cal_lift = rospy.get_param("~cal_lift", 0)
-                self.cal_rotate = rospy.get_param("~cal_rotate", 0)
-                self.cal_elbow = rospy.get_param("~cal_elbow", 0)
                
                 #name = rospy.get_param("~name")
                 self._Counter = 0
 
-                rospy.init_node('r_shoulder')
+                rospy.init_node('left_shoulder')
 
                 port = rospy.get_param("~port", "/dev/ttyACM0")
                 baudRate = int(rospy.get_param("~baudRate", 115200))
@@ -315,28 +310,28 @@ class R_shoulder(object):
                 
                 
                 
-                rospy.Subscriber('right_arm_pan_joint/command',Float64, self._HandleJoint_1_Command)
-                rospy.Subscriber('right_arm_tilt_joint/command',Float64, self._HandleJoint_2_Command)
-                rospy.Subscriber('right_arm_lift_joint/command',Float64, self._HandleJoint_3_Command)
-                rospy.Subscriber('right_arm_rotate_joint/command',Float64, self._HandleJoint_4_Command)
-                rospy.Subscriber('right_arm_elbow_joint/command',Float64, self._HandleJoint_5_Command)
+                rospy.Subscriber('left_arm_pan_joint/command',Float64, self._HandleJoint_1_Command)
+                rospy.Subscriber('left_arm_tilt_joint/command',Float64, self._HandleJoint_2_Command)
+                rospy.Subscriber('left_arm_lift_joint/command',Float64, self._HandleJoint_3_Command)
+                rospy.Subscriber('left_arm_rotate_joint/command',Float64, self._HandleJoint_4_Command)
+                rospy.Subscriber('left_arm_elbow_joint/command',Float64, self._HandleJoint_5_Command)
                 
                 self._SerialPublisher = rospy.Publisher('arm_serial', String)
 
                
                 
-                self.P1_MotorPublisher = rospy.Publisher("/right_arm_pan/motor_state", MotorState)
-                self.P2_MotorPublisher = rospy.Publisher("/right_arm_tilt/motor_state", MotorState)
-                self.P3_MotorPublisher = rospy.Publisher("/right_arm_lift/motor_state", MotorState)
-                self.P4_MotorPublisher = rospy.Publisher("/right_arm_rotate/motor_state", MotorState)
-                self.P5_MotorPublisher = rospy.Publisher("/right_arm_elbow/motor_state", MotorState)
+                self.P1_MotorPublisher = rospy.Publisher("/left_arm_pan/motor_state", MotorState)
+                self.P2_MotorPublisher = rospy.Publisher("/left_arm_tilt/motor_state", MotorState)
+                self.P3_MotorPublisher = rospy.Publisher("/left_arm_lift/motor_state", MotorState)
+                self.P4_MotorPublisher = rospy.Publisher("/left_arm_rotate/motor_state", MotorState)
+                self.P5_MotorPublisher = rospy.Publisher("/left_arm_elbow/motor_state", MotorState)
                 
 
-                self._P1_JointPublisher = rospy.Publisher("/right_arm_pan_joint/state", JointState)#geterrors
-                self._P2_JointPublisher = rospy.Publisher("/right_arm_tilt_joint/state", JointState)
-                self._P3_JointPublisher = rospy.Publisher("/right_arm_lift_joint/state", JointState)
-                self._P4_JointPublisher = rospy.Publisher("/right_arm_rotate_joint/state", JointState)#add joint
-                self._P5_JointPublisher = rospy.Publisher("/right_arm_elbow_joint/state", JointState)
+                self._P1_JointPublisher = rospy.Publisher("/left_arm_pan_joint/state", JointState)#geterrors
+                self._P2_JointPublisher = rospy.Publisher("/left_arm_tilt_joint/state", JointState)
+                self._P3_JointPublisher = rospy.Publisher("/left_arm_lift_joint/state", JointState)
+                self._P4_JointPublisher = rospy.Publisher("/left_arm_rotate_joint/state", JointState)#add joint
+                self._P5_JointPublisher = rospy.Publisher("/left_arm_elbow_joint/state", JointState)
                 
 
                

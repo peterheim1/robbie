@@ -1,7 +1,7 @@
 <launch>
 
    <!-- Load the URDF/Xacro model of our robot -->
-	<param name="robot_description" command="$(find xacro)/xacro.py '$(find robbie)/urdf/robbie5.xacro'" />
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find robbie)/urdf/robbie7.xacro'" />
 
     <!-- Publish the robot state -->
 	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">

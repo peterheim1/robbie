@@ -17,9 +17,9 @@ DualMotorShield md;
 
 // change to actuator
 int MinVal_lift = 100;
-int MaxVal_Lift = 2700;
+int MaxVal_Lift = 1800;
 int MinVal_tilt = 100;
-int MaxVal_tilt = 2700;
+int MaxVal_tilt = 1800;
 double angle_lift ;
 double angle_tilt ;
 double target_pos_lift = 250;
