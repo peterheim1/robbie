@@ -2,13 +2,13 @@
         
       
 
-    <!-- start the kinect and laser  
+    <!-- start the kinect and laser --> 
      <include file="$(find robbie)/launch/openni.launch"/>
--->
-  <!-- start the kinect and laser  
+
+  <!-- start the kinect and laser  -->
      <include file="$(find robbie)/launch/openni2.launch"/>
 
--->
+
 
     <!-- start the robot base controller -->
      <include file="$(find robbie)/launch/robbie_base.launch"/>
@@ -26,10 +26,10 @@
      <include file="$(find omni_bot)/launch/imu.launch" />
 -->
 
-   <!-- Start rosbridge and voice-->
+   <!-- Start rosbridge and voice
 
      <include file="$(find robbie)/launch/1_stage.launch"/>
-
+-->
   <!-- Start arm control-->
 
      <include file="$(find robbie)/launch/arm.launch"/>
@@ -37,13 +37,19 @@
  <!-- Start move base-->
      <include file="$(find robbie)/launch/move_base.launch"/>
 
+  <!-- Start moveit
+     <include file="$(find robbie)/launch/robbie_moveit.launch"/>
+-->
+  <!-- start the AI system   -->
+  <include file="$(find robbie)/launch/a_test.launch"/>
+
 <!-- launch Face tracker
-  <include file="$(find robbie)/launch/face_tracker_kinect.launch"/>
+  <include file="$(find robbie)/launch/face_tracker2.launch"/>
 -->
    <!-- launch head tracking
    <include file="$(find robbie)/launch/tf_head_tracker.launch"/>
 -->
-<!--
+<!--robbie chat
   <node name="robbie_chat" pkg="robbie" type="./robbie_chat" />
 
 -->

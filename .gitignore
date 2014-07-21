@@ -4,6 +4,7 @@
 *.txt~
 *.xml~
 *.pyc
+*.wav
 
 *.py[cod]
 

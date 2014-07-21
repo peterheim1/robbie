@@ -1,9 +1,10 @@
-*.launch~
+*~
 *.py~
 *.ino~
 *.txt~
 *.xml~
-*.pcy
+*.pyc
+
 *.py[cod]
 
 # C extensions
