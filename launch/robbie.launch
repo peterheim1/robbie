@@ -10,7 +10,7 @@
 
 
 
-    <!-- start the robot base controller -->
+    <!-- start the arduino base controller and urdf-->
      <include file="$(find robbie)/launch/robbie_base.launch"/>
     <!--<include file="$(find ros_arduino_python)/launch/arduino.launch"/>-->
 

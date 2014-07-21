@@ -1,5 +1,14 @@
 <launch>
 
+  <!-- Start arduino base controller-->
+
+   <node name="arduino" pkg="robbie" type="arduino.py">
+    <rosparam file="$(find robbie)/params/robbie_base.yaml" command="load" />
+  </node>
+
+  <!-- Start move base params-->
+     <include file="$(find robbie)/launch/move_base.launch"/>
+
   
   <!-- start the arm control  -->
      <include file="$(find robbie)/launch/arm_test.launch"/>

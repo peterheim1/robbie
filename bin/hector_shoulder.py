@@ -424,7 +424,7 @@ class R_shoulder(object):
                 self._WriteSerial(message)
                
 
-        def _HandleJoint_5_Command(self, twistCommand):
+        def _HandleJoint_5_Command(self, Command):
                 """ Handle movement requests. 
                              elbow
                 send message in degrees * 10
@@ -434,7 +434,7 @@ class R_shoulder(object):
                 v1 =int(v * 572.957795) #convert radians to degrees * 10
                 if v1 < 600: v1 = 600 #degrees * 10
                 if v1 > 1100: v1 = 1100 #degrees * 10
-                message = 'j5 %d \r' % (v2)#% self._GetBaseAndExponents((v1)
+                message = 'j5 %d \r' % (v1)#% self._GetBaseAndExponents((v1)
                 rospy.logwarn("Sending elbow command message: " + (message))
                 self._WriteSerial(message) 
                 

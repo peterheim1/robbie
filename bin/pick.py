@@ -43,18 +43,44 @@ from trajectory_msgs.msg import JointTrajectoryPoint
 
 
 def main():
-    rospy.init_node('moveit_py_demo', anonymous=True)
-    new =[0.0555, 0.0]
-    group = MoveGroupCommander("head")
+    rospy.init_node('moveit_py_place', anonymous=True)
+    #right_arm.set_planner_id("KPIECEkConfigDefault");
+    scene = PlanningSceneInterface()
+    robot = RobotCommander()
+    #group = MoveGroupCommander("head")
     right_arm = MoveGroupCommander("right_arm")
-  
+    #right_arm.set_planner_id("KPIECEkConfigDefault");
+    rospy.logwarn("cleaning world")
+    GRIPPER_FRAME = 'gripper_bracket_f2'
+    #scene.remove_world_object("table")
+    scene.remove_world_object("part")
+    scene.remove_attached_object(GRIPPER_FRAME, "part")
+    p = PoseStamped()
+    p.header.frame_id = robot.get_planning_frame()
+
+    p.pose.position.x = 0.67
+    p.pose.position.y = -0.
+    p.pose.position.z = 0.75
+    scene.add_box("part", p, (0.07, 0.01, 0.2))
+
     # move to a random target
     #group.set_named_target("ahead")
     #group.go()
     #rospy.sleep(1)
-    right_arm.set_named_target("high")
-    right_arm.go()
-    rospy.sleep(1)
+
+    result = False
+    n_attempts = 0
+       
+    # repeat until will succeed
+    while result == False:
+        result = robot.right_arm.pick("part")      
+        n_attempts += 1
+        print "Attempts pickup: ", n_attempts
+        rospy.sleep(0.2)
+    
+    #robot.right_arm.pick("part")
+    #right_arm.go()
+    rospy.sleep(5)
 
 
 if __name__=='__main__':

@@ -61,7 +61,7 @@ class Neck_Tilt(object):
         def _HandleJoint_1_Command(self, data):
                 """ republish position. """
                 neck =(data)
-                gear_ratio = 0.3
+                self.gear_ratio = 0.3
                 new_pos =float (data.current_pos) * self.gear_ratio
                 new_goal=float (data.goal_pos) * self.gear_ratio
                 new_error = new_goal - new_pos

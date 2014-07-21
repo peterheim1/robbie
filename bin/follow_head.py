@@ -139,7 +139,7 @@ class FollowController():
                
             if self.server.is_preempt_requested():
                    
-                rospy.loginfo('Stopping arm movement')
+                rospy.loginfo('Stopping head control')
                    
                 self.server.set_preempted()
                 #success = False
