@@ -1,5 +1,0 @@
-<launch>
-   <node pkg="robbie" name="head_tracker" type="head_track.py" output="screen">
-      
-   </node>
-</launch>
