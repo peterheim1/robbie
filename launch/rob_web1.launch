@@ -1,14 +1,10 @@
 <launch>
 
-  
 
-
-   <!-- start the kinect and laser  
-     <include file="$(find omni_bot)/launch/openni_node.launch"/>
-
--->
-  <node name="rosbridge" pkg="rosbridge" type="rosbridge.py" output="screen" />
-
+ <!-- start the kinect and laser  -->
+  <include file="$(find robbie)/launch/openni.launch"/>
+  <node name="node_launcher" pkg="rbx2_utils" type="node_launcher.py" output="screen" />
+  <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" />
   <node name="mjpeg_server" pkg="mjpeg_server" type="mjpeg_server" output="screen" />
 
   

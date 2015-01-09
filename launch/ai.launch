@@ -4,9 +4,9 @@
   <!-- Launch festival text-to-speech node -->
     <node pkg="festival" type="speak_text.py" name="speak_text_service" output="screen" />
 
-<!-- Launch a node to push terminal input instead of speech recognition -->
+<!-- Launch a node to push terminal input instead of speech recognition 
     <node pkg="robbie" type="terminal_input.py" name="terminal_input" output="screen" >
-    </node>
+    </node>-->
 
 <!-- Launch a node that republishes the output of NLTK as a string (representation of a parse tree) 
   <node pkg="nltk_parser" type="nltk_parser.py" name="nltk_parser_service" output="screen" >

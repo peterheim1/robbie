@@ -2,11 +2,8 @@
      
 # freely inspired by http://www.ros.org/wiki/arbotix_python/follow_controller
      
-import roslib
-#roslib.load_manifest('robbie')
-     
+import roslib   
 import rospy, actionlib
-     
 from control_msgs.msg import FollowJointTrajectoryAction
 from dynamixel_msgs.msg import JointState as JointStateDynamixel
 from std_msgs.msg import Float64
@@ -48,25 +45,18 @@ class JointCommander():
            
     def command(self,pos):
            
-        rospy.loginfo('publishing, joint ' + self.joint_name + ', value ' + str(pos))
-        #rospy.loginfo('publishing, joint ' +pos)      
+        rospy.loginfo('publishing, joint ' + self.joint_name + ', value ' + str(pos))   
         self.pub.publish(pos)
-        #rospy.loginfo(self.pub)
+        
      
 class FollowController():
      
     def __init__(self):
            
         self.ns = 'head_controller'
-           
-        #self.rate = 50.0 #rospy.get_param('~controllers/'+name+'/rate',50.0)
-        #self.joints = rospy.get_param('~' + self.ns + '/arm_joints')
         self.joints = ['head_pan_joint', 'head_tilt_mod_joint']
         namespace = rospy.get_namespace()
-        #self.joints = rospy.get_param('dynamixels', '')
-        #self.joints = rospy.get_param('~controllers/'+name+'/joints')
         rospy.loginfo('Configured for ' + str(len(self.joints)) + 'joints')
-        #rospy.logerr(self.joints)
         self.joint_subs = [JointSubscriber(name) for name in self.joints]
         self.joint_pubs = [JointCommander(name) for name in self.joints]
            
@@ -75,10 +65,9 @@ class FollowController():
         for idx in range(0,len(self.joints)):
            
             self.joints_names.append(self.joints[idx])
-            #rospy.logerr(self.joints_names)
-     
+           
         # action server
-        #name = rospy.get_param('~controllers/'+name+'/action_name','follow_joint_trajectory')
+        
         self.name = self.ns + '/head_trajectory'
         self.server = actionlib.SimpleActionServer(self.name, FollowJointTrajectoryAction, execute_cb=self.actionCb, auto_start=False)
      

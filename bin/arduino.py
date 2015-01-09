@@ -31,22 +31,22 @@ Created January, 2011
   ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 '''
 
-#import roslib; roslib.load_manifest('robbie')
+
 import rospy
 import tf
 import math
 from math import sin, cos, pi
 import sys
-
+import time
 from geometry_msgs.msg import Quaternion
 from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
 from std_msgs.msg import String
 from std_msgs.msg import Float32, Int16
-#from robbie.srv import *
+from robbie.srv import *
 #from robbie.msg import *
 
-from SerialDataGateway import SerialDataGateway
+from robbie.SerialDataGateway import SerialDataGateway
 
 class Arduino(object):
 	'''
@@ -117,14 +117,14 @@ class Arduino(object):
 			
 			rosNow = rospy.Time.now()
 			
-			# First, we'll publish the transform from frame odom to frame base_link over tf
+			# First, we'll publish the transform from frame odom to frame base_footprint over tf
 			# Note that sendTransform requires that 'to' is passed in before 'from' while
 			# the TransformListener' lookupTransform function expects 'from' first followed by 'to'.
 			self._OdometryTransformBroadcaster.sendTransform(
 				(x, y, 0), 
 				(quaternion.x, quaternion.y, quaternion.z, quaternion.w),
 				rosNow,
-				"base_link",
+				"base_footprint",
 				"odom"
 				)
 
@@ -137,7 +137,7 @@ class Arduino(object):
 			odometry.pose.pose.position.z = 0
 			odometry.pose.pose.orientation = quaternion
 
-			odometry.child_frame_id = "base_link"
+			odometry.child_frame_id = "base_footprint"
 			odometry.twist.twist.linear.x = vx
 			odometry.twist.twist.linear.y = 0
 			odometry.twist.twist.angular.z = omega
@@ -158,7 +158,7 @@ class Arduino(object):
 			pass
 		
 		try:
-			batteryVoltage = float(lineParts[1])
+			self.batteryVoltage = float(lineParts[1])
                         #batteryCurrent = float(lineParts[2])
 			#batteryState = Float32()
 			#batteryState.voltage = batteryVoltage
@@ -166,7 +166,7 @@ class Arduino(object):
 			
 			
 
-			self._BatteryStatePublisher.publish(batteryVoltage)
+			self._BatteryStatePublisher.publish(self.batteryVoltage)
 			
 			rospy.loginfo(batteryVoltage)
 		
@@ -225,9 +225,11 @@ class Arduino(object):
 		
 		try:
                        self.auto_left = int(lineParts[1]) 
-                       self.auto_left = int(lineParts[2])
+                       self.auto_right = int(lineParts[2])
                        self.auto_bumper = int(lineParts[3])
-                       self._dock_state_Publisher.publish(self.auto_bumper)
+                       self.docked = abs(self.auto_bumper - 1)
+                       self.charged = round((self.docked *   self.batteryVoltage), 2 ) 
+                       self._dock_state_Publisher.publish(self.charged)
                 except:
                         #pass
                         rospy.logwarn("Unexpected error auto dock:" + str(sys.exc_info()[0])) 
@@ -256,6 +258,8 @@ class Arduino(object):
 		# subscriptions
 		rospy.Subscriber("cmd_vel", Twist, self._HandleVelocityCommand)
                 rospy.Subscriber("auto_dock", String, self._AutoDock)
+                # A service to maually start Auto dock
+                rospy.Service('start_auto_dock', AutoDock, self.Start_Auto_Dock)
 		self._SerialPublisher = rospy.Publisher('serial', String)
 
 		self._OdometryTransformBroadcaster = tf.TransformBroadcaster()
@@ -263,10 +267,10 @@ class Arduino(object):
 
 		self._VoltageLowlimit = rospy.get_param("~batteryStateParams/voltageLowlimit", "12.0")
 		self._VoltageLowLowlimit = rospy.get_param("~batteryStateParams/voltageLowLowlimit", "11.7")
-		self._BatteryStatePublisher = rospy.Publisher("battery", Float32)
+		self._BatteryStatePublisher = rospy.Publisher("battery_level", Float32)
                 self._V_leftPublisher = rospy.Publisher("v_left", Float32)
                 self._V_rightPublisher = rospy.Publisher("v_right", Float32)
-                self._dock_state_Publisher = rospy.Publisher("dock_state", Int16)
+                self._dock_state_Publisher = rospy.Publisher("charge_state", Float32)
 		
 		#self._SetDriveGainsService = rospy.Service('setDriveControlGains', SetDriveControlGains, self._HandleSetDriveGains)
 
@@ -281,6 +285,8 @@ class Arduino(object):
 	def Stop(self):
 		rospy.logdebug("Stopping")
 		self._SerialDataGateway.Stop()
+
+        
 		
 	def _HandleVelocityCommand(self, twistCommand):
 		""" Handle movement requests. """
@@ -303,11 +309,11 @@ class Arduino(object):
             
                 v_des_left = int(left * 16065 / 30)# 
                 v_des_right = int(right * 16028/ 30)#ticks_per_meter 15915
-		#rospy.logwarn("Handling twist ommand: " + str(v_des_left) + "," + str(v_des_right))
+		rospy.logwarn("Handling twist ommand: " + str(v_des_left) + "," + str(v_des_right))
 
 		#message = 's %.2f %.2f\r' % (v_des_left, v_des_right)
                 message = 's %d %d %d %d \r' % self._GetBaseAndExponents((v_des_left, v_des_right))
-		#rospy.logdebug("Sending speed command message: " + message)
+		rospy.logwarn("Sending speed command message: " + message)
 		#self._WriteSerial(message)
                 self._SerialDataGateway.Write(message)
 
@@ -375,6 +381,9 @@ class Arduino(object):
 		self._WriteSerial(message)
 
         def _AutoDock(self, data):
+                '''
+                defunct remove after test
+                '''
 		x = data.data
                 if x == "dock":
 		    message = 'd 1\r' 
@@ -383,6 +392,24 @@ class Arduino(object):
 
 		rospy.logwarn("Sending Auto Docks message: " + message)
 		self._WriteSerial(message)
+
+        def Start_Auto_Dock(self, data):
+                '''
+                 start auto dock and charging sequance on the arduino
+                 it will release when full
+                '''
+		x = data.data
+                
+                print x
+                if x == "dock":
+		    message = 'd 1\r' 
+                else:
+                    message = 'd 0\r'
+		rospy.logwarn("Sending Auto Docks message: " + message)
+		self._WriteSerial(message)
+                if self.charged >13.5:
+                     
+                    return AutoDockResponse()
 
 	def _GetBaseAndExponent(self, floatValue, resolution=4):
 		'''

@@ -17,7 +17,7 @@ GNU General Public License for more details at:
 http://www.gnu.org/licenses/gpl.html
 """
 
-import roslib; roslib.load_manifest('robbie')
+
 import rospy
 
 from sensor_msgs.msg import JointState as JointStatePR2
@@ -39,8 +39,8 @@ class JointStatePublisher():
         
         # The namespace and joints parameter needs to be set by the servo controller
         # (The namespace is usually null.)
-        namespace ='right_arm'# rospy.get_namespace()
-        self.joints = rospy.get_param('/joints', '')#delete right_arm joints publisted in dynamixel yaml
+        namespace ='arm_controller'# rospy.get_namespace()
+        self.joints = rospy.get_param('arm_controller/joints', '')#delete right_arm joints publisted in dynamixel yaml
                                                                 
         self.servos = list()
         self.controllers = list()

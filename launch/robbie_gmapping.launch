@@ -1,13 +1,12 @@
 <launch>
         
-      <rosparam ns="/robbie"/>
-
-    <!-- start the kinect and laser  -->
-     <include file="$(find ardros)/launch/kinect_laser.launch"/>
+      
+     <!-- start the kinect and laser --> 
+     <include file="$(find robbie)/launch/openni.launch"/>
 
     <!-- start the robot base controller -->
+     <!-- start the arduino base controller and urdf-->
      <include file="$(find robbie)/launch/robbie_base.launch"/>
-    <!--<include file="$(find ros_arduino_python)/launch/arduino.launch"/>-->
 
 
     <!-- start the dynamixel servos --> 

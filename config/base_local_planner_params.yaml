@@ -1,0 +1,62 @@
+controller_frequency: 4.0
+planner_frequency: 5.00
+recovery_behavior_enabled: true
+clearing_rotation_allowed: true
+
+recovery_behaviors: [{
+name: conservative_reset,
+type: clear_costmap_recovery/ClearCostmapRecovery
+}, {
+name: rotate_recovery1,
+type: rotate_recovery/RotateRecovery
+}, {
+name: aggressive_reset,
+type: clear_costmap_recovery/ClearCostmapRecovery
+}, {
+name: rotate_recovery2,
+type: rotate_recovery/RotateRecovery
+}]
+
+TrajectoryPlannerROS:
+   max_vel_x: 0.5
+   min_vel_x: 0.1
+   max_vel_y: 0.0  # zero for a differential drive robot
+   min_vel_y: 0.0
+   max_rotational_vel: 1.0
+   min_in_place_vel_theta: 1.8
+   escape_vel: -0.1
+   acc_lim_x: 6
+   acc_lim_y: 0.0  # zero for a differential drive robot
+   acc_lim_theta: 3
+
+   holonomic_robot: false
+   yaw_goal_tolerance: 0.1 # about 6 degrees
+   xy_goal_tolerance: 0.2  #  cm
+   latch_xy_goal_tolerance: false
+   pdist_scale: 1
+   gdist_scale: 4
+   meter_scoring: true
+
+   heading_lookahead: 3.3
+   heading_scoring: true
+   heading_scoring_timestep: 0.8
+   oscillation_reset_dist: 0.05
+   prune_plan: true
+   occdist_scale: 0.2              # The weighting for how much the controller should attempt to avoid obstacles
+                                   # occdist_scale * (maximum obstacle cost along the trajectory in obstacle cost (0-254))
+
+  # Debugging
+   publish_traj_pc : true
+   publish_cost_grid_pc: true
+   global_frame_id: odom
+
+
+   sim_time: 1.0
+   sim_granularity: 0.025
+   angular_sim_granularity: 0.1
+   vx_samples: 8
+   vy_samples: 0  # zero for a differential drive robot
+   vtheta_samples: 20
+   dwa: true
+   simple_attractor: false
+   forward_point_distance: 0.6

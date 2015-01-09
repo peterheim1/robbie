@@ -12,6 +12,8 @@ add_service_files(FILES
    Parse.srv
    AskInfo.srv
    InternetService.srv
+   AutoDock.srv
+   AutoDocker.srv
 
  )
 

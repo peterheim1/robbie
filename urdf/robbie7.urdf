@@ -233,7 +233,7 @@
       <material name="OffWhite">
         <color rgba="0.8 0.8 0.8 0.9"/>
       </material>
-      <origin rpy="-1.57 0 1.57" xyz="0 0 0"/>
+      <origin rpy="-1.570795 0 1.57" xyz="0 0 0"/>
     </visual>
   </link>
   <link name="right_shoulder_pan">
@@ -244,7 +244,7 @@
       <material name="yellow2">
         <color rgba="0.8 0.8 0 1.0"/>
       </material>
-      <origin rpy="0 0 -1.57" xyz="-0.05 0.05 0.0"/>
+      <origin rpy="0 0 -1.570795" xyz="-0.05 0.05 0.0"/>
     </visual>
   </link>
   <link name="right_shoulder_tilt">
@@ -255,7 +255,7 @@
       <material name="yellow2">
         <color rgba="0.8 0.8 0 1.0"/>
       </material>
-      <origin rpy="0 0 1.57" xyz="-0.045 0.02 -0.03"/>
+      <origin rpy="0 0 1.570795" xyz="-0.045 0.02 -0.03"/>
     </visual>
   </link>
   <link name="right_shoulder_bracket">
@@ -266,7 +266,7 @@
       <material name="yellow2">
         <color rgba="0.8 0.8 0 1.0"/>
       </material>
-      <origin rpy="0 1.57 1.57" xyz="0 0 0"/>
+      <origin rpy="0 1.570795 1.570795" xyz="0 0 0"/>
     </visual>
   </link>
   <link name="right_shoulder_lift">
@@ -1198,12 +1198,12 @@
     <child link="deck_link"/>
     <origin rpy="0 0 0" xyz="-0.10 0 .36"/>
   </joint>
-  <joint name="left_wheel_joint" type="fixed">
+  <joint name="'base_l_wheel_joint" type="fixed">
     <parent link="base_link"/>
     <child link="left_wheel"/>
     <origin rpy="0 0 0" xyz="0.1 -0.2 0.1"/>
   </joint>
-  <joint name="right_wheel_joint" type="fixed">
+  <joint name="'base_r_wheel_joint" type="fixed">
     <parent link="base_link"/>
     <child link="right_wheel"/>
     <origin rpy="0 0 0" xyz="0.1 0.2 0.1"/>
@@ -1575,7 +1575,7 @@
   <joint name="kinect_joint" type="fixed">
     <parent link="base_link"/>
     <child link="kinect_link"/>
-    <origin rpy="0 0 0" xyz="0.2 0 0.26"/>
+    <origin rpy="0 0 0" xyz="0.2 0 0.47"/>
   </joint>
   <joint name="kinect_depth_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 0.018 0"/>
@@ -1617,6 +1617,7 @@
     <parent link="head_link"/>
     <child link="head_cam_link"/>
     <origin rpy="0 0 0" xyz="0.15 0.1 0.58"/>
+    <!-- 0 -1.57 1.57-->
   </joint>
   <joint name="head_cam_depth_joint" type="fixed">
     <origin rpy="0 0 0" xyz="0 0.018 0"/>
@@ -1631,7 +1632,7 @@
     </inertial>
   </link>
   <joint name="head_cam_depth_optical_joint" type="fixed">
-    <origin rpy="-1.570795 0 -1.570795" xyz="0 0 0"/>
+    <origin rpy="-1.570795 0 0" xyz="0 0 0"/>
     <parent link="head_cam_link"/>
     <child link="head_cam_depth_optical_frame"/>
   </joint>
@@ -1643,7 +1644,7 @@
     </inertial>
   </link>
   <joint name="head_cam_rgb_optical_joint" type="fixed">
-    <origin rpy="-1.570795 0 -1.570795" xyz="0 0 0"/>
+    <origin rpy="0 1.570795 0 " xyz="0 0 0"/>
     <parent link="head_cam_depth_optical_frame"/>
     <child link="head_cam_rgb_optical_frame"/>
   </joint>

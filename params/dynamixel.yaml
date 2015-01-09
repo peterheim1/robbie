@@ -37,7 +37,7 @@ right_arm_wrist_pan_joint:
     joint_name: right_arm_wrist_pan_joint
     joint_speed: 0.5
     motor:
-        id: 3
+        id: 5
         init: 512
         min: 0
         max: 1023

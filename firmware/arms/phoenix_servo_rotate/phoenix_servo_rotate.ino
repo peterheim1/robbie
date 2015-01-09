@@ -2,11 +2,10 @@
 working servo controller 
 change MY_ADDRESS to the correct value
 todo
-fine tune PID
-remove motor noise
-change to phoenix_servo.h driver
-add extra data for the return
-turn off motor driver when not moving
+changed to PD loop op is stable but
+values are never reached due ti no I
+motor controller has a dead band up to 70 pwm
+so motor controller is disabled below 70
 
     error
     current
@@ -24,8 +23,9 @@ turn off motor driver when not moving
 #define Right_tilt_in2			5
 // change to actuator
 int MinVal = 100;
-int MaxVal = 2700;
-double target_pos = 1600;
+int MaxVal = 980;
+double target_pos = 512;
+int angle_pub;
 const byte MY_ADDRESS = 42;
 double angle ;
 double Encoder_Position  = 0;
@@ -40,7 +40,7 @@ int FrameRate = 30;
 //volatile boolean haveData = false;
 volatile long Target = 8;//why 550 
 
-PID Right_tilt(&angle, &Right_pwm, &target_pos, 5,1,0, DIRECT);
+PID Right_tilt(&angle, &Right_pwm, &target_pos, 4,0,1, DIRECT);
 /*
 ##############################################################################
 ##############################################################################
@@ -55,7 +55,7 @@ set up
 void setup() 
 {
   Wire.begin (MY_ADDRESS);
-  Serial.begin (57600);
+  Serial.begin (115200);
   Wire.onReceive (receiveEvent); //recieve target from master
   Wire.onRequest(requestEvent); // send data to master
   //TCCR1B = TCCR1B & 0b11111000 | 0x01 ;// for pin 9
@@ -81,7 +81,8 @@ void setup()
 void loop()
 {
   Encoder_Position =  analogRead(0);
-  angle  = map(Encoder_Position, 0, 1023, 0, 2750);
+  angle  = Encoder_Position;//map(Encoder_Position, 0, 1023, 0, 2750);
+  angle_pub = map(Encoder_Position, 0, 1023, 0, 2750);
   //int angleT  = map(target_pos, 0, 1023, 0, 300);
   Right_Gap = (target_pos - angle)*0.1;
   //int error = angleT - angle;
@@ -91,9 +92,9 @@ void loop()
   Serial.print(" ");
   Serial.print(target_pos);
   Serial.print(" ");
-  Serial.print(angle);
+  Serial.print(angle_pub);
   Serial.print(" ");
-  Serial.print(Right_Gap);
+  Serial.print(angle);
  
  
   Serial.println(" ");
@@ -103,7 +104,8 @@ void loop()
   milliSecsSinceLastUpdate = millis() - CurrentTime;
   if(milliSecsSinceLastUpdate >= FrameRate)
   {
-  
+  Right_tilt.Compute();
+  Right_tilt.SetOutputLimits(-250 ,250);
   Right_drive();
   CurrentTime = millis();
   }
@@ -148,24 +150,16 @@ void sendSensor (const byte which)
 
 void Right_drive()
 {
-  int gap = abs(Right_Gap);
-  if (gap < 50)
-  {
-  Right_tilt.SetTunings(1, 0.1, 0);
-  }
-  else
-  {
-    Right_tilt.SetTunings(2, 0.1, 0);
-  }
-  Right_tilt.Compute();
-  Right_tilt.SetOutputLimits(-255 ,255);
+  
+  //Right_tilt.Compute();
+  //Right_tilt.SetOutputLimits(-255 ,255);
   
   if (Right_pwm < 0){
     digitalWrite(Right_tilt_in1, HIGH);
     digitalWrite(Right_tilt_in2, LOW);
     int right_power = abs(Right_pwm);
-    //if (right_power < 70) 
-    //{right_power = 0;}
+    if (right_power < 70) 
+    {right_power = 0;}
     analogWrite(Right_tilt_pwm, right_power);
   }
   
@@ -173,8 +167,8 @@ void Right_drive()
     digitalWrite(Right_tilt_in1, LOW);
     digitalWrite(Right_tilt_in2, HIGH);
     int right_power = abs(Right_pwm);
-    //if (right_power < 70) 
-    //{right_power = 0;}
+    if (right_power < 70) 
+    {right_power = 0;}
     analogWrite(Right_tilt_pwm, right_power);
   }
 }

@@ -112,7 +112,7 @@
        <material name="OffWhite">
        <color rgba="0.8 0.8 0.8 0.9"/>
        </material>
-      <origin rpy="${-M_PI/2} 0 1.57" xyz="0 0 0"/>
+      <origin rpy="-1.57 0 1.57" xyz="0 0 0"/>
     </visual>
   </link>
   <link name="right_shoulder_pan" >
@@ -121,7 +121,7 @@
         <mesh filename="package://robbie/meshes/shoulder_pan_gear.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:yellow2 />
-      <origin rpy="0 0 ${-M_PI/2}" xyz="-0.05 0.05 0.0"/>
+      <origin rpy="0 0 -1.57" xyz="-0.05 0.05 0.0"/>
     </visual>
   </link>
 
@@ -131,7 +131,7 @@
         <mesh filename="package://robbie/meshes/elbow_pivot.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:yellow2 />
-      <origin rpy="0 0 ${M_PI/2}" xyz="-0.045 0.02 -0.03"/>
+      <origin rpy="0 0 1.57" xyz="-0.045 0.02 -0.03"/>
     </visual>
   </link>
 
@@ -141,7 +141,7 @@
         <mesh filename="package://robbie/meshes/shoulder_lift_bracket.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:yellow2 />
-      <origin rpy="0 ${M_PI/2} ${M_PI/2}" xyz="0 0 0"/>
+      <origin rpy="0 1.57 1.57" xyz="0 0 0"/>
     </visual>
   </link>
 
@@ -203,7 +203,7 @@
         <mesh filename="package://robbie/meshes/gear_box.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:yellow2 />
-      <origin rpy="1.57 0 3.14" xyz="0.06 -0.04 0"/>
+      <origin rpy="1.57 0 0" xyz="0 0 0"/>
     </visual>
   </link>
 
@@ -355,7 +355,7 @@
         <mesh filename="package://robbie/meshes/gear_box.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
       </geometry>
        <xacro:yellow2 />
-      <origin rpy="1.57 0 3.14" xyz="0.06 -0.04 0"/>
+      <origin rpy="1.57 0 0" xyz="0 0 0"/>
     </visual>
   </link>
 
@@ -418,7 +418,7 @@
 
   <xacro:F3_bracket name="neck_link" xyz="0 0 0" rpy="1.57 0 -1.570" />
 
-  <xacro:my_box name="head_base_link" lwh="0.06 0.08 0.005" xyz="0 0 0" rpy="0 0 0" mass="0.1" material="Gazebo/FlatBlack">
+  <xacro:my_box name="head_base_footprint" lwh="0.06 0.08 0.005" xyz="0 0 0" rpy="0 0 0" mass="0.1" material="Gazebo/FlatBlack">
 		<xacro:black />
 	</xacro:my_box>
 
@@ -444,58 +444,6 @@
       </inertial>
     </link>
 
-    <link name="kinect_link">
-      <inertial>
-        <mass value="1.0" />
-        <origin xyz="0 0 0" />
-        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
-                 iyy="1.0" iyz="0.0"
-                 izz="1.0" />
-      </inertial>
-
-      <visual>
-        <origin xyz=" 0 0 0 " rpy="0 0 0" />
-        <geometry>
-          <mesh filename="package://robbie/meshes/kinect.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
-        </geometry>
-        <xacro:ax12_color />
-      </visual>
-
-      <collision>
-        <origin xyz="0 0 0" rpy="0 0 0" />
-        <geometry>
-          <mesh filename="package://robbie/meshes/kinect.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
-          </geometry>
-      </collision>
-
-    </link>
-
-  <link name="head_cam_link">
-      <inertial>
-        <mass value="1.0" />
-        <origin xyz="0 0 0" />
-        <inertia ixx="1.0" ixy="0.0" ixz="0.0"
-                 iyy="1.0" iyz="0.0"
-                 izz="1.0" />
-      </inertial>
-
-      <visual>
-        <origin xyz=" 0 0 0 " rpy="0 0 0" />
-        <geometry>
-          <mesh filename="package://robbie/meshes/kinect.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
-          
-        </geometry>
-          <xacro:grey3 />
-      </visual>
-
-      <collision>
-        <origin xyz="0 0 0" rpy="0 0 0" />
-        <geometry>
-          <mesh filename="package://robbie/meshes/kinect.stl" scale="${M_SCALE} ${M_SCALE} ${M_SCALE}"/>
-          </geometry>
-      </collision>
-
-    </link>
 <!-- =================== Joint Definitions ==================== -->
   <joint name="base_footprint_joint" type="fixed">
     	<parent link="base_footprint" />
@@ -503,13 +451,13 @@
     	<origin xyz="-0.10 0 .36" rpy="0 0 0" />
 	</joint> 
 
-  <joint name="'base_l_wheel_joint" type="fixed">
+  <joint name="left_wheel_joint" type="fixed">
     	<parent link="base_footprint" />
     	<child link="left_wheel" />
     	<origin xyz="0.1 -0.2 0.1" rpy="0 0 0" />
 	</joint>
 
-  <joint name="'base_r_wheel_joint" type="fixed">
+  <joint name="right_wheel_joint" type="fixed">
     	<parent link="base_footprint" />
     	<child link="right_wheel" />
     	<origin xyz="0.1 0.2 0.1" rpy="0 0 0" />
@@ -563,13 +511,13 @@
     	<origin xyz="0.0 0.03 0.01" rpy="0 0 0" />
 	</joint>
 
-<!--###########################right arm############################################3-->
+<!--###########################3right arm############################################3-->
   <joint name="right_arm_pan_joint" type="fixed">
     <parent link="upper_torso"/>
     <child link="right_shoulder_pan"/>
     <origin xyz="-0.05 0.05 0.0" rpy="0  0 0" />
     <axis xyz="0 0 1" />
-   <limit lower="-0.80" upper="0.80" effort="10" velocity="0" />
+   <limit lower="-1.57" upper="1.57" effort="10" velocity="0" />
   </joint>
  
 
@@ -579,18 +527,18 @@
     	<origin xyz="0.025 -0.05 0.105" rpy="0 0 0" />
 	</joint> 
 
-  <joint name="right_arm_tilt_joint" type="revolute">
+  <joint name="right_arm_tilt_joint" type="fixed">
     <parent link="right_shoulder_gear"/>
     <child link="right_shoulder_tilt"/>
     <origin xyz="-0.02 0.03 -0.03" rpy="0 0 0" />
     <axis xyz="1 0 0" />
-   <limit lower="-0.82" upper="0" effort="10" velocity="0" />
+   <limit lower="-1.57" upper="1.57" effort="10" velocity="0" />
   </joint>
 
   <joint name="right_shoulder_lift_bracket_link" type="fixed">
     	<parent link="right_shoulder_tilt" />
     	<child link="right_shoulder_bracket" />
-    	<origin xyz="0.01 -0.145 0.02" rpy="0 0 0" />
+    	<origin xyz="0.0 -0.125 0.02" rpy="0 0 0" />
 	</joint> 
 
   <joint name="right_shoulder_lift_gearbox_link" type="fixed">
@@ -599,12 +547,12 @@
     	<origin xyz="0.03 0.03 -0.055" rpy="0 0 0" />
 	</joint>
 
-  <joint name="right_arm_lift_joint" type="revolute">
+  <joint name="right_arm_lift_joint" type="fixed">
     <parent link="right_shoulder_lift"/>
     <child link="right_shoulder_lift2"/>
-    <origin xyz="-0.025 -0.075 0.035" rpy="0 -1.57 0" />
+    <origin xyz="-0.025 -0.075 0.035" rpy="0 0 0" />
     <axis xyz="0 1 0" />
-   <limit lower="-1.1" upper="1.9" effort="10" velocity="0" />
+   <limit lower="-1.57" upper="1.9" effort="10" velocity="0" />
   </joint>
 
   <joint name="right_shoulder_mid_link" type="fixed">
@@ -613,12 +561,12 @@
     	<origin xyz="0.07 0.001 -0.088" rpy="0 0 0" />
 	</joint>
 
-  <joint name="right_arm_rotate_joint" type="revolute">
+  <joint name="right_arm_rotate_joint" type="fixed">
     	<parent link="right_shoulder_mid" />
     	<child link="right_shoulder_lower" />
     	<origin xyz="-0.07 0.052 -0.131" rpy="0 0 0" />
         <axis xyz="0 0 1" />
-        <limit lower="-1.57" upper="1.57" effort="10" velocity="0" />
+        <limit lower="-2.00" upper="1.57" effort="10" velocity="0" />
 	</joint>
 
   <joint name="right_shoulder_elbow_link" type="fixed">
@@ -633,10 +581,10 @@
     	<origin xyz="-0.09 0.08 -0.13" rpy="0 0 0" />
 	</joint>
 
-   <joint name="right_arm_elbow_joint" type="revolute">
+   <joint name="right_arm_elbow_joint" type="fixed">
     <parent link="right_elbow_gearbox"/>
     <child link="right_elbow"/>
-    <origin xyz="0.03 -0.02 0.025" rpy="0 -1.57 0" />
+    <origin xyz="0.02 -0.02 0.025" rpy="0 -1.57 0" />
     <axis xyz="0 1 0" />
    <limit lower="-2.00" upper="0.57" effort="10" velocity="0" />
   </joint>
@@ -654,7 +602,7 @@
     	<origin xyz="-0.21 0.0 0.0" rpy="0 0 1.57" />
     	
 	</joint>
-  <joint name="right_arm_wrist_pan_joint" type="revolute">
+  <joint name="right_arm_wrist_pan_joint" type="fixed">
     	<parent link="wrist_pan_servo" />
     	<child link="wrist_pan_servo_bracket_f3" />
     	<origin xyz="0. 0.015 0.0" rpy="0 0 0" />
@@ -674,7 +622,7 @@
 
 
 <!--wrist_tilt_joint-->
-  <joint name="right_arm_wrist_tilt_joint" type="revolute">
+  <joint name="right_arm_wrist_tilt_joint" type="fixed">
     	<parent link="wrist_tilt_servo" />
     	<child link="wrist_tilt_bracket_f2" />
     	<origin xyz="-0.04 0.05 0" rpy="-1.57 0 1.57" />
@@ -698,7 +646,7 @@
 
 
 <!-- gripper_joint-->
-   <joint name="right_arm_gripper_joint" type="revolute">
+   <joint name="right_arm_gripper_joint" type="fixed">
     	<parent link="gripper_servo" />
     	<child link="gripper_bracket_f2" />
     	<origin xyz="0 0.0 0.0" rpy="0 1.57 -1.57" />
@@ -725,32 +673,32 @@
   
 
 <!--##########################left arm#############################-->
-  <joint name="left_shoulder_link" type="fixed"> 
+  <joint name="left_shoulder_link" type="fixed">
     	<parent link="left_shoulder_pan" />
     	<child link="left_shoulder_gear" />
     	<origin xyz="-0.025 0.05 0.105" rpy="0 0 0" />
 	</joint>
 
-  <joint name="left_arm_pan_joint" type="fixed"> <!--revolute-->
+  <joint name="left_arm_pan_joint" type="fixed">
     <parent link="upper_torso"/>
     <child link="left_shoulder_pan"/>
     <origin xyz="-0.04 0.22 0.0" rpy="0  0 0" />
     <axis xyz="0 0 1" />
-   <limit lower="-0.80" upper="0.80" effort="10" velocity="0" />
+   <limit lower="-1.57" upper="1.57" effort="10" velocity="0" />
   </joint>
 
-  <joint name="left_arm_tilt_joint" type="fixed"> <!--revolute-->
+  <joint name="left_arm_tilt_joint" type="fixed">
     <parent link="left_shoulder_gear"/>
     <child link="left_shoulder_tilt"/>
     <origin xyz="0.02 -0.03 -0.03" rpy="0 0 0" />
     <axis xyz="1 0 0" />
-   <limit lower="-0.82" upper="0.0" effort="10" velocity="0" />
+   <limit lower="-1.57" upper="1.57" effort="10" velocity="0" />
   </joint>
 
   <joint name="left_shoulder_lift_bracket_link" type="fixed">
     	<parent link="left_shoulder_tilt" />
     	<child link="left_shoulder_bracket" />
-    	<origin xyz="0.0 0.145 0.02" rpy="0 0 0" />
+    	<origin xyz="0.0 0.125 0.02" rpy="0 0 0" />
 	</joint>
 
   <joint name="left_shoulder_lift_gearbox_link" type="fixed">
@@ -759,12 +707,12 @@
     	<origin xyz="0.03 0.005 -0.055" rpy="0 0 0" />
 	</joint>
 
-  <joint name="left_arm_lift_joint" type="fixed"> <!--revolute-->
+  <joint name="left_arm_lift_joint" type="fixed">
     <parent link="left_shoulder_lift"/>
     <child link="left_shoulder_lift2"/>
-    <origin xyz="-0.025 -0.03 0.035" rpy="0 0 0" /><!--rpy="0 -1.57 0"-->
+    <origin xyz="-0.025 -0.03 0.035" rpy="0 0 0" />
     <axis xyz="0 1 0" />
-   <limit lower="-1.1" upper="1.9" effort="10" velocity="0" />
+   <limit lower="-1.57" upper="1.9" effort="10" velocity="0" />
   </joint>
 
   <joint name="left_shoulder_mid_link" type="fixed">
@@ -773,7 +721,7 @@
     	<origin xyz="-0.067 0.07 -0.093" rpy="0 0 0" />
 	</joint>
 
-  <joint name="left_arm_rotate_joint" type="fixed"> <!--revolute-->
+  <joint name="left_arm_rotate_joint" type="fixed">
     	<parent link="left_shoulder_mid" />
     	<child link="left_shoulder_lower" />
     	<origin xyz="0.07 -0.06 -0.131" rpy="0 0 0" />
@@ -793,10 +741,10 @@
     	<origin xyz="-0.09 0.08 -0.13" rpy="0 0 0" />
 	</joint>
 
-  <joint name="left_arm_elbow_joint" type="fixed"> <!--revolute-->
+  <joint name="left_arm_elbow_joint" type="fixed">
     <parent link="left_elbow_gearbox"/>
     <child link="left_elbow"/>
-    <origin xyz="0.03 -0.02 0.025" rpy="0 -1.57 0" />
+    <origin xyz="0.02 -0.02 0.025" rpy="0 -1.57 0" />
     <axis xyz="0 1 0" />
    <limit lower="-2.0" upper="0.57" effort="10" velocity="0" />
   </joint>
@@ -811,10 +759,10 @@
   <joint name="left_arm_wrist_pan_bracket" type="fixed">
     	<parent link="left_forearm_link" />
     	<child link="left_wrist_pan_servo" />
-    	<origin xyz="-0.21 0.0 0.0" rpy="0 0 1.57" />
+    	<origin xyz="-0.21 0.0 0.0" rpy="0 0 1.57" /><!--now-->
     	
 	</joint>
-  <joint name="left_arm_wrist_pan_joint" type="fixed"> <!--revolute-->
+  <joint name="left_arm_wrist_pan_joint" type="fixed">
     	<parent link="left_wrist_pan_servo" />
     	<child link="left_wrist_pan_servo_bracket_f3" />
     	<origin xyz="0. 0.015 0.0" rpy="0 0 0" />
@@ -834,7 +782,7 @@
 
 
 <!--wrist_tilt_joint-->
-  <joint name="left_arm_wrist_tilt_joint" type="fixed"> <!--revolute-->
+  <joint name="left_arm_wrist_tilt_joint" type="fixed">
     	<parent link="left_wrist_tilt_servo" />
     	<child link="left_wrist_tilt_bracket_f2" />
     	<origin xyz="-0.04 0.05 0" rpy="0 0 0" />
@@ -857,7 +805,7 @@
 	</joint>
 
   <!-- left gripper_joint-->
-   <joint name="left_arm_gripper_joint" type="fixed"> <!--revolute-->
+   <joint name="left_arm_gripper_joint" type="fixed">
     	<parent link="left_gripper_servo" />
     	<child link="left_gripper_bracket_f2" />
     	<origin xyz="0 0.0 0.0" rpy="0 0 0" />
@@ -874,7 +822,7 @@
 	</joint> 
 
   <joint name="left_arm_finger_link_r" type="fixed">
-    	<parent link="left_gripper_bracket_f2" />
+    	<parent link="left_gripper_servo" />
     	<child link="left_right_finger_link" />
     	<origin xyz="0 0.03 0.03" rpy="0 0 0" />
 	</joint>
@@ -886,7 +834,7 @@
     	<origin xyz="-0.05 0.135 0.15" rpy="0 0 0" />
 	</joint>
 <!-- Head tilt joint-->
-  <joint name="head_tilt_mod_joint" type="revolute">
+  <joint name="head_tilt_mod_joint" type="fixed">
     	<parent link="head_tilt_bracket" />
     	<child link="head_tilt_link" />
     	<origin xyz="0 0 0.0" rpy="0 0 0" />
@@ -912,7 +860,7 @@
 	</joint>
 
   <!-- head_pan_joint-->	
-	<joint name="head_pan_joint" type="revolute">
+	<joint name="head_pan_joint" type="fixed">
     	<parent link="head_pan_bracket" />
     	<child link="head_pan_link" />
     	<origin xyz="0.0 0 0.02" rpy="0 0 0" />
@@ -930,125 +878,15 @@
 
   <joint name="neck_joint" type="fixed">
     	<parent link="neck_link" />
-    	<child link="head_base_link" />
+    	<child link="head_base_footprint" />
     	<origin xyz="0.02 0 0.0" rpy="0 0 0" />
 	</joint>
 	
   <joint name="head_joint" type="fixed">
-    	<parent link="head_base_link" />
+    	<parent link="head_base_footprint" />
     	<child link="head_link" />
     	<origin xyz="-0.02 -0.097 -0.45" rpy="0 0 0" />
 	</joint>
-
-   <joint name="kinect_joint" type="fixed">
-    	<parent link="base_footprint" />
-    	<child link="kinect_link" />
-    	<origin xyz="0.2 0 0.47" rpy="0 0 0" />
-	</joint>
-
-
-  <joint name="kinect_depth_joint" type="fixed">
-      <origin xyz="0 0.018 0" rpy="0 0 0" />
-      <parent link="kinect_link" />
-      <child link="kinect_depth_frame" />
-    </joint>
-    
-    <link name="kinect_depth_frame">
-      <inertial>
-        <mass value="0.0001" />
-        <origin xyz="0 0 0" />
-        <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
-                 iyy="0.0001" iyz="0.0"
-                 izz="0.0001" />
-      </inertial>
-    </link>
-    
-    <joint name="kinect_depth_optical_joint" type="fixed">
-      <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
-      <parent link="kinect_link" />
-      <child link="kinect_depth_optical_frame" />
-    </joint>
-    
-    <link name="kinect_depth_optical_frame">
-      <inertial>
-        <mass value="0.0001" />
-        <origin xyz="0 0 0" />
-        <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
-                 iyy="0.0001" iyz="0.0"
-                 izz="0.0001" />
-      </inertial>
-    </link>
-
-
-    <joint name="kinect_rgb_optical_joint" type="fixed">
-      <origin xyz="0 0 0" rpy="${-M_PI/2} 0 ${-M_PI/2}" />
-      <parent link="kinect_depth_optical_frame" />
-      <child link="kinect_rgb_optical_frame" />
-    </joint>
-    <link name="kinect_rgb_optical_frame">
-      <inertial>
-        <mass value="0.001" />
-        <origin xyz="0 0 0" />
-        <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
-                 iyy="0.0001" iyz="0.0"
-                 izz="0.0001" />
-      </inertial>
-    </link>
-
-  <joint name="head_cam_joint" type="fixed">
-    	<parent link="head_link" />
-    	<child link="head_cam_link" />
-    	<origin xyz="0.15 0.1 0.58" rpy="0 0 0" /><!-- 0 -1.57 1.57-->	
-  </joint>
-
-
-  <joint name="head_cam_depth_joint" type="fixed">
-      <origin xyz="0 0.018 0" rpy="0 0 0" />
-      <parent link="head_cam_link" />
-      <child link="head_cam_depth_frame" />
-    </joint>
-    
-    <link name="head_cam_depth_frame">
-      <inertial>
-        <mass value="0.0001" />
-        <origin xyz="0 0 0" />
-        <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
-                 iyy="0.0001" iyz="0.0"
-                 izz="0.0001" />
-      </inertial>
-    </link>
-    
-    <joint name="head_cam_depth_optical_joint" type="fixed">
-      <origin xyz="0 0 0" rpy="${-M_PI/2} 0 0" />
-      <parent link="head_cam_link" />
-      <child link="head_cam_depth_optical_frame" />
-    </joint>
-    
-    <link name="head_cam_depth_optical_frame">
-      <inertial>
-        <mass value="0.0001" />
-        <origin xyz="0 0 0" />
-        <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
-                 iyy="0.0001" iyz="0.0"
-                 izz="0.0001" />
-      </inertial>
-    </link>
-
-
-    <joint name="head_cam_rgb_optical_joint" type="fixed">
-      <origin xyz="0 0 0" rpy="0 ${M_PI/2} 0 " />
-      <parent link="head_cam_depth_optical_frame" />
-      <child link="head_cam_rgb_optical_frame" />
-    </joint>
-    <link name="head_cam_rgb_optical_frame">
-      <inertial>
-        <mass value="0.001" />
-        <origin xyz="0 0 0" />
-        <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
-                 iyy="0.0001" iyz="0.0"
-                 izz="0.0001" />
-      </inertial>
-    </link>
   
 
 

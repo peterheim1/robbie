@@ -22,12 +22,14 @@ int MinVal_tilt = 100;
 int MaxVal_tilt = 1800;
 double angle_lift ;
 double angle_tilt ;
-double target_pos_lift = 250;
-double target_pos_tilt = 900;
+double target_pos_lift = 350;
+double target_pos_tilt =512;
 double target_pos_pan = 900;  
 double target_pos_rot = 900; 
 double target_pos_elbow = 900; 
 const byte MY_ADDRESS = 50;
+int target_angle_tilt = 0 ;
+
 
 double Encoder_Position_tilt  = 0;
 double tilt_pwm = 0;
@@ -50,8 +52,8 @@ int FrameRate = 30;
 //volatile boolean haveData = false;
 volatile long Target = 8;//why 550 
 
-PID tilt(&angle_tilt, &tilt_pwm, &target_pos_tilt, 10,3,0, DIRECT);
-PID lift(&angle_lift, &lift_pwm, &target_pos_lift, 10,3,0, DIRECT);
+PID tilt(&Encoder_Position_tilt, &tilt_pwm, &target_pos_tilt, 4,0,0, DIRECT);
+PID lift(&angle_lift, &lift_pwm, &target_pos_lift, 4,0,0, DIRECT);
 
 // Instantiate Messenger object with the message function and the default separator (the space character)
 Messenger _Messenger = Messenger();
@@ -97,9 +99,9 @@ void loop()
 
   ReadSerial();
   Encoder_Position_tilt =  analogRead(2);
-  Encoder_Position_lift =  analogRead(3);
-  angle_tilt  = map(Encoder_Position_tilt, 0, 1023, 0, 1800);
-  angle_lift  = map(Encoder_Position_lift, 0, 1023, 0, 1800);
+  Encoder_Position_lift =  1023 - analogRead(3);
+  angle_tilt  = map(Encoder_Position_tilt, 0, 1023, 0, 3000);
+  angle_lift  = map(Encoder_Position_lift, 0, 1023, 0, 3000);
   tilt_Gap = (target_pos_tilt - angle_tilt)*0.1;
   lift_Gap = (target_pos_lift - angle_lift)*0.1;
   
@@ -158,7 +160,7 @@ void sendSensor (const byte which)
 
 void tilt_drive()
 {
-  int gap = abs(tilt_Gap);
+  /*int gap = abs(tilt_Gap);
   if (gap < 50)
   {
   tilt.SetTunings(1, 0.1, 0);
@@ -166,7 +168,7 @@ void tilt_drive()
   else
   {
     tilt.SetTunings(5, 0, 0);
-  }
+  }*/
   tilt.Compute();
   tilt.SetOutputLimits(-400 ,400);
   
@@ -175,7 +177,7 @@ void tilt_drive()
 
 void lift_drive()
 {
-  int gap = abs(lift_Gap);
+  /*int gap = abs(lift_Gap);
   if (gap < 50)
   {
   lift.SetTunings(1, 0.1, 0);
@@ -183,9 +185,9 @@ void lift_drive()
   else
   {
     lift.SetTunings(5, 0, 0);
-  }
+  }*/
   lift.Compute();
-  lift.SetOutputLimits(-250 ,250);
+  lift.SetOutputLimits(-400 ,400);
   
     md.setM2Speed(lift_pwm);
   }
@@ -216,23 +218,7 @@ void SetTarget(int address, int target)
        
 }
 
-void tilt_drive1()
-{
-  int gap = abs(tilt_Gap);
-  if (gap < 50)
-  {
-  tilt.SetTunings(1, 0.1, 0);
-  }
-  else
-  {
-    tilt.SetTunings(5, 0, 0);
-  }
-  tilt.Compute();
-  tilt.SetOutputLimits(-400 ,400);
-  
-    md.setM1Speed(tilt_pwm);
-  }
-  
+
 void return_data()
 {
   
@@ -256,7 +242,7 @@ void return_data()
   Serial.print("\t");
   Serial.print(target_pos_pan);// joint target
   Serial.print("\t");
-  Serial.print("0");// velocity
+  Serial.print(pan);// velocity
   Serial.print("\t");
   Serial.print("0");// is the joint moving
   Serial.print("\t");
@@ -266,9 +252,9 @@ void return_data()
   Serial.print("\t");
   Serial.print(angle_tilt);//tilt);//current position
   Serial.print("\t");
-  Serial.print(target_pos_tilt);// joint target
+  Serial.print(target_angle_tilt);// joint target
   Serial.print("\t");
-  Serial.print("0");// velocity
+  Serial.print(Encoder_Position_tilt);// velocity
   Serial.print("\t");
   Serial.print("0");// is the joint moving
   Serial.print("\t");
@@ -280,7 +266,7 @@ void return_data()
   Serial.print("\t");
   Serial.print(target_pos_lift);// joint target
   Serial.print("\t");
-  Serial.print("0");// velocity
+  Serial.print(Encoder_Position_lift);// velocity
   Serial.print("\t");
   Serial.print("0");// is the joint moving
   Serial.print("\t");
@@ -292,7 +278,7 @@ void return_data()
   Serial.print("\t");
   Serial.print(target_pos_rot);// joint target
   Serial.print("\t");
-  Serial.print("0");// velocity
+  Serial.print(rot);// velocity
   Serial.print("\t");
   Serial.print("0");// is the joint moving
   Serial.print("\t");
@@ -393,6 +379,7 @@ void OnMssageCompleted()
 void J2()
 {
   target_pos_tilt = _Messenger.readInt(); 
+  target_angle_tilt = map(target_pos_tilt, 0, 1023, 0, 3000);
   
 }
 
